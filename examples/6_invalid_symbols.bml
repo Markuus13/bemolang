@@ -1,0 +1,17 @@
+int main() {
+  int x;
+  x = 2;
+  int y;
+  y = 10;
+
+  int result;
+  result = x % y;
+
+  int foo;
+  foo = x ^ y;
+
+  int bar;
+  bar = x | y;
+
+  x.y = 50;
+}

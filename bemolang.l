@@ -5,17 +5,17 @@
 
 %{
 	#include <stdio.h>
+	#include <string.h>
 
-	int counter = 0;
-	int debug = 1;
+	int debug = 0;
 
-	void count() {
-		counter ++;
-	}
+	int lexeme_counter = 0;
+	int line_counter = 1;
+	int column_counter = 0;
 
-	void print_lexeme(char *yytext) {
-		if (debug) { printf("%s\n", yytext); }
-	}
+	void count();
+	void print_symbol();
+	void handle_unrecognized_symbol();
 %}
 
 DIGIT 					[0-9]
@@ -23,52 +23,85 @@ LETTER					[a-zA-Z_]
 
 %%
 
-"add"													{ count(); print_lexeme(yytext); }
-"elem"												{ count(); print_lexeme(yytext); }
-"else"												{ count(); print_lexeme(yytext); }
-"exists"											{ count(); print_lexeme(yytext); }
-"for"													{ count(); print_lexeme(yytext); }
-"float"												{ count(); print_lexeme(yytext); }
-"forall"											{ count(); print_lexeme(yytext); }
-"if"					  							{ count(); print_lexeme(yytext); }
-"is_set"											{ count(); print_lexeme(yytext); }
-"in"					  							{ count(); print_lexeme(yytext); }
-"int"					  							{ count(); print_lexeme(yytext); }
-"remove"											{ count(); print_lexeme(yytext); }
-"return"											{ count(); print_lexeme(yytext); }
-"set"					  							{ count(); print_lexeme(yytext); }
+"add"													{ count(); print_symbol(); }
+"elem"												{ count(); print_symbol(); }
+"else"												{ count(); print_symbol(); }
+"exists"											{ count(); print_symbol(); }
+"for"													{ count(); print_symbol(); }
+"float"												{ count(); print_symbol(); }
+"forall"											{ count(); print_symbol(); }
+"if"					  							{ count(); print_symbol(); }
+"is_set"											{ count(); print_symbol(); }
+"in"					  							{ count(); print_symbol(); }
+"int"					  							{ count(); print_symbol(); }
+"remove"											{ count(); print_symbol(); }
+"return"											{ count(); print_symbol(); }
+"set"					  							{ count(); print_symbol(); }
 
-"EMPTY"												{ count(); print_lexeme(yytext); }
-{LETTER}({LETTER}|{DIGIT})*		{ count(); print_lexeme(yytext); }
-[+-]?{DIGIT}+									{ count(); print_lexeme(yytext); }
-[+-]?{DIGIT}+"."{DIGIT}+			{ count(); print_lexeme(yytext); }
-\"(\\.|[^\\"])*\"							{ count(); print_lexeme(yytext); }
-\'(\\.|[^\\'])\'							{ count(); print_lexeme(yytext); }
+"EMPTY"												{ count(); print_symbol(); }
+{LETTER}({LETTER}|{DIGIT})*		{ count(); print_symbol(); }
+[+-]?{DIGIT}+									{ count(); print_symbol(); }
+[+-]?{DIGIT}+"."{DIGIT}+			{ count(); print_symbol(); }
+\"(\\.|[^\\"])*\"							{ count(); print_symbol(); }
+\'(\\.|[^\\'])\'							{ count(); print_symbol(); }
 
-"&&"													{ count(); print_lexeme(yytext); }
-"||"													{ count(); print_lexeme(yytext); }
-"<="													{ count(); print_lexeme(yytext); }
-">="													{ count(); print_lexeme(yytext); }
-"=="													{ count(); print_lexeme(yytext); }
-"!="													{ count(); print_lexeme(yytext); }
-";"														{ count(); print_lexeme(yytext); }
-"{"														{ count(); print_lexeme(yytext); }
-"}"														{ count(); print_lexeme(yytext); }
-"="														{ count(); print_lexeme(yytext); }
-"("														{ count(); print_lexeme(yytext); }
-")"														{ count(); print_lexeme(yytext); }
-"-"														{ count(); print_lexeme(yytext); }
-"+"														{ count(); print_lexeme(yytext); }
-"*"														{ count(); print_lexeme(yytext); }
-"/"														{ count(); print_lexeme(yytext); }
-"!"														{ count(); print_lexeme(yytext); }
-"<"														{ count(); print_lexeme(yytext); }
-">"														{ count(); print_lexeme(yytext); }
+"&&"													{ count(); print_symbol(); }
+"||"													{ count(); print_symbol(); }
+"<="													{ count(); print_symbol(); }
+">="													{ count(); print_symbol(); }
+"=="													{ count(); print_symbol(); }
+"!="													{ count(); print_symbol(); }
+";"														{ count(); print_symbol(); }
+"{"														{ count(); print_symbol(); }
+"}"														{ count(); print_symbol(); }
+"="														{ count(); print_symbol(); }
+"("														{ count(); print_symbol(); }
+")"														{ count(); print_symbol(); }
+"-"														{ count(); print_symbol(); }
+"+"														{ count(); print_symbol(); }
+"*"														{ count(); print_symbol(); }
+"/"														{ count(); print_symbol(); }
+"!"														{ count(); print_symbol(); }
+"<"														{ count(); print_symbol(); }
+">"														{ count(); print_symbol(); }
 
-[ \t\v\n\f]										{ count(); print_lexeme(yytext); }
-.															{ printf("Invalid token"); }
+[ \t\v\f] 										{ count(); print_symbol(); }
+\n														{ count(); print_symbol();  }
+
+.															{ handle_unrecognized_symbol(); }
 
 %%
+
+int is_a_line_break(char* string) {
+	return !strcmp(string, "\n");
+}
+
+void count_line() {
+	if (is_a_line_break(yytext)) {
+		column_counter = 0;
+		line_counter ++;
+	}
+}
+
+void count_column() {
+	int number_of_symbols = strlen(yytext);
+	column_counter += number_of_symbols;
+}
+
+void count() {
+	lexeme_counter ++;
+
+	count_column();
+	count_line();
+}
+
+void print_symbol() {
+	if (debug) { printf("Valid symbol: %s\n", yytext); }
+}
+
+void handle_unrecognized_symbol() {
+	printf("Unrecognized symbol \"%s\" at %d:%d.\n", yytext, line_counter, column_counter);
+}
 
 int main(int argc, char **argv) {
 	/* skip over program name */
@@ -81,5 +114,10 @@ int main(int argc, char **argv) {
 	}
 	yylex();
 
-	printf("Total de tokens: %d\n", counter);
+	if (debug) {
+		printf("Total de tokens: %d\n", lexeme_counter);
+		printf("Total de linhas: %d\n", line_counter);
+	}
+
+	return 0;
 }
