@@ -1,0 +1,124 @@
+/* Based on https://cs.wmich.edu/~gupta/teaching/cs4850/sumII06/The%20syntax%20of%20C%20in%20Backus-Naur%20form.htm  */
+
+<translation-unit> ::= {<external-declaration>}*
+
+<external-declaration> ::= <function-definition>
+                         | <declaration>
+
+<function-definition> ::= <type-specifier> <declarator> <compound-statement>
+
+<type-specifier> ::= int
+                   | float
+                   | elem
+                   | set
+
+<declarator> ::= <identifier> ( {<parameter-list>}* )
+
+<parameter-list> ::= <parameter-declaration>
+                   | <parameter-list> , <parameter-list>
+
+<parameter-declaration> ::= <type-specifier> <identifier>
+
+<conditional-expression> ::= <logical-or-expression>
+
+<logical-or-expression> ::= <logical-and-expression>
+                          | <logical-or-expression> || <logical-and-expression>
+
+<logical-and-expression> ::= <equality-expression>
+                           | <logical-and-expression> && <equality-expression>
+
+<equality-expression> ::= <relational-expression>
+                        | <equality-expression> == <relational-expression>
+                        | <equality-expression> != <relational-expression>
+
+<relational-expression> ::= <additive-expression>
+                          | <relational-expression> < <additive-expression>
+                          | <relational-expression> > <additive-expression>
+                          | <relational-expression> <= <additive-expression>
+                          | <relational-expression> >= <additive-expression>
+
+<additive-expression> ::= <multiplicative-expression>
+                        | <additive-expression> + <multiplicative-expression>
+                        | <additive-expression> - <multiplicative-expression>
+
+<multiplicative-expression> ::= <unary-expression>
+                              | <multiplicative-expression> * <unary-expression>
+                              | <multiplicative-expression> / <unary-expression>
+
+<unary-expression> ::= <postfix-expression>
+                     | <unary-operator> <unary-expression>
+
+<postfix-expression> ::= <primary-expression>
+                       | <postfix-expression> ( {<assignment-expression>}* )
+
+<primary-expression> ::= <identifier>
+                       | <constant>
+                       | <string>
+                       | ( <expression> )
+
+<constant> ::= <integer-constant>
+             | <character-constant>
+             | <floating-constant>
+             | <empty-constant>
+
+<expression> ::= <assignment-expression>
+               | <expression> , <assignment-expression>
+
+<assignment-expression> ::= <conditional-expression>
+                          | <unary-expression> = <assignment-expression>
+
+<unary-operator> ::= +
+                   | -
+                   | !
+
+<compound-statement> ::= { {<declaration>}* {<statement>}* }
+
+<declaration> ::= <type-qualifier> <identifier> ;
+
+<statement> ::= <expression-statement>
+              | <compound-statement>
+              | <selection-statement>
+              | <iteration-statement>
+              | <set-statement>
+              | <jump-statement>
+
+<expression-statement> ::= {<expression>}? ;
+
+<selection-statement> ::= if ( <expression> ) <statement>
+                        | if ( <expression> ) <statement> else <statement>
+
+<iteration-statement> ::= for ( {<expression>}? ; {<expression>}? ; {<expression>}? ) <statement>
+
+<set-statement> ::= <membership-expression>
+                | <inclusion-statement>
+                | <removal-statement>
+                | <existence-statement>
+                | <type-check-statement>
+                | <set-iteration-statement>
+
+<membership-expression> ::= <expression> in <expression>
+
+<inclusion-statement> ::= add ( <membership-expression> ) ;
+                        | add ( <expression> in <inclusion-statement> )
+
+<removal-statement> ::= remove ( <membership-expression> ) ;
+                    | remove ( <removal-statement> )
+
+<existence-statement> ::= exists ( <membership-expression> )
+                        | exists ( <existence-statement> )
+
+<set-iteration-statement> ::= forall ( <membership-expression> ) <statement>
+
+<jump-statement> ::= return {<expression>}? ;
+
+<identifier> = /[a-zA-Z][(a-z)(A-Z)(0-9)(_)]*/
+<string> = TODO
+<integer-constant> = TODO
+<character-constant> = TODO
+<floating-constant> = TODO
+<empty-constant> = EMPTY
+
+/**
+  TODO: Add is_set operator to language
+  TODO: Fix set expression. Probably it should be put under our generic <expression>
+**/
