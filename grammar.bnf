@@ -111,14 +111,8 @@
 
 <jump-statement> ::= return {<expression>}? ;
 
-<identifier> = /[a-zA-Z][(a-z)(A-Z)(0-9)(_)]*/
-<string> = TODO
-<integer-constant> = TODO
-<character-constant> = TODO
-<floating-constant> = TODO
-<empty-constant> = EMPTY
-
 /**
   TODO: Add is_set operator to language
   TODO: Fix set expression. Probably it should be put under our generic <expression>
+  TODO: add writeIn, write and read operators
 **/
