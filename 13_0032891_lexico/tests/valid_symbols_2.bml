@@ -1,0 +1,12 @@
+set add_set(set s) {
+  set newset;
+  newset = EMPTY;
+  return add(add_int(newset) in s);
+}
+
+int main() {
+  set s;
+  s = EMPTY;
+
+  add_set(s);
+}
