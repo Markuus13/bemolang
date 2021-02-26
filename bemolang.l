@@ -1,13 +1,14 @@
 /* Bemolang Grammar, Lex specification */
 /* Based on https://www.lysator.liu.se/c/ANSI-C-grammar-l.html */
 
+%option noinput nounput
 %option noyywrap
 
 %{
   #include <stdio.h>
   #include <string.h>
 
-  int debug = 0;
+  const int DEBUG = 1;
 
   int lexeme_counter = 0;
   int line_counter = 1;
@@ -99,7 +100,7 @@ void count() {
 }
 
 void print_symbol() {
-  if (debug) { printf("Valid symbol: %s\n", yytext); }
+  if (DEBUG) { printf("Valid symbol: %s\n", yytext); }
 }
 
 void handle_unrecognized_symbol() {
@@ -107,17 +108,16 @@ void handle_unrecognized_symbol() {
 }
 
 int main(int argc, char **argv) {
-  /* skip over program name */
-  ++argv, --argc;
+  yyin = fopen(argv[1], "r");
 
-  if (argc > 0) {
-    yyin = fopen(argv[0], "r");
-  } else {
-    yyin = stdin;
-  }
-  yylex();
+  do {
+    yylex();
+  } while (!feof(yyin));
 
-  if (debug) {
+  fclose(yyin);
+  yylex_destroy();
+
+  if (DEBUG) {
     printf("Total de tokens: %d\n", lexeme_counter);
     printf("Total de linhas: %d\n", line_counter);
   }
