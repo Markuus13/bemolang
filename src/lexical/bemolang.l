@@ -3,12 +3,15 @@
 
 %option noinput nounput
 %option noyywrap
+%option outfile="./src/lexical/bemolang.c" header-file="./src/lexical/bemolang.h"
 
 %{
   #include <stdio.h>
   #include <string.h>
+  #include <math.h>
+  #include "../syntactic/bemolang.h"
 
-  const int DEBUG = 1;
+  const int DEBUG = 0;
 
   int lexeme_counter = 0;
   int line_counter = 1;
@@ -45,7 +48,7 @@ LETTER     [a-zA-Z_]
 "EMPTY"                         { count(); print_symbol(); }
 {LETTER}({LETTER}|{DIGIT})*     { count(); print_symbol(); }
 [+-]?{DIGIT}+                   { count(); print_symbol(); }
-[+-]?{DIGIT}+"."{DIGIT}+        { count(); print_symbol(); }
+[+-]?{DIGIT}+"."{DIGIT}+        { count(); print_symbol(); yylval.d = atof(yytext); return NUMBER; }
 \"(\\.|[^\\"])*\"               { count(); print_symbol(); }
 \'(\\.|[^\\'])\'                { count(); print_symbol(); }
 
@@ -61,10 +64,10 @@ LETTER     [a-zA-Z_]
 "="                             { count(); print_symbol(); }
 "("                             { count(); print_symbol(); }
 ")"                             { count(); print_symbol(); }
-"-"                             { count(); print_symbol(); }
-"+"                             { count(); print_symbol(); }
-"*"                             { count(); print_symbol(); }
-"/"                             { count(); print_symbol(); }
+"-"                             { count(); print_symbol(); return '-'; }
+"+"                             { count(); print_symbol(); return '+'; }
+"*"                             { count(); print_symbol(); return '*'; }
+"/"                             { count(); print_symbol(); return '/'; }
 "!"                             { count(); print_symbol(); }
 "<"                             { count(); print_symbol(); }
 ">"                             { count(); print_symbol(); }
@@ -105,22 +108,4 @@ void print_symbol() {
 
 void handle_unrecognized_symbol() {
   printf("Unrecognized symbol \"%s\" at %d:%d.\n", yytext, line_counter, column_counter);
-}
-
-int main(int argc, char **argv) {
-  yyin = fopen(argv[1], "r");
-
-  do {
-    yylex();
-  } while (!feof(yyin));
-
-  fclose(yyin);
-  yylex_destroy();
-
-  if (DEBUG) {
-    printf("Total de tokens: %d\n", lexeme_counter);
-    printf("Total de linhas: %d\n", line_counter);
-  }
-
-  return 0;
 }
