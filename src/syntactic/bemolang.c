@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "./src/syntactic/bemolang.y" /* yacc.c:337  */
+#line 1 "src/syntactic/bemolang.y" /* yacc.c:337  */
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -123,7 +123,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "./src/syntactic/bemolang.y" /* yacc.c:352  */
+#line 17 "src/syntactic/bemolang.y" /* yacc.c:352  */
 
  float d;
 
@@ -1224,31 +1224,31 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 30 "./src/syntactic/bemolang.y" /* yacc.c:1652  */
+#line 30 "src/syntactic/bemolang.y" /* yacc.c:1652  */
     { printf("%f", (yyvsp[0].d)); }
 #line 1230 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 34 "./src/syntactic/bemolang.y" /* yacc.c:1652  */
+#line 34 "src/syntactic/bemolang.y" /* yacc.c:1652  */
     { (yyval.d) = (yyvsp[-2].d) + (yyvsp[0].d); }
 #line 1236 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 35 "./src/syntactic/bemolang.y" /* yacc.c:1652  */
+#line 35 "src/syntactic/bemolang.y" /* yacc.c:1652  */
     { (yyval.d) = (yyvsp[-2].d) - (yyvsp[0].d); }
 #line 1242 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 39 "./src/syntactic/bemolang.y" /* yacc.c:1652  */
+#line 39 "src/syntactic/bemolang.y" /* yacc.c:1652  */
     { (yyval.d) = (yyvsp[-2].d) * (yyvsp[0].d); }
 #line 1248 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 40 "./src/syntactic/bemolang.y" /* yacc.c:1652  */
+#line 40 "src/syntactic/bemolang.y" /* yacc.c:1652  */
     { (yyval.d) = (yyvsp[-2].d) / (yyvsp[0].d); }
 #line 1254 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
     break;
@@ -1485,7 +1485,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 45 "./src/syntactic/bemolang.y" /* yacc.c:1918  */
+#line 45 "src/syntactic/bemolang.y" /* yacc.c:1918  */
 
 
 void yyerror (char const *s) {

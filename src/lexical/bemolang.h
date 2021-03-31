@@ -469,7 +469,7 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 80 "./src/lexical/bemolang.l"
+#line 80 "src/lexical/bemolang.l"
 
 
 #line 476 "./src/lexical/bemolang.h"
