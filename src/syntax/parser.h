@@ -53,13 +53,32 @@ extern int yydebug;
     FLOAT = 259,
     ELEM = 260,
     SET = 261,
-    FOO = 262,
-    IF = 263,
-    ELSE = 264,
-    FOR = 265,
+    IF = 262,
+    ELSE = 263,
+    FOR = 264,
+    RETURN = 265,
     FORALL = 266,
     ADD = 267,
-    REMOVE = 268
+    REMOVE = 268,
+    READ = 269,
+    WRITELN = 270,
+    WRITE = 271,
+    IS_SET = 272,
+    IN = 273,
+    EXISTS = 274,
+    IDENTIFIER = 275,
+    INTEGER_CONSTANT = 276,
+    FLOAT_CONSTANT = 277,
+    CHARACTER_CONSTANT = 278,
+    STRING_CONSTANT = 279,
+    EMPTY_CONSTANT = 280,
+    IF_ONLY = 281,
+    OR = 282,
+    AND = 283,
+    EQUAL_TO = 284,
+    NOT_EQUAL_TO = 285,
+    LT_OR_EQ_TO = 286,
+    BG_OR_EQ_TO = 287
   };
 #endif
 
@@ -72,7 +91,7 @@ union YYSTYPE
 
   struct ast_node *ast_node;
 
-#line 76 "./src/syntax/parser.h" /* yacc.c:1921  */
+#line 95 "./src/syntax/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -16,9 +16,14 @@
   struct ast_node *ast_node;
 }
 
-%token <token> INT FLOAT ELEM SET IF ELSE FOR FORALL ADD REMOVE READ WRITELN WRITE IS_SET IN RETURN IDENTIFIER INTEGER_CONSTANT FLOAT_CONSTANT CHARACTER_CONSTANT STRING_CONSTANT EMPTY_CONSTANT FOO
+%token <token> INT FLOAT ELEM SET
+%token <token> IF ELSE FOR RETURN
+%token <token> FORALL ADD REMOVE READ WRITELN WRITE IS_SET IN EXISTS
+%token <token> IDENTIFIER INTEGER_CONSTANT FLOAT_CONSTANT CHARACTER_CONSTANT STRING_CONSTANT EMPTY_CONSTANT
+%token <token> IF_ONLY
+%token <token> OR AND EQUAL_TO NOT_EQUAL_TO LT_OR_EQ_TO BG_OR_EQ_TO
 
-%nonassoc FOO ELSE
+%nonassoc IF_ONLY ELSE
 
 // %type <ast_node> translation_unit external_declaration_list external_declaration function_definition type_specifier declarator compound_statement
 
@@ -58,23 +63,23 @@ conditional_expression: logical_or_expression
                       ;
 
 logical_or_expression: logical_and_expression
-                    | logical_or_expression "||" logical_and_expression
+                    | logical_or_expression OR logical_and_expression
                     ;
 
 logical_and_expression: equality_expression
-                      | logical_and_expression "&&" equality_expression
+                      | logical_and_expression AND equality_expression
                       ;
 
 equality_expression: relational_expression
-                  | equality_expression "==" relational_expression
-                  | equality_expression "!=" relational_expression
+                  | equality_expression EQUAL_TO relational_expression
+                  | equality_expression NOT_EQUAL_TO relational_expression
                   ;
 
 relational_expression: additive_expression
                     | relational_expression '<' additive_expression
                     | relational_expression '>' additive_expression
-                    | relational_expression "<=" additive_expression
-                    | relational_expression ">=" additive_expression
+                    | relational_expression LT_OR_EQ_TO additive_expression
+                    | relational_expression BG_OR_EQ_TO additive_expression
                     ;
 
 additive_expression: multiplicative_expression
@@ -118,6 +123,9 @@ optional_expression: expression
 
 expression: assignment_expression
           | type_check_expression
+          | exists_expression
+          | inclusion_expression
+          | removal_expression
           | expression ',' assignment_expression
           ;
 
@@ -125,8 +133,17 @@ assignment_expression: conditional_expression
                     | unary_expression '=' assignment_expression
                     ;
 
-type_check_expression:  IS_SET '(' identifier ')'
+type_check_expression: IS_SET '(' expression ')'
                     ;
+
+exists_expression: EXISTS '(' expression ')'
+                ;
+
+inclusion_expression: ADD '(' expression ')'
+                  ;
+
+removal_expression: REMOVE '(' expression ')'
+                ;
 
 compound_statement: '{' declaration_list statement_list '}'
                   ;
@@ -149,8 +166,6 @@ declaration: type_specifier identifier
 statement: expression_statement
         | selection_statement
         | iteration_statement
-        | inclusion_statement
-        | removal_statement
         | io_statement
         | jump_statement
         ;
@@ -161,19 +176,13 @@ expression_statement: optional_expression ';'
 membership_expression: expression IN expression
                     ;
 
-selection_statement: IF '(' expression ')' compound_or_inline_statement %prec FOO
+selection_statement: IF '(' expression ')' compound_or_inline_statement %prec IF_ONLY
                   | IF '(' expression ')' compound_or_inline_statement ELSE compound_or_inline_statement
                   ;
 
-iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ';' ')' compound_or_inline_statement
+iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' compound_or_inline_statement
                   | FORALL '(' membership_expression ')' compound_or_inline_statement
                   ;
-
-inclusion_statement: ADD '(' membership_expression ')'
-                  ;
-
-removal_statement: REMOVE '(' membership_expression ')'
-                ;
 
 io_statement: WRITE '(' expression ')' ';'
             | WRITELN '(' expression ')' ';'
