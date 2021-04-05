@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED
-# define YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED
+#ifndef YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
+# define YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -58,11 +58,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/syntactic/bemolang.y" /* yacc.c:1921  */
+#line 13 "src/syntax/parser.y" /* yacc.c:1921  */
 
- float d;
+  struct ast *ast;
+  float float_value;
 
-#line 66 "./src/syntactic/bemolang.h" /* yacc.c:1921  */
+#line 67 "./src/syntax/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -75,4 +76,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED  */
+#endif /* !YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED  */

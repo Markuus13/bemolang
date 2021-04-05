@@ -66,17 +66,13 @@
 
 
 /* First part of user prologue.  */
-#line 1 "src/syntactic/bemolang.y" /* yacc.c:337  */
+#line 1 "src/syntax/parser.y" /* yacc.c:337  */
 
   #include <stdio.h>
   #include <stdlib.h>
+  #include "ast.h"
 
-  int yylex(void);
-  extern void yyerror(const char*);
-  extern int yylex_destroy(void);
-  extern FILE* yyin;
-
-#line 80 "./src/syntactic/bemolang.c" /* yacc.c:337  */
+#line 76 "./src/syntax/parser.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -98,9 +94,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "bemolang.h".  */
-#ifndef YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED
-# define YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED
+   by #include "parser.h".  */
+#ifndef YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
+# define YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -123,11 +119,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/syntactic/bemolang.y" /* yacc.c:352  */
+#line 13 "src/syntax/parser.y" /* yacc.c:352  */
 
- float d;
+  struct ast *ast;
+  float float_value;
 
-#line 131 "./src/syntactic/bemolang.c" /* yacc.c:352  */
+#line 128 "./src/syntax/parser.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -140,7 +137,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_SYNTACTIC_BEMOLANG_H_INCLUDED  */
+#endif /* !YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED  */
 
 
 
@@ -430,8 +427,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    27,    30,    33,    34,    35,    38,    39,
-      40,    43
+       0,    24,    24,    25,    28,    31,    32,    33,    36,    37,
+      38,    41
 };
 #endif
 
@@ -1224,37 +1221,37 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 30 "src/syntactic/bemolang.y" /* yacc.c:1652  */
-    { printf("%f", (yyvsp[0].d)); }
-#line 1230 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 28 "src/syntax/parser.y" /* yacc.c:1652  */
+    { printf("%f", (yyvsp[0].float_value)); }
+#line 1227 "./src/syntax/parser.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 34 "src/syntactic/bemolang.y" /* yacc.c:1652  */
-    { (yyval.d) = (yyvsp[-2].d) + (yyvsp[0].d); }
-#line 1236 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 32 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.float_value) = (yyvsp[-2].float_value) + (yyvsp[0].float_value); }
+#line 1233 "./src/syntax/parser.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 35 "src/syntactic/bemolang.y" /* yacc.c:1652  */
-    { (yyval.d) = (yyvsp[-2].d) - (yyvsp[0].d); }
-#line 1242 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 33 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.float_value) = (yyvsp[-2].float_value) - (yyvsp[0].float_value); }
+#line 1239 "./src/syntax/parser.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 39 "src/syntactic/bemolang.y" /* yacc.c:1652  */
-    { (yyval.d) = (yyvsp[-2].d) * (yyvsp[0].d); }
-#line 1248 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 37 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.float_value) = (yyvsp[-2].float_value) * (yyvsp[0].float_value); }
+#line 1245 "./src/syntax/parser.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 40 "src/syntactic/bemolang.y" /* yacc.c:1652  */
-    { (yyval.d) = (yyvsp[-2].d) / (yyvsp[0].d); }
-#line 1254 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 38 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.float_value) = (yyvsp[-2].float_value) / (yyvsp[0].float_value); }
+#line 1251 "./src/syntax/parser.c" /* yacc.c:1652  */
     break;
 
 
-#line 1258 "./src/syntactic/bemolang.c" /* yacc.c:1652  */
+#line 1255 "./src/syntax/parser.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1485,7 +1482,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 45 "src/syntactic/bemolang.y" /* yacc.c:1918  */
+#line 43 "src/syntax/parser.y" /* yacc.c:1918  */
 
 
 void yyerror (char const *s) {

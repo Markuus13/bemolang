@@ -3,13 +3,13 @@
 
 %option noinput nounput
 %option noyywrap
-%option outfile="./src/lexical/bemolang.c" header-file="./src/lexical/bemolang.h"
+%option outfile="./src/lexical/scanner.c" header-file="./src/lexical/scanner.h"
 
 %{
   #include <stdio.h>
   #include <string.h>
   #include <math.h>
-  #include "../syntactic/bemolang.h"
+  #include "../syntax/parser.h"
 
   const int DEBUG = 0;
 
@@ -48,7 +48,7 @@ LETTER     [a-zA-Z_]
 "EMPTY"                         { count(); print_symbol(); }
 {LETTER}({LETTER}|{DIGIT})*     { count(); print_symbol(); }
 [+-]?{DIGIT}+                   { count(); print_symbol(); }
-[+-]?{DIGIT}+"."{DIGIT}+        { count(); print_symbol(); yylval.d = atof(yytext); return NUMBER; }
+[+-]?{DIGIT}+"."{DIGIT}+        { count(); print_symbol(); yylval.float_value = atof(yytext); return NUMBER; }
 \"(\\.|[^\\"])*\"               { count(); print_symbol(); }
 \'(\\.|[^\\'])\'                { count(); print_symbol(); }
 
@@ -64,10 +64,10 @@ LETTER     [a-zA-Z_]
 "="                             { count(); print_symbol(); }
 "("                             { count(); print_symbol(); }
 ")"                             { count(); print_symbol(); }
-"-"                             { count(); print_symbol(); return '-'; }
-"+"                             { count(); print_symbol(); return '+'; }
-"*"                             { count(); print_symbol(); return '*'; }
-"/"                             { count(); print_symbol(); return '/'; }
+"-"                             { count(); print_symbol(); return yytext[0]; }
+"+"                             { count(); print_symbol(); return yytext[0]; }
+"*"                             { count(); print_symbol(); return yytext[0]; }
+"/"                             { count(); print_symbol(); return yytext[0]; }
 "!"                             { count(); print_symbol(); }
 "<"                             { count(); print_symbol(); }
 ">"                             { count(); print_symbol(); }

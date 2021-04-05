@@ -1,26 +1,24 @@
 %{
   #include <stdio.h>
   #include <stdlib.h>
-
-  int yylex(void);
-  extern void yyerror(const char*);
-  extern int yylex_destroy(void);
-  extern FILE* yyin;
+  #include "ast.h"
 %}
 
-%output "./src/syntactic/bemolang.c"
-%defines "./src/syntactic/bemolang.h"
+%output "./src/syntax/parser.c"
+%defines "./src/syntax/parser.h"
 
 %define lr.type canonical-lr
 %define parse.error verbose
 
 %union {
- float d;
+  struct ast *ast;
+  float float_value;
 }
 
-%token <d> NUMBER
+%token <float_value> NUMBER
 
-%type <d> multiplicative_expression additive_expression unary_expression
+%type <ast> translation_unit external_declaration
+%type <float_value> multiplicative_expression additive_expression unary_expression
 
 %%
 translation_unit: external_declaration

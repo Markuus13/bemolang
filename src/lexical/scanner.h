@@ -2,9 +2,9 @@
 #define yyHEADER_H 1
 #define yyIN_HEADER 1
 
-#line 6 "./src/lexical/bemolang.h"
+#line 6 "./src/lexical/scanner.h"
 
-#line 8 "./src/lexical/bemolang.h"
+#line 8 "./src/lexical/scanner.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -469,9 +469,9 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 80 "src/lexical/bemolang.l"
+#line 80 "src/lexical/scanner.l"
 
 
-#line 476 "./src/lexical/bemolang.h"
+#line 476 "./src/lexical/scanner.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

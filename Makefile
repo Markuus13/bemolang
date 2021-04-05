@@ -1,14 +1,14 @@
-FILES = src/lexical/bemolang.c src/syntactic/bemolang.c src/main.c
+FILES = src/lexical/scanner.c src/syntax/parser.c src/main.c
 FLAGS = -g -Wall
 
 install:
 	apt install flex valgrind
 
 flex:
-	flex src/lexical/bemolang.l
+	flex src/lexical/scanner.l
 
 bison:
-	bison -d src/syntactic/bemolang.y
+	bison -d src/syntax/parser.y
 
 compile: bison flex
 	gcc $(FILES) $(FLAGS) -o bemolang.out

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "./lexical/bemolang.h"
-#include "./syntactic/bemolang.h"
+#include "lexical/scanner.h"
+#include "syntax/parser.h"
 
 int main(int argc, char **argv) {
   if (argc < 2) {
