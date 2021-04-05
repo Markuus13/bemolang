@@ -49,7 +49,17 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUMBER = 258
+    INT = 258,
+    FLOAT = 259,
+    ELEM = 260,
+    SET = 261,
+    FOO = 262,
+    IF = 263,
+    ELSE = 264,
+    FOR = 265,
+    FORALL = 266,
+    ADD = 267,
+    REMOVE = 268
   };
 #endif
 
@@ -58,12 +68,11 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "src/syntax/parser.y" /* yacc.c:1921  */
+#line 15 "src/syntax/parser.y" /* yacc.c:1921  */
 
-  struct ast *ast;
-  float float_value;
+  struct ast_node *ast_node;
 
-#line 67 "./src/syntax/parser.h" /* yacc.c:1921  */
+#line 76 "./src/syntax/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

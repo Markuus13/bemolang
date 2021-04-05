@@ -3,21 +3,19 @@ extern int yylex(void);
 void yyerror(const char*);
 
 /* Nodes in the abstract syntax tree */
-struct ast {
+struct ast_node {
  int node_type;
- struct ast *left_node;
- struct ast *right_node;
+ struct ast_node *first_node;
+ struct ast_node *second_node;
 };
 
-struct num_val {
- int node_type;
- float number;
+/* AST functions */
+struct ast_node *create_ast_node(int node_type, struct ast_node *left_node, struct ast_node *right_node);
+
+
+/* AST type enums */
+enum AST_NODE_TYPES {
+  EXTERNAL_DECLARATION_LIST = 0,
+  EXTERNAL_DECLARATION = 1,
+  FUNCTION_DEFINITION = 2
 };
-
-/* build an AST */
-struct ast *create_ast(int nodetype, struct ast *l, struct ast *r);
-struct ast *create_num(float value);
-float evaluate_ast(struct ast *);
-
-/* delete and free an AST */
-void tree_free(struct ast *);
