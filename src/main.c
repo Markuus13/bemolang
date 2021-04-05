@@ -4,10 +4,12 @@
 #include <math.h>
 #include "lexical/scanner.h"
 #include "syntax/parser.h"
+#include "syntax/ast.h"
 
 extern int lexeme_counter;
 extern int line_counter;
 extern int DEBUG;
+extern struct ast_node *ast;
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -27,6 +29,8 @@ int main(int argc, char **argv) {
     printf("Total de tokens: %d\n", lexeme_counter);
     printf("Total de linhas: %d\n", line_counter);
   }
+
+  print_ast(ast);
 
   return 0;
 }

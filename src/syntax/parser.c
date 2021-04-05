@@ -461,16 +461,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    34,    35,    38,    39,    42,    45,    46,
-      47,    48,    51,    54,    55,    58,    59,    62,    65,    68,
-      69,    72,    73,    76,    77,    78,    81,    82,    83,    84,
-      85,    88,    89,    90,    93,    94,    95,    98,    99,   102,
-     103,   104,   107,   108,   111,   112,   113,   116,   117,   118,
-     119,   120,   123,   124,   127,   128,   129,   130,   131,   132,
-     133,   136,   139,   140,   143,   144,   147,   148,   151,   154,
-     157,   160,   163,   166,   167,   170,   171,   174,   177,   178,
-     179,   180,   181,   182,   185,   188,   191,   192,   195,   196,
-     199,   200,   201,   204,   207
+       0,    41,    41,    45,    48,    51,    52,    55,    60,    61,
+      62,    63,    66,    71,    72,    75,    78,    81,    86,    89,
+      90,    93,    94,    97,    98,    99,   102,   103,   104,   105,
+     106,   109,   110,   111,   114,   115,   116,   119,   120,   123,
+     124,   125,   128,   129,   132,   133,   134,   137,   138,   139,
+     140,   141,   144,   145,   148,   149,   150,   151,   152,   153,
+     154,   157,   160,   161,   164,   165,   168,   169,   172,   175,
+     178,   181,   184,   187,   188,   191,   192,   195,   198,   199,
+     200,   201,   202,   203,   209,   212,   215,   216,   219,   220,
+     223,   224,   225,   228,   231
 };
 #endif
 
@@ -3148,8 +3148,576 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 3153 "./src/syntax/parser.c" /* yacc.c:1652  */
+        case 2:
+#line 41 "src/syntax/parser.y" /* yacc.c:1652  */
+    { ast = (yyvsp[0].ast_node); }
+#line 3155 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 3:
+#line 45 "src/syntax/parser.y" /* yacc.c:1652  */
+    {
+                            (yyval.ast_node) = create_ast_node(EXTERNAL_DECLARATION_LIST, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL);
+                          }
+#line 3163 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 4:
+#line 48 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = (yyvsp[0].ast_node); }
+#line 3169 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 5:
+#line 51 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = (yyvsp[0].ast_node); }
+#line 3175 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 6:
+#line 52 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = (yyvsp[0].ast_node); }
+#line 3181 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 7:
+#line 55 "src/syntax/parser.y" /* yacc.c:1652  */
+    {
+                      (yyval.ast_node) = create_ast_node(FUNCTION_DEFINITION, NULL, (yyvsp[-2].ast_node), (yyvsp[-1].ast_node), NULL);
+                    }
+#line 3189 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 8:
+#line 60 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL); }
+#line 3195 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 9:
+#line 61 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL); }
+#line 3201 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 10:
+#line 62 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL); }
+#line 3207 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 11:
+#line 63 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL); }
+#line 3213 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 12:
+#line 66 "src/syntax/parser.y" /* yacc.c:1652  */
+    {
+              (yyval.ast_node) = create_ast_node(FUNCTION_DEFINITION, NULL, (yyvsp[-3].ast_node), (yyvsp[-1].ast_node), NULL);
+            }
+#line 3221 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 13:
+#line 71 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = (yyvsp[0].ast_node); }
+#line 3227 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 14:
+#line 72 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = NULL; }
+#line 3233 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 15:
+#line 75 "src/syntax/parser.y" /* yacc.c:1652  */
+    {
+                  (yyval.ast_node) = create_ast_node(PARAMETER_LIST, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL);
+                }
+#line 3241 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 16:
+#line 78 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = (yyvsp[0].ast_node); }
+#line 3247 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 17:
+#line 81 "src/syntax/parser.y" /* yacc.c:1652  */
+    {
+                        (yyval.ast_node) = create_ast_node(PARAMETER_DECLARATION, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL);
+                      }
+#line 3255 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 18:
+#line 86 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3261 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 19:
+#line 89 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3267 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 20:
+#line 90 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3273 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 21:
+#line 93 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3279 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 22:
+#line 94 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3285 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 23:
+#line 97 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3291 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 24:
+#line 98 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3297 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 25:
+#line 99 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3303 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 26:
+#line 102 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3309 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 27:
+#line 103 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3315 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 28:
+#line 104 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3321 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 29:
+#line 105 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3327 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 30:
+#line 106 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3333 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 31:
+#line 109 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3339 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 32:
+#line 110 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3345 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 33:
+#line 111 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3351 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 34:
+#line 114 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3357 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 35:
+#line 115 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3363 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 36:
+#line 116 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3369 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 37:
+#line 119 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3375 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 38:
+#line 120 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3381 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 39:
+#line 123 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3387 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 40:
+#line 124 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3393 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 41:
+#line 125 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3399 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 42:
+#line 128 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3405 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 43:
+#line 129 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3411 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 44:
+#line 132 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3417 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 45:
+#line 133 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3423 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 46:
+#line 134 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3429 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 47:
+#line 137 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3435 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 48:
+#line 138 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3441 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 49:
+#line 139 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3447 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 50:
+#line 140 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3453 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 51:
+#line 141 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3459 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 52:
+#line 144 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3465 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 53:
+#line 145 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3471 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 54:
+#line 148 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3477 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 55:
+#line 149 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3483 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 56:
+#line 150 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3489 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 57:
+#line 151 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3495 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 58:
+#line 152 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3501 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 59:
+#line 153 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3507 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 60:
+#line 154 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3513 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 61:
+#line 157 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3519 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 62:
+#line 160 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3525 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 63:
+#line 161 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3531 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 64:
+#line 164 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3537 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 65:
+#line 165 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3543 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 66:
+#line 168 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3549 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 67:
+#line 169 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3555 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 68:
+#line 172 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3561 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 69:
+#line 175 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3567 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 70:
+#line 178 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3573 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 71:
+#line 181 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3579 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 72:
+#line 184 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3585 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 73:
+#line 187 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3591 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 74:
+#line 188 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3597 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 75:
+#line 191 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3603 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 76:
+#line 192 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3609 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 77:
+#line 195 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3615 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 78:
+#line 198 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3621 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 79:
+#line 199 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3627 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 80:
+#line 200 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3633 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 81:
+#line 201 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3639 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 82:
+#line 202 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3645 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 83:
+#line 203 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3651 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 84:
+#line 209 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3657 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 85:
+#line 212 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3663 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 86:
+#line 215 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3669 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 87:
+#line 216 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3675 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 88:
+#line 219 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3681 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 89:
+#line 220 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3687 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 90:
+#line 223 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3693 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 91:
+#line 224 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3699 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 92:
+#line 225 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3705 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 93:
+#line 228 "src/syntax/parser.y" /* yacc.c:1652  */
+    {}
+#line 3711 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+  case 94:
+#line 231 "src/syntax/parser.y" /* yacc.c:1652  */
+    { (yyval.ast_node) = create_ast_node(IDENTIFIER, (yyvsp[0].token), NULL, NULL, NULL); }
+#line 3717 "./src/syntax/parser.c" /* yacc.c:1652  */
+    break;
+
+
+#line 3721 "./src/syntax/parser.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -3380,7 +3948,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 210 "src/syntax/parser.y" /* yacc.c:1918  */
+#line 234 "src/syntax/parser.y" /* yacc.c:1918  */
 
 
 void yyerror (char const *s) {
