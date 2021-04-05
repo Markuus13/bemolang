@@ -14,7 +14,7 @@ compile: bison flex
 	gcc $(FILES) $(FLAGS) -o bemolang.out
 
 run:
-	./bemolang.out "./examples/1_function.bml"
+	./bemolang.out "./examples/4_natural_numbers_as_sets.bml"
 
 valgrind:
 	valgrind -v --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="logfile.out" ./bemolang.out "./examples/foo.bml"

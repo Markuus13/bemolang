@@ -48,12 +48,15 @@ type_specifier: INT
               | SET
               ;
 
-declarator: identifier '(' parameter_list ')'
+declarator: identifier '(' parameters ')'
+          ;
+
+parameters: parameter_list
+          |
           ;
 
 parameter_list: parameter_declaration ',' parameter_list
               | parameter_declaration
-              |
               ;
 
 parameter_declaration: type_specifier identifier
@@ -121,18 +124,25 @@ optional_expression: expression
                   |
                   ;
 
-set_expression: inclusion_expression
-            | removal_expression
-            | expression
-
 expression: assignment_expression
           | type_check_expression
           | exists_expression
           | inclusion_expression
           | removal_expression
           | membership_expression
-          | expression ',' assignment_expression
+          | function_call_expression
           ;
+
+function_call_expression: identifier '(' args ')'
+                        ;
+
+args: argument_list
+    |
+    ;
+
+argument_list: expression ',' argument_list
+            | expression
+            ;
 
 assignment_expression: conditional_expression
                     | unary_expression '=' assignment_expression
@@ -191,7 +201,7 @@ io_statement: WRITE '(' expression ')' ';'
             | READ '(' identifier ')' ';'
             ;
 
-jump_statement: RETURN optional_expression ';'
+jump_statement: RETURN expression ';'
               ;
 
 identifier: IDENTIFIER
@@ -202,6 +212,3 @@ identifier: IDENTIFIER
 void yyerror (char const *s) {
   fprintf (stderr, "%s\n", s);
 }
-
-
-

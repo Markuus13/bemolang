@@ -5,6 +5,10 @@
 #include "lexical/scanner.h"
 #include "syntax/parser.h"
 
+extern int lexeme_counter;
+extern int line_counter;
+extern int DEBUG;
+
 int main(int argc, char **argv) {
   if (argc < 2) {
     exit(1);
@@ -19,10 +23,10 @@ int main(int argc, char **argv) {
   fclose(yyin);
   yylex_destroy();
 
-  // if (DEBUG) {
-  //   printf("Total de tokens: %d\n", lexeme_counter);
-  //   printf("Total de linhas: %d\n", line_counter);
-  // }
+  if (DEBUG) {
+    printf("Total de tokens: %d\n", lexeme_counter);
+    printf("Total de linhas: %d\n", line_counter);
+  }
 
   return 0;
 }
