@@ -67,11 +67,11 @@ extern int yydebug;
     IN = 273,
     EXISTS = 274,
     IDENTIFIER = 275,
-    INTEGER_CONSTANT = 276,
-    FLOAT_CONSTANT = 277,
-    CHARACTER_CONSTANT = 278,
-    STRING_CONSTANT = 279,
-    EMPTY_CONSTANT = 280,
+    INTEGER_CONST = 276,
+    FLOAT_CONST = 277,
+    CHARACTER_CONST = 278,
+    STRING = 279,
+    EMPTY_CONST = 280,
     IF_ONLY = 281,
     OR = 282,
     AND = 283,
@@ -90,8 +90,9 @@ union YYSTYPE
 #line 15 "src/syntax/parser.y" /* yacc.c:1921  */
 
   struct ast_node *ast_node;
+  char* token;
 
-#line 95 "./src/syntax/parser.h" /* yacc.c:1921  */
+#line 96 "./src/syntax/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

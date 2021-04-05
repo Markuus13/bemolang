@@ -12,9 +12,9 @@ int main(int argc, char **argv) {
 
   yyin = fopen(argv[1], "r");
 
-  do {
+  // do {
     yyparse();
-  } while (!feof(yyin));
+  // } while (!feof(yyin));
 
   fclose(yyin);
   yylex_destroy();

@@ -3,7 +3,7 @@
   #include <stdlib.h>
   #include "ast.h"
 
-  struct ast_node *ast = NULL
+  struct ast_node *ast = NULL;
 %}
 
 %output "./src/syntax/parser.c"
@@ -14,19 +14,19 @@
 
 %union {
   struct ast_node *ast_node;
+  char* token;
 }
 
 %token <token> INT FLOAT ELEM SET
 %token <token> IF ELSE FOR RETURN
 %token <token> FORALL ADD REMOVE READ WRITELN WRITE IS_SET IN EXISTS
-%token <token> IDENTIFIER INTEGER_CONSTANT FLOAT_CONSTANT CHARACTER_CONSTANT STRING_CONSTANT EMPTY_CONSTANT
+%token <token> IDENTIFIER INTEGER_CONST FLOAT_CONST CHARACTER_CONST STRING EMPTY_CONST
 %token <token> IF_ONLY
 %token <token> OR AND EQUAL_TO NOT_EQUAL_TO LT_OR_EQ_TO BG_OR_EQ_TO
 
 %nonassoc IF_ONLY ELSE
 
 // %type <ast_node> translation_unit external_declaration_list external_declaration function_definition type_specifier declarator compound_statement
-
 %%
 translation_unit: external_declaration_list
                 ;
@@ -110,22 +110,27 @@ primary_expression: identifier
                   | '(' expression ')'
                   ;
 
-constant: integer_constant
-        | character_constant
-        | float_constant
-        | empty_constant
-        | string_constant
+constant: INTEGER_CONST
+        | FLOAT_CONST
+        | CHARACTER_CONST
+        | EMPTY_CONST
+        | STRING
         ;
 
 optional_expression: expression
                   |
                   ;
 
+set_expression: inclusion_expression
+            | removal_expression
+            | expression
+
 expression: assignment_expression
           | type_check_expression
           | exists_expression
           | inclusion_expression
           | removal_expression
+          | membership_expression
           | expression ',' assignment_expression
           ;
 
@@ -145,22 +150,18 @@ inclusion_expression: ADD '(' expression ')'
 removal_expression: REMOVE '(' expression ')'
                 ;
 
-compound_statement: '{' declaration_list statement_list '}'
+compound_statement: '{' statement_list '}'
                   ;
-
-declaration_list: declaration_list declaration
-                | declaration
-                ;
 
 compound_or_inline_statement: compound_statement
                             | statement
                             ;
 
 statement_list: statement_list statement
-              | statement
+              |
               ;
 
-declaration: type_specifier identifier
+declaration: type_specifier identifier ';'
           ;
 
 statement: expression_statement
@@ -168,6 +169,7 @@ statement: expression_statement
         | iteration_statement
         | io_statement
         | jump_statement
+        | declaration
         ;
 
 expression_statement: optional_expression ';'
@@ -192,23 +194,8 @@ io_statement: WRITE '(' expression ')' ';'
 jump_statement: RETURN optional_expression ';'
               ;
 
-identifier: IDENTIFIER;
+identifier: IDENTIFIER
           ;
-
-integer_constant: INTEGER_CONSTANT
-                ;
-
-character_constant: CHARACTER_CONSTANT
-                  ;
-
-float_constant: FLOAT_CONSTANT
-              ;
-
-empty_constant: EMPTY_CONSTANT
-              ;
-
-string_constant: STRING_CONSTANT
-              ;
 
 %%
 

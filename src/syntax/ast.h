@@ -10,12 +10,12 @@ struct ast_node {
 };
 
 /* AST functions */
-struct ast_node *create_ast_node(int node_type, struct ast_node *left_node, struct ast_node *right_node);
+// struct ast_node *create_ast_node(int node_type, struct ast_node *left_node, struct ast_node *right_node);
 
 
 /* AST type enums */
-enum AST_NODE_TYPES {
-  EXTERNAL_DECLARATION_LIST = 0,
-  EXTERNAL_DECLARATION = 1,
-  FUNCTION_DEFINITION = 2
-};
+// enum AST_NODE_TYPES {
+//   EXTERNAL_DECLARATION_LIST = 0,
+//   EXTERNAL_DECLARATION = 1,
+//   FUNCTION_DEFINITION = 2
+// };
