@@ -1,0 +1,5 @@
+int main() {
+  int @variable;
+  set foo;
+  elem ^abc;
+}

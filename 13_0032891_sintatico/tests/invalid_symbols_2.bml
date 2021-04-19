@@ -1,5 +1,0 @@
-int main() {
-  int @_variable;
-  set foo;
-  elem ^abc#;
-}

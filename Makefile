@@ -17,7 +17,7 @@ run:
 	./bemolang.out "./examples/4_natural_numbers_as_sets.bml"
 
 valgrind:
-	valgrind -v --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="logfile.out" ./bemolang.out "./examples/foo.bml"
+	valgrind -v --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="logfile.out" ./bemolang.out "./examples/4_natural_numbers_as_sets.bml"
 
 clear:
 	rm *.yy.c *.out
