@@ -20,8 +20,8 @@ run:
 	./bemolang.out "./examples/4_natural_numbers_as_sets.bml"
 	# ./bemolang.out "./examples/5_syntax_error.bml"
 	# ./bemolang.out "./examples/6_invalid_symbols.bml"
-	# ./bemolang.out "./examples/7_if_else_corner_case.bml"
-	# ./bemolang.out "./examples/foo.bml"
+	./bemolang.out "./examples/7_if_else_corner_case.bml"
+	./bemolang.out "./examples/foo.bml"
 
 valgrind:
 	valgrind -v --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="logfile.out" ./bemolang.out "./examples/4_natural_numbers_as_sets.bml"

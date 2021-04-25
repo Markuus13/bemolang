@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.7.  */
+/* A Bison parser, made by GNU Bison 3.3.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -31,9 +31,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or yy_.  They are
-   private implementation details that can be changed or removed.  */
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
 # define YY_YY_SRC_SYNTAX_PARSER_H_INCLUDED
@@ -45,61 +44,57 @@
 extern int yydebug;
 #endif
 
-/* Token kinds.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    INT = 258,                     /* INT  */
-    FLOAT = 259,                   /* FLOAT  */
-    ELEM = 260,                    /* ELEM  */
-    SET = 261,                     /* SET  */
-    IF = 262,                      /* IF  */
-    ELSE = 263,                    /* ELSE  */
-    FOR = 264,                     /* FOR  */
-    RETURN = 265,                  /* RETURN  */
-    FORALL = 266,                  /* FORALL  */
-    ADD = 267,                     /* ADD  */
-    REMOVE = 268,                  /* REMOVE  */
-    READ = 269,                    /* READ  */
-    WRITELN = 270,                 /* WRITELN  */
-    WRITE = 271,                   /* WRITE  */
-    IS_SET = 272,                  /* IS_SET  */
-    IN = 273,                      /* IN  */
-    EXISTS = 274,                  /* EXISTS  */
-    IDENTIFIER = 275,              /* IDENTIFIER  */
-    INTEGER_CONST = 276,           /* INTEGER_CONST  */
-    FLOAT_CONST = 277,             /* FLOAT_CONST  */
-    CHARACTER_CONST = 278,         /* CHARACTER_CONST  */
-    STRING = 279,                  /* STRING  */
-    EMPTY_CONST = 280,             /* EMPTY_CONST  */
-    IF_ONLY = 281,                 /* IF_ONLY  */
-    OR = 282,                      /* OR  */
-    AND = 283,                     /* AND  */
-    EQUAL_TO = 284,                /* EQUAL_TO  */
-    NOT_EQUAL_TO = 285,            /* NOT_EQUAL_TO  */
-    LT_OR_EQ_TO = 286,             /* LT_OR_EQ_TO  */
-    BG_OR_EQ_TO = 287              /* BG_OR_EQ_TO  */
+    INT = 258,
+    FLOAT = 259,
+    ELEM = 260,
+    SET = 261,
+    IF = 262,
+    ELSE = 263,
+    FOR = 264,
+    RETURN = 265,
+    FORALL = 266,
+    ADD = 267,
+    REMOVE = 268,
+    READ = 269,
+    WRITELN = 270,
+    WRITE = 271,
+    IS_SET = 272,
+    IN = 273,
+    EXISTS = 274,
+    IDENTIFIER = 275,
+    INTEGER_CONST = 276,
+    FLOAT_CONST = 277,
+    CHARACTER_CONST = 278,
+    STRING = 279,
+    EMPTY_CONST = 280,
+    IF_ONLY = 281,
+    OR = 282,
+    AND = 283,
+    EQUAL_TO = 284,
+    NOT_EQUAL_TO = 285,
+    LT_OR_EQ_TO = 286,
+    BG_OR_EQ_TO = 287
   };
-  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+
 union YYSTYPE
 {
-#line 15 "src/syntax/parser.y"
+#line 15 "src/syntax/parser.y" /* yacc.c:1921  */
 
   struct ast_node *ast_node;
   char* token;
 
-#line 101 "./src/syntax/parser.h"
-
+#line 96 "./src/syntax/parser.h" /* yacc.c:1921  */
 };
+
 typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

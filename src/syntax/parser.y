@@ -74,12 +74,16 @@ equality_expression: relational_expression
                   | equality_expression NOT_EQUAL_TO relational_expression
                   ;
 
-relational_expression: additive_expression
+relational_expression: belongs_to_expression
                     | EMPTY_CONST
                     | relational_expression '<' additive_expression
                     | relational_expression '>' additive_expression
                     | relational_expression LT_OR_EQ_TO additive_expression
                     | relational_expression BG_OR_EQ_TO additive_expression
+                    ;
+
+belongs_to_expression: belongs_to_expression IN additive_expression
+                    |  additive_expression
                     ;
 
 additive_expression: multiplicative_expression
@@ -123,6 +127,7 @@ function_arg_constant_expression: EMPTY_CONST
 
 function_call_expression: identifier '(' argument_list ')'
                         | set_function_call_expression
+                        | '(' function_arg_constant_expression ')'
                         ;
 
 set_function_call_expression: IS_SET '(' identifier ')'
