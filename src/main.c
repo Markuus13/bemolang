@@ -11,8 +11,11 @@ extern struct ast_node *ast;
 
 void global_setup() {
   print_tokens_enabled = 0;
+
   line_counter = 1;
   column_counter = 1;
+
+  parser_column = 1;
 }
 
 int main(int argc, char **argv) {

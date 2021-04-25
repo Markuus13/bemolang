@@ -137,12 +137,16 @@ void count_line() {
   if (is_a_line_break(yytext) || is_a_comment(yytext)) {
     column_counter = 1;
     line_counter ++;
+
+    parser_column = column_counter;
   }
 }
 
 void count_column() {
   int number_of_symbols = strlen(yytext);
   column_counter += number_of_symbols;
+
+  parser_column = column_counter - strlen(yytext);
 }
 
 void count() {

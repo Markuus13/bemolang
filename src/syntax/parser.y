@@ -2,6 +2,7 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include "ast.h"
+  #include "../main.h"
 
   struct ast_node *ast = NULL;
 %}
@@ -159,6 +160,7 @@ statement: declaration
         | iteration_statement
         | io_statement
         | jump_statement
+        | error { yyerrok; }
         ;
 
 expression_statement: optional_expression ';'
@@ -188,6 +190,6 @@ identifier: IDENTIFIER
 
 %%
 
-void yyerror (char const *s) {
-  fprintf (stderr, "%s\n", s);
+void yyerror (char const *string) {
+  fprintf (stderr, "%d:%d %s\n", line_counter, parser_column, string);
 }
