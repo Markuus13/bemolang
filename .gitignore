@@ -2,3 +2,4 @@
 *.yy.c
 *.zip
 .vscode
+.output
