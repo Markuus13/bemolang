@@ -11,7 +11,7 @@
   #include <math.h>
   #include "../syntax/parser.h"
 
-  const int PRINT_TOKENS_ENABLED = 0;
+  const int PRINT_TOKENS_ENABLED = 1;
 
   enum TOKENS {
     SET_ADD_TKN,
@@ -57,7 +57,8 @@
     INTEGER_TKN,
     FLOAT_TKN,
     STRING_TKN,
-    CHARACTER_TKN
+    CHARACTER_TKN,
+    COMMENT_TKN
   };
 
 
@@ -124,6 +125,7 @@ LETTER     [a-zA-Z_]
 
 [ \t\v\f]                       { handle_token(WHITESPACE_TKN); }
 \n                              { handle_token(BREAK_LINE_TKN); }
+"//".*"\n"                      { handle_token(COMMENT_TKN); }
 
 .                               { handle_unrecognized_symbol(); }
 
@@ -289,6 +291,10 @@ void print_token(int token) {
       case CHARACTER_TKN:
         printf("<char, %s>", yytext);
         break;
+      case COMMENT_TKN:
+        printf("<comment>");
+        column_counter = 1;
+        line_counter ++;
       default:
         break;
     }
@@ -296,6 +302,7 @@ void print_token(int token) {
 }
 
 void handle_unrecognized_symbol() {
+  if (PRINT_TOKENS_ENABLED) printf("\n");
   printf("%d:%d Unrecognized symbol \"%s\".\n", line_counter, column_counter, yytext);
   count();
 }

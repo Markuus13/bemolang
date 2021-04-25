@@ -38,8 +38,8 @@
 
 %%
 translation_unit: external_declaration_list { ast = $1; }
-                // | error {  yyerrork; }
-                ;
+               | error {  yyerrok; }
+               ;
 
 external_declaration_list: external_declaration_list external_declaration {
                             $$ = create_ast_node(EXTERNAL_DECLARATION_LIST, NULL, $1, $2, NULL);

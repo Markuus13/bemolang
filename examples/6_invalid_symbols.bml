@@ -3,12 +3,12 @@ int main() {
   x = 2;
   int y;
   y = 10;
-
+  // this is a comment
   int result;
   result = x % y;
 
   int foo;
-  foo = x ^ y;
+  foo = x ^ y; // this is a second comment
 
   int bar;
   bar = x | y;
