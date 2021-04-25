@@ -523,7 +523,7 @@ char *yytext;
   #include <math.h>
   #include "../syntax/parser.h"
 
-  const int PRINT_TOKENS_ENABLED = 1;
+  const int PRINT_TOKENS_ENABLED = 0;
 
   enum TOKENS {
     SET_ADD_TKN,
@@ -575,7 +575,7 @@ char *yytext;
 
   int lexeme_counter = 0;
   int line_counter = 1;
-  int column_counter = 0;
+  int column_counter = 1;
 
   void handle_token(int token);
   void handle_unrecognized_symbol();
@@ -1077,13 +1077,13 @@ YY_RULE_SETUP
 case 44:
 YY_RULE_SETUP
 #line 125 "src/lexical/scanner.l"
-{ handle_token(WHITESPACE_TKN); /* ignore */ }
+{ handle_token(WHITESPACE_TKN); }
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
 #line 126 "src/lexical/scanner.l"
-{ handle_token(BREAK_LINE_TKN); /* ignore */ }
+{ handle_token(BREAK_LINE_TKN); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
@@ -2077,7 +2077,7 @@ int is_a_line_break(char* string) {
 
 void count_line() {
   if (is_a_line_break(yytext)) {
-    column_counter = 0;
+    column_counter = 1;
     line_counter ++;
   }
 }
@@ -2233,6 +2233,7 @@ void print_token(int token) {
 }
 
 void handle_unrecognized_symbol() {
-  printf("Unrecognized symbol \"%s\" at %d:%d.\n", yytext, line_counter, column_counter);
+  printf("%d:%d Unrecognized symbol \"%s\".\n", line_counter, column_counter, yytext);
+  count();
 }
 

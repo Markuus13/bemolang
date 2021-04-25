@@ -87,7 +87,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 15 "src/syntax/parser.y" /* yacc.c:1921  */
+#line 14 "src/syntax/parser.y" /* yacc.c:1921  */
 
   struct ast_node *ast_node;
   char* token;

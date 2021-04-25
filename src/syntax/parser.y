@@ -8,7 +8,6 @@
 
 %output "./src/syntax/parser.c"
 %defines "./src/syntax/parser.h"
-
 %define lr.type canonical-lr
 %define parse.error verbose
 
@@ -227,9 +226,9 @@ statement: expression_statement {}
         | io_statement {}
         | jump_statement {}
         | declaration {}
-        // | error {
-        //   yyerrork;
-        // }
+        | error {
+          yyerrok;
+        }
         ;
 
 expression_statement: optional_expression ';' {}
