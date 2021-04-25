@@ -10,8 +10,7 @@
   #include <string.h>
   #include <math.h>
   #include "../syntax/parser.h"
-
-  const int PRINT_TOKENS_ENABLED = 1;
+  #include "../main.h"
 
   enum TOKENS {
     SET_ADD_TKN,
@@ -60,16 +59,6 @@
     CHARACTER_TKN,
     COMMENT_TKN
   };
-
-
-  int lexeme_counter = 0;
-  int line_counter = 1;
-  int column_counter = 1;
-
-  void handle_token(int token);
-  void handle_unrecognized_symbol();
-  void count();
-  void print_token(int token);
 %}
 
 DIGIT      [0-9]
@@ -133,15 +122,19 @@ LETTER     [a-zA-Z_]
 
 void handle_token(int token) {
   count();
-  print_token(token);
+  if (print_tokens_enabled) print_token(token);
 }
 
 int is_a_line_break(char* string) {
   return !strcmp(string, "\n");
 }
 
+int is_a_comment(char* string) {
+  return string[0] == '/' && string[1] == '/';
+}
+
 void count_line() {
-  if (is_a_line_break(yytext)) {
+  if (is_a_line_break(yytext) || is_a_comment(yytext)) {
     column_counter = 1;
     line_counter ++;
   }
@@ -153,156 +146,151 @@ void count_column() {
 }
 
 void count() {
-  lexeme_counter ++;
-
   count_column();
   count_line();
 }
 
 void print_token(int token) {
-  if (PRINT_TOKENS_ENABLED) {
-    switch(token) {
-      case SET_ADD_TKN:
-        printf("<add>");
-        break;
-      case ELEM_TKN:
-        printf("<elem>");
-        break;
-      case ELSE_TKN:
-        printf("<else>");
-        break;
-      case EXISTS_TKN:
-        printf("<exists>");
-        break;
-      case FOR_TKN:
-        printf("<for>");
-        break;
-      case FORALL_TKN:
-        printf("<forall>");
-        break;
-      case IF_TKN:
-        printf("<if>");
-        break;
-      case IN_TKN:
-        printf("<in>");
-        break;
-      case IS_SET_TKN:
-        printf("is_set");
-        break;
-      case READ_TKN:
-        printf("<read>");
-        break;
-      case REMOVE_TKN:
-        printf("<remove>");
-        break;
-      case RETURN_TKN:
-        printf("<return>");
-        break;
-      case SET_TKN:
-        printf("<set>");
-        break;
-      case WRITE_TKN:
-        printf("<write>");
-        break;
-      case WRITELN_TKN:
-        printf("<writeln>");
-        break;
-      case AND_OP_TKN:
-        printf("<and_op, '%s'>", yytext);
-        break;
-      case OR_OP_TKN:
-        printf("<or_op, '%s'>", yytext);
-        break;
-      case LT_OR_EQ_OP_TKN:
-        printf("<lt_or_eq_op, '%s'>", yytext);
-        break;
-      case BG_OR_EQ_OP_TKN:
-        printf("<bg_or_eq_op, '%s'>", yytext);
-        break;
-      case EQUAL_OP_TKN:
-        printf("<eq_op, '%s'>", yytext);
-        break;
-      case NOT_EQUAL_OP_TKN:
-        printf("<not_eq_op, '%s'>", yytext);
-        break;
-      case SEMICOLON_TKN:
-        printf("<semicolon, '%s'>", yytext);
-        break;
-      case LEFT_BRACKET_TKN:
-        printf("<left_brack, '%s'>", yytext);
-        break;
-      case RIGHT_BRACKET_TKN:
-        printf("<right_brack, '%s'>", yytext);
-        break;
-      case ASSIGNMENT_OP_TKN:
-        printf("<assign_op, '%s'>", yytext);
-        break;
-      case LEFT_PARENTESIS_TKN:
-        printf("<left_parent, '%s'>", yytext);
-        break;
-      case RIGHT_PARENTESIS_TKN:
-        printf("<right_parent, '%s'>", yytext);
-        break;
-      case ADD_OP_TKN:
-        printf("<add_op, '%s'>", yytext);
-        break;
-      case SUBTRACTION_OP_TKN:
-        printf("<sub_op, '%s'>", yytext);
-        break;
-      case MULTIPLICATION_OP_TKN:
-        printf("<mult_op, '%s'>", yytext);
-        break;
-      case DIVISION_OP_TKN:
-        printf("<div_op, '%s'>", yytext);
-        break;
-      case NOT_OP_TKN:
-        printf("<not_op, '%s'>", yytext);
-        break;
-      case LT_OP_TKN:
-        printf("<lt_op, '%s'>", yytext);
-        break;
-      case BG_OP_TKN:
-        printf("<bg_op, '%s'>", yytext);
-        break;
-      case COMMA_TKN:
-        printf("<comma, '%s>'", yytext);
-        break;
-      case WHITESPACE_TKN:
-        printf("%s", yytext);
-        break;
-      case BREAK_LINE_TKN:
-        printf("%s", yytext);
-        break;
-      case EMPTY_CONST_TKN:
-        printf("<EMPTY>");
-        break;
-      case IDENTIFIER_TKN:
-        printf("<id, '%s'>", yytext);
-        break;
-      case INTEGER_TKN:
-        printf("<int, %s>", yytext);
-        break;
-      case FLOAT_TKN:
-        printf("<float, %s>", yytext);
-        break;
-      case STRING_TKN:
-        printf("<string, %s>", yytext);
-        break;
-      case CHARACTER_TKN:
-        printf("<char, %s>", yytext);
-        break;
-      case COMMENT_TKN:
-        printf("<comment>");
-        column_counter = 1;
-        line_counter ++;
-      default:
-        break;
-    }
+  switch(token) {
+    case SET_ADD_TKN:
+      printf("<add>");
+      break;
+    case ELEM_TKN:
+      printf("<elem>");
+      break;
+    case ELSE_TKN:
+      printf("<else>");
+      break;
+    case EXISTS_TKN:
+      printf("<exists>");
+      break;
+    case FOR_TKN:
+      printf("<for>");
+      break;
+    case FORALL_TKN:
+      printf("<forall>");
+      break;
+    case IF_TKN:
+      printf("<if>");
+      break;
+    case IN_TKN:
+      printf("<in>");
+      break;
+    case IS_SET_TKN:
+      printf("is_set");
+      break;
+    case READ_TKN:
+      printf("<read>");
+      break;
+    case REMOVE_TKN:
+      printf("<remove>");
+      break;
+    case RETURN_TKN:
+      printf("<return>");
+      break;
+    case SET_TKN:
+      printf("<set>");
+      break;
+    case WRITE_TKN:
+      printf("<write>");
+      break;
+    case WRITELN_TKN:
+      printf("<writeln>");
+      break;
+    case AND_OP_TKN:
+      printf("<and_op, '%s'>", yytext);
+      break;
+    case OR_OP_TKN:
+      printf("<or_op, '%s'>", yytext);
+      break;
+    case LT_OR_EQ_OP_TKN:
+      printf("<lt_or_eq_op, '%s'>", yytext);
+      break;
+    case BG_OR_EQ_OP_TKN:
+      printf("<bg_or_eq_op, '%s'>", yytext);
+      break;
+    case EQUAL_OP_TKN:
+      printf("<eq_op, '%s'>", yytext);
+      break;
+    case NOT_EQUAL_OP_TKN:
+      printf("<not_eq_op, '%s'>", yytext);
+      break;
+    case SEMICOLON_TKN:
+      printf("<semicolon, '%s'>", yytext);
+      break;
+    case LEFT_BRACKET_TKN:
+      printf("<left_brack, '%s'>", yytext);
+      break;
+    case RIGHT_BRACKET_TKN:
+      printf("<right_brack, '%s'>", yytext);
+      break;
+    case ASSIGNMENT_OP_TKN:
+      printf("<assign_op, '%s'>", yytext);
+      break;
+    case LEFT_PARENTESIS_TKN:
+      printf("<left_parent, '%s'>", yytext);
+      break;
+    case RIGHT_PARENTESIS_TKN:
+      printf("<right_parent, '%s'>", yytext);
+      break;
+    case ADD_OP_TKN:
+      printf("<add_op, '%s'>", yytext);
+      break;
+    case SUBTRACTION_OP_TKN:
+      printf("<sub_op, '%s'>", yytext);
+      break;
+    case MULTIPLICATION_OP_TKN:
+      printf("<mult_op, '%s'>", yytext);
+      break;
+    case DIVISION_OP_TKN:
+      printf("<div_op, '%s'>", yytext);
+      break;
+    case NOT_OP_TKN:
+      printf("<not_op, '%s'>", yytext);
+      break;
+    case LT_OP_TKN:
+      printf("<lt_op, '%s'>", yytext);
+      break;
+    case BG_OP_TKN:
+      printf("<bg_op, '%s'>", yytext);
+      break;
+    case COMMA_TKN:
+      printf("<comma, '%s>'", yytext);
+      break;
+    case WHITESPACE_TKN:
+      printf("%s", yytext);
+      break;
+    case BREAK_LINE_TKN:
+      printf("%s", yytext);
+      break;
+    case EMPTY_CONST_TKN:
+      printf("<EMPTY>");
+      break;
+    case IDENTIFIER_TKN:
+      printf("<id, '%s'>", yytext);
+      break;
+    case INTEGER_TKN:
+      printf("<int, %s>", yytext);
+      break;
+    case FLOAT_TKN:
+      printf("<float, %s>", yytext);
+      break;
+    case STRING_TKN:
+      printf("<string, %s>", yytext);
+      break;
+    case CHARACTER_TKN:
+      printf("<char, %s>", yytext);
+      break;
+    case COMMENT_TKN:
+      printf("<comment>");
+      break;
+    default:
+      break;
   }
 }
 
 void handle_unrecognized_symbol() {
-  if (PRINT_TOKENS_ENABLED) printf("\n");
+  if (print_tokens_enabled) printf("\n");
   printf("%d:%d Unrecognized symbol \"%s\".\n", line_counter, column_counter, yytext);
   count();
 }

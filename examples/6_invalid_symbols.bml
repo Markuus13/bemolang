@@ -4,11 +4,12 @@ int main() {
   int y;
   y = 10;
   // this is a comment
+  // this is a second comment
   int result;
   result = x % y;
 
   int foo;
-  foo = x ^ y; // this is a second comment
+  foo = x ^ y; // this is a third comment
 
   int bar;
   bar = x | y;
