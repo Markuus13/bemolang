@@ -125,9 +125,9 @@ function_call_expression: identifier '(' argument_list ')'
                         ;
 
 set_function_call_expression: IS_SET '(' identifier ')'
-                            | ADD '(' membership_expression ')'
-                            | REMOVE '(' membership_expression ')'
-                            | EXISTS '(' membership_expression ')'
+                            | ADD '(' set_membership_expression ')'
+                            | REMOVE '(' set_membership_expression ')'
+                            | EXISTS '(' set_membership_expression ')'
                             ;
 
 argument_list: argument_list ',' expression
@@ -143,10 +143,6 @@ compound_statement: '{' statement_list '}'
                   | '{' '}'
                   ;
 
-compound_or_inline_statement: compound_statement
-                            | statement
-                            ;
-
 statement_list: statement_list statement
               | statement
               ;
@@ -155,6 +151,7 @@ declaration: type_specifier identifier ';'
           ;
 
 statement: declaration
+        | compound_statement
         | expression_statement
         | selection_statement
         | iteration_statement
@@ -166,15 +163,15 @@ statement: declaration
 expression_statement: optional_expression ';'
                     ;
 
-membership_expression: expression IN expression
+set_membership_expression: expression IN expression
                     ;
 
-selection_statement: IF '(' logical_or_expression ')' compound_or_inline_statement %prec IF_ONLY
-                  | IF '(' logical_or_expression ')' compound_or_inline_statement ELSE compound_or_inline_statement
+selection_statement: IF '(' logical_or_expression ')' statement %prec IF_ONLY
+                  | IF '(' logical_or_expression ')' statement ELSE statement
                   ;
 
-iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' compound_or_inline_statement
-                  | FORALL '(' membership_expression ')' compound_or_inline_statement
+iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement
+                  | FORALL '(' set_membership_expression ')' statement
                   ;
 
 io_statement: WRITE '(' expression ')' ';'
