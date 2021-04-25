@@ -24,7 +24,8 @@
 %token <token> IF_ONLY
 %token <token> OR AND EQUAL_TO NOT_EQUAL_TO LT_OR_EQ_TO BG_OR_EQ_TO
 
-%nonassoc IF_ONLY ELSE
+%nonassoc IF_ONLY
+%nonassoc ELSE
 
 %%
 translation_unit: external_declaration_list

@@ -8511,7 +8511,7 @@ Estado 460
    82 selection_statement: IF '(' logical_or_expression ')' statement .
    83                    | IF '(' logical_or_expression ')' statement . ELSE statement
 
-    ELSE  erro (não associativo)
+    ELSE  deslocar, e ir ao estado 466
 
     error            reduzir usando a regra 82 (selection_statement)
     INT              reduzir usando a regra 82 (selection_statement)
@@ -8548,7 +8548,7 @@ Estado 461
 
    84 iteration_statement: FOR '(' optional_expression ';' optional_expression . ';' optional_expression ')' statement
 
-    ';'  deslocar, e ir ao estado 466
+    ';'  deslocar, e ir ao estado 467
 
 
 Estado 462
@@ -8697,6 +8697,63 @@ Estado 465
 
 Estado 466
 
+   83 selection_statement: IF '(' logical_or_expression ')' statement ELSE . statement
+
+    error            deslocar, e ir ao estado 256
+    INT              deslocar, e ir ao estado 1
+    FLOAT            deslocar, e ir ao estado 2
+    ELEM             deslocar, e ir ao estado 3
+    SET              deslocar, e ir ao estado 4
+    IF               deslocar, e ir ao estado 257
+    FOR              deslocar, e ir ao estado 258
+    RETURN           deslocar, e ir ao estado 259
+    FORALL           deslocar, e ir ao estado 260
+    ADD              deslocar, e ir ao estado 25
+    REMOVE           deslocar, e ir ao estado 26
+    READ             deslocar, e ir ao estado 261
+    WRITELN          deslocar, e ir ao estado 262
+    WRITE            deslocar, e ir ao estado 263
+    IS_SET           deslocar, e ir ao estado 30
+    EXISTS           deslocar, e ir ao estado 31
+    IDENTIFIER       deslocar, e ir ao estado 170
+    INTEGER_CONST    deslocar, e ir ao estado 32
+    FLOAT_CONST      deslocar, e ir ao estado 33
+    CHARACTER_CONST  deslocar, e ir ao estado 34
+    STRING           deslocar, e ir ao estado 35
+    EMPTY_CONST      deslocar, e ir ao estado 36
+    '('              deslocar, e ir ao estado 37
+    '+'              deslocar, e ir ao estado 38
+    '-'              deslocar, e ir ao estado 39
+    '!'              deslocar, e ir ao estado 40
+    '{'              deslocar, e ir ao estado 264
+
+    ';'  reduzir usando a regra 49 (optional_expression)
+
+    type_specifier                    ir ao estado 265
+    additive_expression               ir ao estado 43
+    multiplicative_expression         ir ao estado 44
+    unary_expression                  ir ao estado 45
+    unary_operator                    ir ao estado 46
+    term                              ir ao estado 47
+    optional_expression               ir ao estado 266
+    expression                        ir ao estado 49
+    function_arg_constant_expression  ir ao estado 50
+    function_call_expression          ir ao estado 51
+    set_function_call_expression      ir ao estado 52
+    compound_statement                ir ao estado 267
+    declaration                       ir ao estado 268
+    statement                         ir ao estado 468
+    assignment_statement              ir ao estado 269
+    expression_statement              ir ao estado 270
+    selection_statement               ir ao estado 271
+    iteration_statement               ir ao estado 272
+    io_statement                      ir ao estado 273
+    jump_statement                    ir ao estado 274
+    identifier                        ir ao estado 275
+
+
+Estado 467
+
    84 iteration_statement: FOR '(' optional_expression ';' optional_expression ';' . optional_expression ')' statement
 
     ADD              deslocar, e ir ao estado 173
@@ -8721,7 +8778,7 @@ Estado 466
     unary_expression                  ir ao estado 185
     unary_operator                    ir ao estado 186
     term                              ir ao estado 187
-    optional_expression               ir ao estado 467
+    optional_expression               ir ao estado 469
     expression                        ir ao estado 293
     function_arg_constant_expression  ir ao estado 230
     function_call_expression          ir ao estado 188
@@ -8729,14 +8786,50 @@ Estado 466
     identifier                        ir ao estado 190
 
 
-Estado 467
+Estado 468
+
+   83 selection_statement: IF '(' logical_or_expression ')' statement ELSE statement .
+
+    error            reduzir usando a regra 83 (selection_statement)
+    INT              reduzir usando a regra 83 (selection_statement)
+    FLOAT            reduzir usando a regra 83 (selection_statement)
+    ELEM             reduzir usando a regra 83 (selection_statement)
+    SET              reduzir usando a regra 83 (selection_statement)
+    IF               reduzir usando a regra 83 (selection_statement)
+    ELSE             reduzir usando a regra 83 (selection_statement)
+    FOR              reduzir usando a regra 83 (selection_statement)
+    RETURN           reduzir usando a regra 83 (selection_statement)
+    FORALL           reduzir usando a regra 83 (selection_statement)
+    ADD              reduzir usando a regra 83 (selection_statement)
+    REMOVE           reduzir usando a regra 83 (selection_statement)
+    READ             reduzir usando a regra 83 (selection_statement)
+    WRITELN          reduzir usando a regra 83 (selection_statement)
+    WRITE            reduzir usando a regra 83 (selection_statement)
+    IS_SET           reduzir usando a regra 83 (selection_statement)
+    EXISTS           reduzir usando a regra 83 (selection_statement)
+    IDENTIFIER       reduzir usando a regra 83 (selection_statement)
+    INTEGER_CONST    reduzir usando a regra 83 (selection_statement)
+    FLOAT_CONST      reduzir usando a regra 83 (selection_statement)
+    CHARACTER_CONST  reduzir usando a regra 83 (selection_statement)
+    STRING           reduzir usando a regra 83 (selection_statement)
+    EMPTY_CONST      reduzir usando a regra 83 (selection_statement)
+    '('              reduzir usando a regra 83 (selection_statement)
+    '+'              reduzir usando a regra 83 (selection_statement)
+    '-'              reduzir usando a regra 83 (selection_statement)
+    '!'              reduzir usando a regra 83 (selection_statement)
+    '{'              reduzir usando a regra 83 (selection_statement)
+    '}'              reduzir usando a regra 83 (selection_statement)
+    ';'              reduzir usando a regra 83 (selection_statement)
+
+
+Estado 469
 
    84 iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression . ')' statement
 
-    ')'  deslocar, e ir ao estado 468
+    ')'  deslocar, e ir ao estado 470
 
 
-Estado 468
+Estado 470
 
    84 iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' . statement
 
@@ -8783,7 +8876,7 @@ Estado 468
     set_function_call_expression      ir ao estado 52
     compound_statement                ir ao estado 267
     declaration                       ir ao estado 268
-    statement                         ir ao estado 469
+    statement                         ir ao estado 471
     assignment_statement              ir ao estado 269
     expression_statement              ir ao estado 270
     selection_statement               ir ao estado 271
@@ -8793,7 +8886,7 @@ Estado 468
     identifier                        ir ao estado 275
 
 
-Estado 469
+Estado 471
 
    84 iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement .
 
