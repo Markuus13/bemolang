@@ -75,6 +75,7 @@ equality_expression: relational_expression
                   ;
 
 relational_expression: additive_expression
+                    | EMPTY_CONST
                     | relational_expression '<' additive_expression
                     | relational_expression '>' additive_expression
                     | relational_expression LT_OR_EQ_TO additive_expression
@@ -111,7 +112,7 @@ optional_expression: expression
                   |
                   ;
 
-expression: assignment_expression
+expression: additive_expression
           | function_arg_constant_expression
           ;
 
@@ -135,10 +136,6 @@ argument_list: argument_list ',' expression
             |
             ;
 
-assignment_expression: logical_or_expression
-                    | identifier '=' assignment_expression
-                    ;
-
 compound_statement: '{' statement_list '}'
                   | '{' '}'
                   ;
@@ -157,8 +154,12 @@ statement: declaration
         | iteration_statement
         | io_statement
         | jump_statement
+        | assignment_statement
         | error { yyerrok; }
         ;
+
+assignment_statement: identifier '=' expression ';'
+                  ;
 
 expression_statement: optional_expression ';'
                     ;
