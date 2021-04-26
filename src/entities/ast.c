@@ -44,6 +44,7 @@ void print_ast(struct ast_node *ast_node) {
   print_ast(ast_node->first_node);
   print_ast(ast_node->second_node);
   print_ast(ast_node->third_node);
+  print_ast(ast_node->fourth_node);
 
   ast_printer_aux -= 3;
 }

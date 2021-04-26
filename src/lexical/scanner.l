@@ -158,6 +158,8 @@ void handle_token(int token) {
       break;
     case ELEM_TKN:
       if (print_tokens_enabled) printf("<elem>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
     case ELSE_TKN:
       if (print_tokens_enabled) printf("<else>");
@@ -191,6 +193,9 @@ void handle_token(int token) {
       break;
     case SET_TKN:
       if (print_tokens_enabled) printf("<set>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case WRITE_TKN:
       if (print_tokens_enabled) printf("<write>");
