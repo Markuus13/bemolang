@@ -2099,41 +2099,75 @@ void handle_token(int token) {
   switch(token) {
     case SET_ADD_TKN:
       if (print_tokens_enabled) printf("<add>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case ELEM_TKN:
       if (print_tokens_enabled) printf("<elem>");
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case ELSE_TKN:
       if (print_tokens_enabled) printf("<else>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case EXISTS_TKN:
       if (print_tokens_enabled) printf("<exists>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case FOR_TKN:
       if (print_tokens_enabled) printf("<for>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case FORALL_TKN:
       if (print_tokens_enabled) printf("<forall>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case IF_TKN:
       if (print_tokens_enabled) printf("<if>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case IN_TKN:
       if (print_tokens_enabled) printf("<in>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case IS_SET_TKN:
       if (print_tokens_enabled) printf("is_set");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case READ_TKN:
       if (print_tokens_enabled) printf("<read>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case REMOVE_TKN:
       if (print_tokens_enabled) printf("<remove>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case RETURN_TKN:
       if (print_tokens_enabled) printf("<return>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case SET_TKN:
       if (print_tokens_enabled) printf("<set>");
@@ -2143,103 +2177,183 @@ void handle_token(int token) {
       break;
     case WRITE_TKN:
       if (print_tokens_enabled) printf("<write>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case WRITELN_TKN:
       if (print_tokens_enabled) printf("<writeln>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case AND_OP_TKN:
       if (print_tokens_enabled) printf("<and_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case OR_OP_TKN:
       if (print_tokens_enabled) printf("<or_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case LT_OR_EQ_OP_TKN:
       if (print_tokens_enabled) printf("<lt_or_eq_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case BG_OR_EQ_OP_TKN:
       if (print_tokens_enabled) printf("<bg_or_eq_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case EQUAL_OP_TKN:
       if (print_tokens_enabled) printf("<eq_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case NOT_EQUAL_OP_TKN:
       if (print_tokens_enabled) printf("<not_eq_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case SEMICOLON_TKN:
       if (print_tokens_enabled) printf("<semicolon, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case LEFT_BRACKET_TKN:
       if (print_tokens_enabled) printf("<left_brack, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case RIGHT_BRACKET_TKN:
       if (print_tokens_enabled) printf("<right_brack, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case ASSIGNMENT_OP_TKN:
       if (print_tokens_enabled) printf("<assign_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case LEFT_PARENTESIS_TKN:
       if (print_tokens_enabled) printf("<left_parent, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case RIGHT_PARENTESIS_TKN:
       if (print_tokens_enabled) printf("<right_parent, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case ADD_OP_TKN:
       if (print_tokens_enabled) printf("<add_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case SUBTRACTION_OP_TKN:
       if (print_tokens_enabled) printf("<sub_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case MULTIPLICATION_OP_TKN:
       if (print_tokens_enabled) printf("<mult_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case DIVISION_OP_TKN:
       if (print_tokens_enabled) printf("<div_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case NOT_OP_TKN:
       if (print_tokens_enabled) printf("<not_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case LT_OP_TKN:
       if (print_tokens_enabled) printf("<lt_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case BG_OP_TKN:
       if (print_tokens_enabled) printf("<bg_op, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case COMMA_TKN:
       if (print_tokens_enabled) printf("<comma, '%s>'", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case WHITESPACE_TKN:
       if (print_tokens_enabled) printf("%s", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case BREAK_LINE_TKN:
       if (print_tokens_enabled) printf("%s", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case EMPTY_CONST_TKN:
       if (print_tokens_enabled) printf("<EMPTY>");
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case IDENTIFIER_TKN:;
       if (print_tokens_enabled) printf("<id, '%s'>", yytext);
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case INTEGER_TKN:;
       if (print_tokens_enabled) printf("<int, %s>", yytext);
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case FLOAT_TKN:;
       if (print_tokens_enabled) printf("<float, %s>", yytext);
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case STRING_TKN:;
       if (print_tokens_enabled) printf("<string, %s>", yytext);
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case CHARACTER_TKN:;
       if (print_tokens_enabled) printf("<char, %s>", yytext);
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
       break;
     case COMMENT_TKN:
       if (print_tokens_enabled) printf("<comment>");
