@@ -85,11 +85,11 @@ LETTER     [a-zA-Z_]
 "writeln"                       { handle_token(WRITELN_TKN); return WRITELN; }
 
 "EMPTY"                         { handle_token(EMPTY_CONST_TKN); return EMPTY_CONST; }
-{LETTER}({LETTER}|{DIGIT})*     { handle_token(IDENTIFIER_TKN); yylval.token = (char *) strdup(yytext); return IDENTIFIER; }
-[+-]?{DIGIT}+                   { handle_token(INTEGER_TKN); yylval.token = (char *) strdup(yytext); return INTEGER_CONST; }
-[+-]?{DIGIT}+"."{DIGIT}+        { handle_token(FLOAT_TKN); yylval.token = (char *) strdup(yytext); return FLOAT_CONST; }
-\"(\\.|[^\\"])*\"               { handle_token(STRING_TKN); yylval.token = (char *) strdup(yytext); return STRING; }
-\'(\\.|[^\\'])\'                { handle_token(CHARACTER_TKN); yylval.token = (char *) strdup(yytext); return CHARACTER_CONST; }
+{LETTER}({LETTER}|{DIGIT})*     { handle_token(IDENTIFIER_TKN); return IDENTIFIER; }
+[+-]?{DIGIT}+                   { handle_token(INTEGER_TKN); return INTEGER_CONST; }
+[+-]?{DIGIT}+"."{DIGIT}+        { handle_token(FLOAT_TKN); return FLOAT_CONST; }
+\"(\\.|[^\\"])*\"               { handle_token(STRING_TKN); return STRING; }
+\'(\\.|[^\\'])\'                { handle_token(CHARACTER_TKN); return CHARACTER_CONST; }
 
 "&&"                            { handle_token(AND_OP_TKN); return AND; }
 "||"                            { handle_token(OR_OP_TKN); return OR; }
@@ -120,11 +120,6 @@ LETTER     [a-zA-Z_]
 
 %%
 
-void handle_token(int token) {
-  count();
-  if (print_tokens_enabled) print_token(token);
-}
-
 int is_a_line_break(char* string) {
   return !strcmp(string, "\n");
 }
@@ -154,139 +149,151 @@ void count() {
   count_line();
 }
 
-void print_token(int token) {
+void handle_token(int token) {
+  int token_length;
+  count();
   switch(token) {
     case SET_ADD_TKN:
-      printf("<add>");
+      if (print_tokens_enabled) printf("<add>");
       break;
     case ELEM_TKN:
-      printf("<elem>");
+      if (print_tokens_enabled) printf("<elem>");
       break;
     case ELSE_TKN:
-      printf("<else>");
+      if (print_tokens_enabled) printf("<else>");
       break;
     case EXISTS_TKN:
-      printf("<exists>");
+      if (print_tokens_enabled) printf("<exists>");
       break;
     case FOR_TKN:
-      printf("<for>");
+      if (print_tokens_enabled) printf("<for>");
       break;
     case FORALL_TKN:
-      printf("<forall>");
+      if (print_tokens_enabled) printf("<forall>");
       break;
     case IF_TKN:
-      printf("<if>");
+      if (print_tokens_enabled) printf("<if>");
       break;
     case IN_TKN:
-      printf("<in>");
+      if (print_tokens_enabled) printf("<in>");
       break;
     case IS_SET_TKN:
-      printf("is_set");
+      if (print_tokens_enabled) printf("is_set");
       break;
     case READ_TKN:
-      printf("<read>");
+      if (print_tokens_enabled) printf("<read>");
       break;
     case REMOVE_TKN:
-      printf("<remove>");
+      if (print_tokens_enabled) printf("<remove>");
       break;
     case RETURN_TKN:
-      printf("<return>");
+      if (print_tokens_enabled) printf("<return>");
       break;
     case SET_TKN:
-      printf("<set>");
+      if (print_tokens_enabled) printf("<set>");
       break;
     case WRITE_TKN:
-      printf("<write>");
+      if (print_tokens_enabled) printf("<write>");
       break;
     case WRITELN_TKN:
-      printf("<writeln>");
+      if (print_tokens_enabled) printf("<writeln>");
       break;
     case AND_OP_TKN:
-      printf("<and_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<and_op, '%s'>", yytext);
       break;
     case OR_OP_TKN:
-      printf("<or_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<or_op, '%s'>", yytext);
       break;
     case LT_OR_EQ_OP_TKN:
-      printf("<lt_or_eq_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<lt_or_eq_op, '%s'>", yytext);
       break;
     case BG_OR_EQ_OP_TKN:
-      printf("<bg_or_eq_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<bg_or_eq_op, '%s'>", yytext);
       break;
     case EQUAL_OP_TKN:
-      printf("<eq_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<eq_op, '%s'>", yytext);
       break;
     case NOT_EQUAL_OP_TKN:
-      printf("<not_eq_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<not_eq_op, '%s'>", yytext);
       break;
     case SEMICOLON_TKN:
-      printf("<semicolon, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<semicolon, '%s'>", yytext);
       break;
     case LEFT_BRACKET_TKN:
-      printf("<left_brack, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<left_brack, '%s'>", yytext);
       break;
     case RIGHT_BRACKET_TKN:
-      printf("<right_brack, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<right_brack, '%s'>", yytext);
       break;
     case ASSIGNMENT_OP_TKN:
-      printf("<assign_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<assign_op, '%s'>", yytext);
       break;
     case LEFT_PARENTESIS_TKN:
-      printf("<left_parent, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<left_parent, '%s'>", yytext);
       break;
     case RIGHT_PARENTESIS_TKN:
-      printf("<right_parent, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<right_parent, '%s'>", yytext);
       break;
     case ADD_OP_TKN:
-      printf("<add_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<add_op, '%s'>", yytext);
       break;
     case SUBTRACTION_OP_TKN:
-      printf("<sub_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<sub_op, '%s'>", yytext);
       break;
     case MULTIPLICATION_OP_TKN:
-      printf("<mult_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<mult_op, '%s'>", yytext);
       break;
     case DIVISION_OP_TKN:
-      printf("<div_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<div_op, '%s'>", yytext);
       break;
     case NOT_OP_TKN:
-      printf("<not_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<not_op, '%s'>", yytext);
       break;
     case LT_OP_TKN:
-      printf("<lt_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<lt_op, '%s'>", yytext);
       break;
     case BG_OP_TKN:
-      printf("<bg_op, '%s'>", yytext);
+      if (print_tokens_enabled) printf("<bg_op, '%s'>", yytext);
       break;
     case COMMA_TKN:
-      printf("<comma, '%s>'", yytext);
+      if (print_tokens_enabled) printf("<comma, '%s>'", yytext);
       break;
     case WHITESPACE_TKN:
-      printf("%s", yytext);
+      if (print_tokens_enabled) printf("%s", yytext);
       break;
     case BREAK_LINE_TKN:
-      printf("%s", yytext);
+      if (print_tokens_enabled) printf("%s", yytext);
       break;
     case EMPTY_CONST_TKN:
-      printf("<EMPTY>");
+      if (print_tokens_enabled) printf("<EMPTY>");
       break;
-    case IDENTIFIER_TKN:
-      printf("<id, '%s'>", yytext);
+    case IDENTIFIER_TKN:;
+      if (print_tokens_enabled) printf("<id, '%s'>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
-    case INTEGER_TKN:
-      printf("<int, %s>", yytext);
+    case INTEGER_TKN:;
+      if (print_tokens_enabled) printf("<int, %s>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
-    case FLOAT_TKN:
-      printf("<float, %s>", yytext);
+    case FLOAT_TKN:;
+      if (print_tokens_enabled) printf("<float, %s>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
-    case STRING_TKN:
-      printf("<string, %s>", yytext);
+    case STRING_TKN:;
+      if (print_tokens_enabled) printf("<string, %s>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
-    case CHARACTER_TKN:
-      printf("<char, %s>", yytext);
+    case CHARACTER_TKN:;
+      if (print_tokens_enabled) printf("<char, %s>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
       break;
     case COMMENT_TKN:
-      printf("<comment>");
+      if (print_tokens_enabled) printf("<comment>");
       break;
     default:
       break;

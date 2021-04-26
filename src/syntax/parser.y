@@ -1,7 +1,7 @@
 %{
   #include <stdio.h>
   #include <stdlib.h>
-  #include "ast.h"
+  #include "../entities/ast.h"
   #include "../main.h"
 
   struct ast_node *ast = NULL;
@@ -27,169 +27,283 @@
 %nonassoc IF_ONLY
 %nonassoc ELSE
 
+%type <ast_node> translation_unit external_declaration external_declaration_list type_specifier
+%type <ast_node> declarator parameters parameter_list parameter_declaration function_definition
+%type <ast_node> logical_or_expression logical_and_expression equality_expression
+%type <ast_node> relational_expression belongs_to_expression additive_expression
+%type <ast_node> multiplicative_expression unary_expression unary_operator term optional_expression
+%type <ast_node> expression function_arg_constant_expression function_call_expression
+%type <ast_node> set_function_call_expression argument_list compound_statement statement_list
+%type <ast_node> declaration statement assignment_statement expression_statement
+%type <ast_node> set_membership_expression selection_statement iteration_statement io_statement
+%type <ast_node> jump_statement identifier
+
 %%
-translation_unit: external_declaration_list
+translation_unit: external_declaration_list {
+                    $$ = create_ast_node(TRANSLATION_UNIT, NULL, $1, NULL, NULL, NULL);
+                    ast = $$;
+                  }
                ;
 
-external_declaration_list: external_declaration_list external_declaration
-                        | external_declaration
+external_declaration_list: external_declaration_list external_declaration {
+                            $$ = create_ast_node(EXTERNAL_DECLARATION_LIST, NULL, $1, $2, NULL, NULL);
+                          }
+                        | external_declaration { $$ = $1; }
                         ;
 
-external_declaration: function_definition
-                    | declaration
+external_declaration: function_definition { $$ = $1; }
+                    | declaration { $$ = $1; }
                     ;
 
-function_definition: type_specifier declarator compound_statement
+function_definition: type_specifier declarator compound_statement {
+                      $$ = create_ast_node(FUNCTION_DEFINITION, NULL, $1, $2, $3, NULL);
+                    }
                   ;
 
-type_specifier: INT
-              | FLOAT
-              | ELEM
-              | SET
+type_specifier: INT { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
+              | FLOAT { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
+              | ELEM { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
+              | SET { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
               ;
 
-declarator: identifier '(' parameters ')'
+declarator: identifier '(' parameters ')' {
+              $$ = create_ast_node(DECLARATOR, NULL, $1, $3, NULL, NULL);
+            }
           ;
 
-parameters: parameter_list
-          |
+parameters: parameter_list { $$ = $1; }
+          | { $$ = NULL; }
           ;
 
-parameter_list: parameter_declaration ',' parameter_list
-              | parameter_declaration
+parameter_list: parameter_declaration ',' parameter_list {
+                  $$ = create_ast_node(PARAMETER_LIST, NULL, $1, $3, NULL, NULL);
+                }
+              | parameter_declaration { $$ = $1; }
               ;
 
-parameter_declaration: type_specifier identifier
+parameter_declaration: type_specifier identifier {
+                        $$ = create_ast_node(PARAMETER_DECLARATION, NULL, $1, $2, NULL, NULL);
+                      }
                     ;
 
-logical_or_expression: logical_and_expression
-                    | logical_or_expression OR logical_and_expression
+logical_or_expression: logical_and_expression { $$ = $1; }
+                    | logical_or_expression OR logical_and_expression {
+                        $$ = create_ast_node(LOGICAL_OR_EXPRESSION, $2, $1, $3, NULL, NULL);
+                      }
                     ;
 
-logical_and_expression: equality_expression
-                      | logical_and_expression AND equality_expression
+logical_and_expression: equality_expression { $$ = $1; }
+                      | logical_and_expression AND equality_expression {
+                          $$ = create_ast_node(LOGICAL_AND_EXPRESSION, $2, $1, $3, NULL, NULL);
+                        }
                       ;
 
-equality_expression: relational_expression
-                  | equality_expression EQUAL_TO relational_expression
-                  | equality_expression NOT_EQUAL_TO relational_expression
+equality_expression: relational_expression { $$ = $1; }
+                  | equality_expression EQUAL_TO relational_expression {
+                      $$ = create_ast_node(EQUALITY_EXPRESSION, $2, $1, $3, NULL, NULL);
+                    }
+                  | equality_expression NOT_EQUAL_TO relational_expression {
+                      $$ = create_ast_node(EQUALITY_EXPRESSION, $2, $1, $3, NULL, NULL);
+                    }
                   ;
 
-relational_expression: belongs_to_expression
-                    | EMPTY_CONST
-                    | relational_expression '<' additive_expression
-                    | relational_expression '>' additive_expression
-                    | relational_expression LT_OR_EQ_TO additive_expression
-                    | relational_expression BG_OR_EQ_TO additive_expression
+relational_expression: belongs_to_expression { $$ = $1; }
+                    | EMPTY_CONST {
+                        $$ = create_ast_node(RELATIONAL_EXPRESSION, $1, NULL, NULL, NULL, NULL);
+                      }
+                    | relational_expression '<' additive_expression {
+                        $$ = create_ast_node(RELATIONAL_EXPRESSION, "<", $1, $3, NULL, NULL);
+                      }
+                    | relational_expression '>' additive_expression {
+                        $$ = create_ast_node(RELATIONAL_EXPRESSION, ">", $1, $3, NULL, NULL);
+                      }
+                    | relational_expression LT_OR_EQ_TO additive_expression {
+                        $$ = create_ast_node(RELATIONAL_EXPRESSION, (char *) $2, $1, $3, NULL, NULL);
+                      }
+                    | relational_expression BG_OR_EQ_TO additive_expression {
+                        $$ = create_ast_node(RELATIONAL_EXPRESSION, (char *) $2, $1, $3, NULL, NULL);
+                      }
                     ;
 
-belongs_to_expression: belongs_to_expression IN additive_expression
-                    |  additive_expression
+belongs_to_expression: belongs_to_expression IN additive_expression {
+                        $$ = create_ast_node(BELONGS_TO_EXPRESSION, $2, $1, $3, NULL, NULL);
+                      }
+                    |  additive_expression { $$ = $1; }
                     ;
 
-additive_expression: multiplicative_expression
-                  | additive_expression '+' multiplicative_expression
-                  | additive_expression '-' multiplicative_expression
+additive_expression: multiplicative_expression { $$ = $1; }
+                  | additive_expression '+' multiplicative_expression {
+                      $$ = create_ast_node(ADDITIVE_EXPRESSION, "+", $1, $3, NULL, NULL);
+                    }
+                  | additive_expression '-' multiplicative_expression {
+                      $$ = create_ast_node(ADDITIVE_EXPRESSION, "-", $1, $3, NULL, NULL);
+                    }
                   ;
 
-multiplicative_expression: unary_expression
-                        | multiplicative_expression '*' unary_expression
-                        | multiplicative_expression '/' unary_expression
+multiplicative_expression: unary_expression { $$ = $1; }
+                        | multiplicative_expression '*' unary_expression {
+                            $$ = create_ast_node(MULTIPLICATIVE_EXPRESSION, "*", $1, $3, NULL, NULL);
+                          }
+                        | multiplicative_expression '/' unary_expression {
+                            $$ = create_ast_node(MULTIPLICATIVE_EXPRESSION, "/", $1, $3, NULL, NULL);
+                          }
                         ;
 
-unary_expression: term
-                | unary_operator unary_expression
+unary_expression: term { $$ = $1; }
+                | unary_operator unary_expression {
+                    $$ = create_ast_node(UNARY_EXPRESSION, NULL, $1, $2, NULL, NULL);
+                  }
                 ;
 
-unary_operator: '+'
-              | '-'
-              | '!'
+unary_operator: '+' { $$ = create_ast_node(UNARY_OPERATOR, "+", NULL, NULL, NULL, NULL); }
+              | '-' { $$ = create_ast_node(UNARY_OPERATOR, "-", NULL, NULL, NULL, NULL); }
+              | '!' { $$ = create_ast_node(UNARY_OPERATOR, "!", NULL, NULL, NULL, NULL); }
               ;
 
-term: identifier
-    | INTEGER_CONST
-    | FLOAT_CONST
-    | '(' additive_expression ')'
-    | function_call_expression
+term: identifier { $$ = $1; }
+    | INTEGER_CONST { $$ = create_ast_node(TERM, $1, NULL, NULL, NULL, NULL); }
+    | FLOAT_CONST { $$ = create_ast_node(TERM, $1, NULL, NULL, NULL, NULL); }
+    | '(' additive_expression ')' {
+        $$ = create_ast_node(TERM, NULL, $2, NULL, NULL, NULL);
+      }
+    | function_call_expression { $$ = $1; }
     ;
 
-optional_expression: expression
-                  |
+optional_expression: expression { $$ = $1; }
+                  | { $$ = NULL; }
                   ;
 
-expression: additive_expression
-          | function_arg_constant_expression
+expression: additive_expression { $$ = $1; }
+          | function_arg_constant_expression { $$ = $1; }
           ;
 
-function_arg_constant_expression: EMPTY_CONST
-                                | STRING
-                                | CHARACTER_CONST
+function_arg_constant_expression: EMPTY_CONST {
+                                    $$ = create_ast_node(
+                                      FUNCTION_ARG_CONSTANT_EXPRESSION, $1, NULL, NULL, NULL, NULL
+                                    );
+                                  }
+                                | STRING {
+                                    $$ = create_ast_node(
+                                      FUNCTION_ARG_CONSTANT_EXPRESSION, $1, NULL, NULL, NULL, NULL
+                                    );
+                                  }
+                                | CHARACTER_CONST {
+                                    $$ = create_ast_node(
+                                      FUNCTION_ARG_CONSTANT_EXPRESSION, $1, NULL, NULL, NULL, NULL
+                                    );
+                                  }
                                 ;
 
-function_call_expression: identifier '(' argument_list ')'
-                        | set_function_call_expression
-                        | '(' function_arg_constant_expression ')'
+function_call_expression: identifier '(' argument_list ')' {
+                            $$ = create_ast_node(
+                              FUNCTION_CALL_EXPRESSION, NULL, $1, $3, NULL, NULL
+                            );
+                          }
+                        | set_function_call_expression { $$ = $1; }
+                        | '(' function_arg_constant_expression ')' { $$ = $2; }
                         ;
 
-set_function_call_expression: IS_SET '(' identifier ')'
-                            | ADD '(' set_membership_expression ')'
-                            | REMOVE '(' set_membership_expression ')'
-                            | EXISTS '(' set_membership_expression ')'
+set_function_call_expression: IS_SET '(' identifier ')' {
+                                $$ = create_ast_node(
+                                  SET_FUNCTION_CALL_EXPRESSION, $1, $3, NULL, NULL, NULL
+                                );
+                              }
+                            | ADD '(' set_membership_expression ')' {
+                                $$ = create_ast_node(
+                                  SET_FUNCTION_CALL_EXPRESSION, $1, $3, NULL, NULL, NULL
+                                );
+                              }
+                            | REMOVE '(' set_membership_expression ')' {
+                                $$ = create_ast_node(
+                                  SET_FUNCTION_CALL_EXPRESSION, $1, $3, NULL, NULL, NULL
+                                );
+                              }
+                            | EXISTS '(' set_membership_expression ')' {
+                                $$ = create_ast_node(
+                                  SET_FUNCTION_CALL_EXPRESSION, $1, $3, NULL, NULL, NULL
+                                );
+                              }
                             ;
 
-argument_list: argument_list ',' expression
-            | expression
-            |
+argument_list: argument_list ',' expression {
+                $$ = create_ast_node(ARGUMENT_LIST, NULL, $1, $3, NULL, NULL);
+              }
+            | expression { $$ = $1; }
+            | { $$ = NULL; }
             ;
 
-compound_statement: '{' statement_list '}'
-                  | '{' '}'
+compound_statement: '{' statement_list '}' { $$ = $2; }
+                  | '{' '}' { create_ast_node(COMPOUND_STATEMENT, NULL, NULL, NULL, NULL, NULL); }
                   ;
 
-statement_list: statement_list statement
-              | statement
+statement_list: statement_list statement {
+                  $$ = create_ast_node(STATEMENT_LIST, NULL, $1, $2, NULL, NULL);
+                }
+              | statement { $$ = $1; }
               ;
 
-declaration: type_specifier identifier ';'
+declaration: type_specifier identifier ';' {
+              $$ = create_ast_node(DECLARATION, NULL, $1, $2, NULL, NULL);
+            }
           ;
 
-statement: declaration
-        | compound_statement
-        | expression_statement
-        | selection_statement
-        | iteration_statement
-        | io_statement
-        | jump_statement
-        | assignment_statement
+statement: declaration { $$ = $1; }
+        | compound_statement { $$ = $1; }
+        | expression_statement { $$ = $1; }
+        | selection_statement { $$ = $1; }
+        | iteration_statement { $$ = $1; }
+        | io_statement { $$ = $1; }
+        | jump_statement { $$ = $1; }
+        | assignment_statement { $$ = $1; }
         | error { yyerrok; }
         ;
 
-assignment_statement: identifier '=' expression ';'
+assignment_statement: identifier '=' expression ';' {
+                      $$ = create_ast_node(ASSIGNMENT_STATEMENT, NULL, $1, $3, NULL, NULL);
+                    }
                   ;
 
-expression_statement: optional_expression ';'
+expression_statement: optional_expression ';' { $$ = $1; }
                     ;
 
-set_membership_expression: expression IN expression
+set_membership_expression: expression IN expression {
+                        $$ = create_ast_node(SET_MEMBERSHIP_EXPRESSION, NULL, $1, $3, NULL, NULL);
+                      }
                     ;
 
-selection_statement: IF '(' logical_or_expression ')' statement %prec IF_ONLY
-                  | IF '(' logical_or_expression ')' statement ELSE statement
+selection_statement: IF '(' logical_or_expression ')' statement %prec IF_ONLY {
+                      $$ = create_ast_node(SELECTION_STATEMENT, NULL, $3, $5, NULL, NULL);
+                    }
+                  | IF '(' logical_or_expression ')' statement ELSE statement {
+                      $$ = create_ast_node(SELECTION_STATEMENT, NULL, $3, $5, $7, NULL);
+                    }
                   ;
 
-iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement
-                  | FORALL '(' set_membership_expression ')' statement
+iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement {
+                      $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, $7, $9);
+                    }
+                  | FORALL '(' set_membership_expression ')' statement {
+                      $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, NULL, NULL);
+                    }
                   ;
 
-io_statement: WRITE '(' expression ')' ';'
-            | WRITELN '(' expression ')' ';'
-            | READ '(' identifier ')' ';'
+io_statement: WRITE '(' expression ')' ';' {
+                $$ = create_ast_node(IO_STATEMENT, $1, $3, NULL, NULL, NULL);
+              }
+            | WRITELN '(' expression ')' ';' {
+                $$ = create_ast_node(IO_STATEMENT, $1, $3, NULL, NULL, NULL);
+              }
+            | READ '(' identifier ')' ';' {
+                $$ = create_ast_node(IO_STATEMENT, $1, $3, NULL, NULL, NULL);
+              }
             ;
 
-jump_statement: RETURN expression ';'
+jump_statement: RETURN expression ';' {
+                  $$ = create_ast_node(JUMP_STATEMENT, $1, $2, NULL, NULL, NULL);
+                }
               ;
 
-identifier: IDENTIFIER
+identifier: IDENTIFIER { $$ = create_ast_node(tIDENTIFIER, $1, NULL, NULL, NULL, NULL); }
           ;
 
 %%

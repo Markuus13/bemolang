@@ -10,7 +10,8 @@ struct ast_node *create_ast_node(
   char *value,
   struct ast_node *first_node,
   struct ast_node *second_node,
-  struct ast_node *third_node
+  struct ast_node *third_node,
+  struct ast_node *fourth_node
   ) {
   struct ast_node *ast_node = malloc(sizeof(struct ast_node));
 
@@ -24,6 +25,7 @@ struct ast_node *create_ast_node(
   ast_node->first_node = first_node;
   ast_node->second_node = second_node;
   ast_node->third_node = third_node;
+  ast_node->fourth_node = fourth_node;
 
   return ast_node;
 }

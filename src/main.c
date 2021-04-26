@@ -4,7 +4,7 @@
 #include <math.h>
 #include "lexical/scanner.h"
 #include "syntax/parser.h"
-#include "syntax/ast.h"
+#include "entities/ast.h"
 #include "main.h"
 
 extern struct ast_node *ast;
@@ -26,9 +26,9 @@ int main(int argc, char **argv) {
 
   yyin = fopen(argv[1], "r");
 
-  do {
+  // do {
     yyparse();
-  } while (!feof(yyin));
+  // } while (!feof(yyin));
 
   fclose(yyin);
   yylex_destroy();
