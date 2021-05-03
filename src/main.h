@@ -1,4 +1,6 @@
 int print_tokens_enabled;
+int print_ast_enabled;
+int print_st_enabled;
 
 int line_counter;
 int column_counter;

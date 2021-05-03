@@ -72,11 +72,14 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include "../entities/ast.h"
+  #include "../entities/symbol_table.h"
   #include "../main.h"
 
   struct ast_node *ast = NULL;
+  struct symbol_table *symbol_table = NULL;
+  int scope = 0;
 
-#line 80 "./src/syntax/parser.c"
+#line 83 "./src/syntax/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -559,16 +562,16 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    42,    42,    48,    51,    54,    55,    58,    63,    64,
-      65,    66,    69,    74,    75,    78,    81,    84,    89,    90,
-      95,    96,   101,   102,   105,   110,   111,   114,   117,   120,
-     123,   128,   131,   134,   135,   138,   143,   144,   147,   152,
-     153,   158,   159,   160,   163,   164,   165,   166,   169,   172,
-     173,   176,   177,   180,   185,   190,   197,   202,   203,   206,
-     211,   216,   221,   228,   231,   232,   235,   236,   239,   242,
-     245,   250,   251,   252,   253,   254,   255,   256,   257,   258,
-     261,   266,   269,   274,   277,   282,   285,   290,   293,   296,
-     301,   306
+       0,    45,    45,    51,    54,    57,    58,    61,    66,    67,
+      68,    69,    72,    77,    78,    81,    84,    87,    92,    93,
+      98,    99,   104,   105,   108,   113,   114,   117,   120,   123,
+     126,   131,   134,   137,   138,   141,   146,   147,   150,   155,
+     156,   161,   162,   163,   166,   167,   168,   169,   172,   175,
+     176,   179,   180,   183,   188,   193,   200,   205,   206,   209,
+     214,   219,   224,   231,   234,   235,   238,   239,   242,   245,
+     248,   253,   254,   255,   256,   257,   258,   259,   260,   261,
+     264,   269,   272,   277,   280,   285,   288,   293,   296,   299,
+     304,   309
 };
 #endif
 
@@ -2641,650 +2644,650 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* translation_unit: external_declaration_list  */
-#line 42 "src/syntax/parser.y"
+#line 45 "src/syntax/parser.y"
                                             {
                     (yyval.ast_node) = create_ast_node(TRANSLATION_UNIT, NULL, (yyvsp[0].ast_node), NULL, NULL, NULL);
                     ast = (yyval.ast_node);
                   }
-#line 2650 "./src/syntax/parser.c"
+#line 2653 "./src/syntax/parser.c"
     break;
 
   case 3: /* external_declaration_list: external_declaration_list external_declaration  */
-#line 48 "src/syntax/parser.y"
+#line 51 "src/syntax/parser.y"
                                                                           {
                             (yyval.ast_node) = create_ast_node(EXTERNAL_DECLARATION_LIST, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                           }
-#line 2658 "./src/syntax/parser.c"
+#line 2661 "./src/syntax/parser.c"
     break;
 
   case 4: /* external_declaration_list: external_declaration  */
-#line 51 "src/syntax/parser.y"
+#line 54 "src/syntax/parser.y"
                                                { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2664 "./src/syntax/parser.c"
+#line 2667 "./src/syntax/parser.c"
     break;
 
   case 5: /* external_declaration: function_definition  */
-#line 54 "src/syntax/parser.y"
+#line 57 "src/syntax/parser.y"
                                           { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2670 "./src/syntax/parser.c"
+#line 2673 "./src/syntax/parser.c"
     break;
 
   case 6: /* external_declaration: declaration  */
-#line 55 "src/syntax/parser.y"
+#line 58 "src/syntax/parser.y"
                                   { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2676 "./src/syntax/parser.c"
+#line 2679 "./src/syntax/parser.c"
     break;
 
   case 7: /* function_definition: type_specifier declarator compound_statement  */
-#line 58 "src/syntax/parser.y"
+#line 61 "src/syntax/parser.y"
                                                                   {
                       (yyval.ast_node) = create_ast_node(FUNCTION_DEFINITION, NULL, (yyvsp[-2].ast_node), (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL);
                     }
-#line 2684 "./src/syntax/parser.c"
+#line 2687 "./src/syntax/parser.c"
     break;
 
   case 8: /* type_specifier: INT  */
-#line 63 "src/syntax/parser.y"
+#line 66 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2690 "./src/syntax/parser.c"
+#line 2693 "./src/syntax/parser.c"
     break;
 
   case 9: /* type_specifier: FLOAT  */
-#line 64 "src/syntax/parser.y"
+#line 67 "src/syntax/parser.y"
                       { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2696 "./src/syntax/parser.c"
+#line 2699 "./src/syntax/parser.c"
     break;
 
   case 10: /* type_specifier: ELEM  */
-#line 65 "src/syntax/parser.y"
+#line 68 "src/syntax/parser.y"
                      { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2702 "./src/syntax/parser.c"
+#line 2705 "./src/syntax/parser.c"
     break;
 
   case 11: /* type_specifier: SET  */
-#line 66 "src/syntax/parser.y"
+#line 69 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(TYPE_SPECIFIER, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2708 "./src/syntax/parser.c"
+#line 2711 "./src/syntax/parser.c"
     break;
 
   case 12: /* declarator: identifier '(' parameters ')'  */
-#line 69 "src/syntax/parser.y"
+#line 72 "src/syntax/parser.y"
                                           {
               (yyval.ast_node) = create_ast_node(DECLARATOR, NULL, (yyvsp[-3].ast_node), (yyvsp[-1].ast_node), NULL, NULL);
             }
-#line 2716 "./src/syntax/parser.c"
+#line 2719 "./src/syntax/parser.c"
     break;
 
   case 13: /* parameters: parameter_list  */
-#line 74 "src/syntax/parser.y"
+#line 77 "src/syntax/parser.y"
                            { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2722 "./src/syntax/parser.c"
+#line 2725 "./src/syntax/parser.c"
     break;
 
   case 14: /* parameters: %empty  */
-#line 75 "src/syntax/parser.y"
+#line 78 "src/syntax/parser.y"
             { (yyval.ast_node) = NULL; }
-#line 2728 "./src/syntax/parser.c"
+#line 2731 "./src/syntax/parser.c"
     break;
 
   case 15: /* parameter_list: parameter_declaration ',' parameter_list  */
-#line 78 "src/syntax/parser.y"
+#line 81 "src/syntax/parser.y"
                                                          {
                   (yyval.ast_node) = create_ast_node(PARAMETER_LIST, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                 }
-#line 2736 "./src/syntax/parser.c"
+#line 2739 "./src/syntax/parser.c"
     break;
 
   case 16: /* parameter_list: parameter_declaration  */
-#line 81 "src/syntax/parser.y"
+#line 84 "src/syntax/parser.y"
                                       { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2742 "./src/syntax/parser.c"
+#line 2745 "./src/syntax/parser.c"
     break;
 
   case 17: /* parameter_declaration: type_specifier identifier  */
-#line 84 "src/syntax/parser.y"
+#line 87 "src/syntax/parser.y"
                                                  {
                         (yyval.ast_node) = create_ast_node(PARAMETER_DECLARATION, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2750 "./src/syntax/parser.c"
+#line 2753 "./src/syntax/parser.c"
     break;
 
   case 18: /* logical_or_expression: logical_and_expression  */
-#line 89 "src/syntax/parser.y"
+#line 92 "src/syntax/parser.y"
                                               { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2756 "./src/syntax/parser.c"
+#line 2759 "./src/syntax/parser.c"
     break;
 
   case 19: /* logical_or_expression: logical_or_expression OR logical_and_expression  */
-#line 90 "src/syntax/parser.y"
+#line 93 "src/syntax/parser.y"
                                                                       {
                         (yyval.ast_node) = create_ast_node(LOGICAL_OR_EXPRESSION, (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2764 "./src/syntax/parser.c"
+#line 2767 "./src/syntax/parser.c"
     break;
 
   case 20: /* logical_and_expression: equality_expression  */
-#line 95 "src/syntax/parser.y"
+#line 98 "src/syntax/parser.y"
                                             { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2770 "./src/syntax/parser.c"
+#line 2773 "./src/syntax/parser.c"
     break;
 
   case 21: /* logical_and_expression: logical_and_expression AND equality_expression  */
-#line 96 "src/syntax/parser.y"
+#line 99 "src/syntax/parser.y"
                                                                        {
                           (yyval.ast_node) = create_ast_node(LOGICAL_AND_EXPRESSION, (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                         }
-#line 2778 "./src/syntax/parser.c"
+#line 2781 "./src/syntax/parser.c"
     break;
 
   case 22: /* equality_expression: relational_expression  */
-#line 101 "src/syntax/parser.y"
+#line 104 "src/syntax/parser.y"
                                            { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2784 "./src/syntax/parser.c"
+#line 2787 "./src/syntax/parser.c"
     break;
 
   case 23: /* equality_expression: equality_expression EQUAL_TO relational_expression  */
-#line 102 "src/syntax/parser.y"
+#line 105 "src/syntax/parser.y"
                                                                        {
                       (yyval.ast_node) = create_ast_node(EQUALITY_EXPRESSION, (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 2792 "./src/syntax/parser.c"
+#line 2795 "./src/syntax/parser.c"
     break;
 
   case 24: /* equality_expression: equality_expression NOT_EQUAL_TO relational_expression  */
-#line 105 "src/syntax/parser.y"
+#line 108 "src/syntax/parser.y"
                                                                            {
                       (yyval.ast_node) = create_ast_node(EQUALITY_EXPRESSION, (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 2800 "./src/syntax/parser.c"
+#line 2803 "./src/syntax/parser.c"
     break;
 
   case 25: /* relational_expression: belongs_to_expression  */
-#line 110 "src/syntax/parser.y"
+#line 113 "src/syntax/parser.y"
                                              { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2806 "./src/syntax/parser.c"
+#line 2809 "./src/syntax/parser.c"
     break;
 
   case 26: /* relational_expression: EMPTY_CONST  */
-#line 111 "src/syntax/parser.y"
+#line 114 "src/syntax/parser.y"
                                   {
                         (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, (yyvsp[0].token), NULL, NULL, NULL, NULL);
                       }
-#line 2814 "./src/syntax/parser.c"
+#line 2817 "./src/syntax/parser.c"
     break;
 
   case 27: /* relational_expression: relational_expression '<' additive_expression  */
-#line 114 "src/syntax/parser.y"
+#line 117 "src/syntax/parser.y"
                                                                     {
                         (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, "<", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2822 "./src/syntax/parser.c"
+#line 2825 "./src/syntax/parser.c"
     break;
 
   case 28: /* relational_expression: relational_expression '>' additive_expression  */
-#line 117 "src/syntax/parser.y"
+#line 120 "src/syntax/parser.y"
                                                                     {
                         (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, ">", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2830 "./src/syntax/parser.c"
+#line 2833 "./src/syntax/parser.c"
     break;
 
   case 29: /* relational_expression: relational_expression LT_OR_EQ_TO additive_expression  */
-#line 120 "src/syntax/parser.y"
-                                                                            {
-                        (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, (char *) (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
-                      }
-#line 2838 "./src/syntax/parser.c"
-    break;
-
-  case 30: /* relational_expression: relational_expression BG_OR_EQ_TO additive_expression  */
 #line 123 "src/syntax/parser.y"
                                                                             {
                         (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, (char *) (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2846 "./src/syntax/parser.c"
+#line 2841 "./src/syntax/parser.c"
+    break;
+
+  case 30: /* relational_expression: relational_expression BG_OR_EQ_TO additive_expression  */
+#line 126 "src/syntax/parser.y"
+                                                                            {
+                        (yyval.ast_node) = create_ast_node(RELATIONAL_EXPRESSION, (char *) (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
+                      }
+#line 2849 "./src/syntax/parser.c"
     break;
 
   case 31: /* belongs_to_expression: belongs_to_expression IN additive_expression  */
-#line 128 "src/syntax/parser.y"
+#line 131 "src/syntax/parser.y"
                                                                     {
                         (yyval.ast_node) = create_ast_node(BELONGS_TO_EXPRESSION, (yyvsp[-1].token), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 2854 "./src/syntax/parser.c"
+#line 2857 "./src/syntax/parser.c"
     break;
 
   case 32: /* belongs_to_expression: additive_expression  */
-#line 131 "src/syntax/parser.y"
+#line 134 "src/syntax/parser.y"
                                            { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2860 "./src/syntax/parser.c"
+#line 2863 "./src/syntax/parser.c"
     break;
 
   case 33: /* additive_expression: multiplicative_expression  */
-#line 134 "src/syntax/parser.y"
+#line 137 "src/syntax/parser.y"
                                                { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2866 "./src/syntax/parser.c"
+#line 2869 "./src/syntax/parser.c"
     break;
 
   case 34: /* additive_expression: additive_expression '+' multiplicative_expression  */
-#line 135 "src/syntax/parser.y"
+#line 138 "src/syntax/parser.y"
                                                                       {
                       (yyval.ast_node) = create_ast_node(ADDITIVE_EXPRESSION, "+", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 2874 "./src/syntax/parser.c"
+#line 2877 "./src/syntax/parser.c"
     break;
 
   case 35: /* additive_expression: additive_expression '-' multiplicative_expression  */
-#line 138 "src/syntax/parser.y"
+#line 141 "src/syntax/parser.y"
                                                                       {
                       (yyval.ast_node) = create_ast_node(ADDITIVE_EXPRESSION, "-", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 2882 "./src/syntax/parser.c"
+#line 2885 "./src/syntax/parser.c"
     break;
 
   case 36: /* multiplicative_expression: unary_expression  */
-#line 143 "src/syntax/parser.y"
+#line 146 "src/syntax/parser.y"
                                             { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2888 "./src/syntax/parser.c"
+#line 2891 "./src/syntax/parser.c"
     break;
 
   case 37: /* multiplicative_expression: multiplicative_expression '*' unary_expression  */
-#line 144 "src/syntax/parser.y"
+#line 147 "src/syntax/parser.y"
                                                                          {
                             (yyval.ast_node) = create_ast_node(MULTIPLICATIVE_EXPRESSION, "*", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                           }
-#line 2896 "./src/syntax/parser.c"
+#line 2899 "./src/syntax/parser.c"
     break;
 
   case 38: /* multiplicative_expression: multiplicative_expression '/' unary_expression  */
-#line 147 "src/syntax/parser.y"
+#line 150 "src/syntax/parser.y"
                                                                          {
                             (yyval.ast_node) = create_ast_node(MULTIPLICATIVE_EXPRESSION, "/", (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                           }
-#line 2904 "./src/syntax/parser.c"
+#line 2907 "./src/syntax/parser.c"
     break;
 
   case 39: /* unary_expression: term  */
-#line 152 "src/syntax/parser.y"
+#line 155 "src/syntax/parser.y"
                        { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2910 "./src/syntax/parser.c"
+#line 2913 "./src/syntax/parser.c"
     break;
 
   case 40: /* unary_expression: unary_operator unary_expression  */
-#line 153 "src/syntax/parser.y"
+#line 156 "src/syntax/parser.y"
                                                   {
                     (yyval.ast_node) = create_ast_node(UNARY_EXPRESSION, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                   }
-#line 2918 "./src/syntax/parser.c"
+#line 2921 "./src/syntax/parser.c"
     break;
 
   case 41: /* unary_operator: '+'  */
-#line 158 "src/syntax/parser.y"
+#line 161 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(UNARY_OPERATOR, "+", NULL, NULL, NULL, NULL); }
-#line 2924 "./src/syntax/parser.c"
+#line 2927 "./src/syntax/parser.c"
     break;
 
   case 42: /* unary_operator: '-'  */
-#line 159 "src/syntax/parser.y"
+#line 162 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(UNARY_OPERATOR, "-", NULL, NULL, NULL, NULL); }
-#line 2930 "./src/syntax/parser.c"
+#line 2933 "./src/syntax/parser.c"
     break;
 
   case 43: /* unary_operator: '!'  */
-#line 160 "src/syntax/parser.y"
+#line 163 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(UNARY_OPERATOR, "!", NULL, NULL, NULL, NULL); }
-#line 2936 "./src/syntax/parser.c"
+#line 2939 "./src/syntax/parser.c"
     break;
 
   case 44: /* term: identifier  */
-#line 163 "src/syntax/parser.y"
+#line 166 "src/syntax/parser.y"
                  { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2942 "./src/syntax/parser.c"
+#line 2945 "./src/syntax/parser.c"
     break;
 
   case 45: /* term: INTEGER_CONST  */
-#line 164 "src/syntax/parser.y"
+#line 167 "src/syntax/parser.y"
                     { (yyval.ast_node) = create_ast_node(TERM, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2948 "./src/syntax/parser.c"
+#line 2951 "./src/syntax/parser.c"
     break;
 
   case 46: /* term: FLOAT_CONST  */
-#line 165 "src/syntax/parser.y"
+#line 168 "src/syntax/parser.y"
                   { (yyval.ast_node) = create_ast_node(TERM, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 2954 "./src/syntax/parser.c"
+#line 2957 "./src/syntax/parser.c"
     break;
 
   case 47: /* term: '(' additive_expression ')'  */
-#line 166 "src/syntax/parser.y"
+#line 169 "src/syntax/parser.y"
                                   {
         (yyval.ast_node) = create_ast_node(TERM, NULL, (yyvsp[-1].ast_node), NULL, NULL, NULL);
       }
-#line 2962 "./src/syntax/parser.c"
+#line 2965 "./src/syntax/parser.c"
     break;
 
   case 48: /* term: function_call_expression  */
-#line 169 "src/syntax/parser.y"
+#line 172 "src/syntax/parser.y"
                                { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2968 "./src/syntax/parser.c"
+#line 2971 "./src/syntax/parser.c"
     break;
 
   case 49: /* optional_expression: expression  */
-#line 172 "src/syntax/parser.y"
+#line 175 "src/syntax/parser.y"
                                 { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2974 "./src/syntax/parser.c"
+#line 2977 "./src/syntax/parser.c"
     break;
 
   case 50: /* optional_expression: %empty  */
-#line 173 "src/syntax/parser.y"
+#line 176 "src/syntax/parser.y"
                     { (yyval.ast_node) = NULL; }
-#line 2980 "./src/syntax/parser.c"
+#line 2983 "./src/syntax/parser.c"
     break;
 
   case 51: /* expression: additive_expression  */
-#line 176 "src/syntax/parser.y"
+#line 179 "src/syntax/parser.y"
                                 { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2986 "./src/syntax/parser.c"
+#line 2989 "./src/syntax/parser.c"
     break;
 
   case 52: /* expression: function_arg_constant_expression  */
-#line 177 "src/syntax/parser.y"
+#line 180 "src/syntax/parser.y"
                                              { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 2992 "./src/syntax/parser.c"
+#line 2995 "./src/syntax/parser.c"
     break;
 
   case 53: /* function_arg_constant_expression: EMPTY_CONST  */
-#line 180 "src/syntax/parser.y"
+#line 183 "src/syntax/parser.y"
                                               {
                                     (yyval.ast_node) = create_ast_node(
                                       FUNCTION_ARG_CONSTANT_EXPRESSION, (yyvsp[0].token), NULL, NULL, NULL, NULL
                                     );
                                   }
-#line 3002 "./src/syntax/parser.c"
+#line 3005 "./src/syntax/parser.c"
     break;
 
   case 54: /* function_arg_constant_expression: STRING  */
-#line 185 "src/syntax/parser.y"
+#line 188 "src/syntax/parser.y"
                                          {
                                     (yyval.ast_node) = create_ast_node(
                                       FUNCTION_ARG_CONSTANT_EXPRESSION, (yyvsp[0].token), NULL, NULL, NULL, NULL
                                     );
                                   }
-#line 3012 "./src/syntax/parser.c"
+#line 3015 "./src/syntax/parser.c"
     break;
 
   case 55: /* function_arg_constant_expression: CHARACTER_CONST  */
-#line 190 "src/syntax/parser.y"
+#line 193 "src/syntax/parser.y"
                                                   {
                                     (yyval.ast_node) = create_ast_node(
                                       FUNCTION_ARG_CONSTANT_EXPRESSION, (yyvsp[0].token), NULL, NULL, NULL, NULL
                                     );
                                   }
-#line 3022 "./src/syntax/parser.c"
+#line 3025 "./src/syntax/parser.c"
     break;
 
   case 56: /* function_call_expression: identifier '(' argument_list ')'  */
-#line 197 "src/syntax/parser.y"
+#line 200 "src/syntax/parser.y"
                                                            {
                             (yyval.ast_node) = create_ast_node(
                               FUNCTION_CALL_EXPRESSION, NULL, (yyvsp[-3].ast_node), (yyvsp[-1].ast_node), NULL, NULL
                             );
                           }
-#line 3032 "./src/syntax/parser.c"
+#line 3035 "./src/syntax/parser.c"
     break;
 
   case 57: /* function_call_expression: set_function_call_expression  */
-#line 202 "src/syntax/parser.y"
+#line 205 "src/syntax/parser.y"
                                                        { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3038 "./src/syntax/parser.c"
+#line 3041 "./src/syntax/parser.c"
     break;
 
   case 58: /* function_call_expression: '(' function_arg_constant_expression ')'  */
-#line 203 "src/syntax/parser.y"
+#line 206 "src/syntax/parser.y"
                                                                    { (yyval.ast_node) = (yyvsp[-1].ast_node); }
-#line 3044 "./src/syntax/parser.c"
+#line 3047 "./src/syntax/parser.c"
     break;
 
   case 59: /* set_function_call_expression: IS_SET '(' identifier ')'  */
-#line 206 "src/syntax/parser.y"
+#line 209 "src/syntax/parser.y"
                                                         {
                                 (yyval.ast_node) = create_ast_node(
                                   SET_FUNCTION_CALL_EXPRESSION, (yyvsp[-3].token), (yyvsp[-1].ast_node), NULL, NULL, NULL
                                 );
                               }
-#line 3054 "./src/syntax/parser.c"
+#line 3057 "./src/syntax/parser.c"
     break;
 
   case 60: /* set_function_call_expression: ADD '(' set_membership_expression ')'  */
-#line 211 "src/syntax/parser.y"
+#line 214 "src/syntax/parser.y"
                                                                     {
                                 (yyval.ast_node) = create_ast_node(
                                   SET_FUNCTION_CALL_EXPRESSION, (yyvsp[-3].token), (yyvsp[-1].ast_node), NULL, NULL, NULL
                                 );
                               }
-#line 3064 "./src/syntax/parser.c"
+#line 3067 "./src/syntax/parser.c"
     break;
 
   case 61: /* set_function_call_expression: REMOVE '(' set_membership_expression ')'  */
-#line 216 "src/syntax/parser.y"
+#line 219 "src/syntax/parser.y"
                                                                        {
                                 (yyval.ast_node) = create_ast_node(
                                   SET_FUNCTION_CALL_EXPRESSION, (yyvsp[-3].token), (yyvsp[-1].ast_node), NULL, NULL, NULL
                                 );
                               }
-#line 3074 "./src/syntax/parser.c"
+#line 3077 "./src/syntax/parser.c"
     break;
 
   case 62: /* set_function_call_expression: EXISTS '(' set_membership_expression ')'  */
-#line 221 "src/syntax/parser.y"
+#line 224 "src/syntax/parser.y"
                                                                        {
                                 (yyval.ast_node) = create_ast_node(
                                   SET_FUNCTION_CALL_EXPRESSION, (yyvsp[-3].token), (yyvsp[-1].ast_node), NULL, NULL, NULL
                                 );
                               }
-#line 3084 "./src/syntax/parser.c"
+#line 3087 "./src/syntax/parser.c"
     break;
 
   case 63: /* argument_list: argument_list ',' expression  */
-#line 228 "src/syntax/parser.y"
+#line 231 "src/syntax/parser.y"
                                             {
                 (yyval.ast_node) = create_ast_node(ARGUMENT_LIST, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
               }
-#line 3092 "./src/syntax/parser.c"
+#line 3095 "./src/syntax/parser.c"
     break;
 
   case 64: /* argument_list: expression  */
-#line 231 "src/syntax/parser.y"
+#line 234 "src/syntax/parser.y"
                          { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3098 "./src/syntax/parser.c"
+#line 3101 "./src/syntax/parser.c"
     break;
 
   case 65: /* argument_list: %empty  */
-#line 232 "src/syntax/parser.y"
+#line 235 "src/syntax/parser.y"
               { (yyval.ast_node) = NULL; }
-#line 3104 "./src/syntax/parser.c"
+#line 3107 "./src/syntax/parser.c"
     break;
 
   case 66: /* compound_statement: '{' statement_list '}'  */
-#line 235 "src/syntax/parser.y"
+#line 238 "src/syntax/parser.y"
                                            { (yyval.ast_node) = (yyvsp[-1].ast_node); }
-#line 3110 "./src/syntax/parser.c"
+#line 3113 "./src/syntax/parser.c"
     break;
 
   case 67: /* compound_statement: '{' '}'  */
-#line 236 "src/syntax/parser.y"
+#line 239 "src/syntax/parser.y"
                             { create_ast_node(COMPOUND_STATEMENT, NULL, NULL, NULL, NULL, NULL); }
-#line 3116 "./src/syntax/parser.c"
+#line 3119 "./src/syntax/parser.c"
     break;
 
   case 68: /* statement_list: statement_list statement  */
-#line 239 "src/syntax/parser.y"
+#line 242 "src/syntax/parser.y"
                                          {
                   (yyval.ast_node) = create_ast_node(STATEMENT_LIST, NULL, (yyvsp[-1].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                 }
-#line 3124 "./src/syntax/parser.c"
+#line 3127 "./src/syntax/parser.c"
     break;
 
   case 69: /* statement_list: statement  */
-#line 242 "src/syntax/parser.y"
+#line 245 "src/syntax/parser.y"
                           { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3130 "./src/syntax/parser.c"
+#line 3133 "./src/syntax/parser.c"
     break;
 
   case 70: /* declaration: type_specifier identifier ';'  */
-#line 245 "src/syntax/parser.y"
+#line 248 "src/syntax/parser.y"
                                            {
               (yyval.ast_node) = create_ast_node(DECLARATION, NULL, (yyvsp[-2].ast_node), (yyvsp[-1].ast_node), NULL, NULL);
             }
-#line 3138 "./src/syntax/parser.c"
+#line 3141 "./src/syntax/parser.c"
     break;
 
   case 71: /* statement: declaration  */
-#line 250 "src/syntax/parser.y"
+#line 253 "src/syntax/parser.y"
                        { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3144 "./src/syntax/parser.c"
+#line 3147 "./src/syntax/parser.c"
     break;
 
   case 72: /* statement: compound_statement  */
-#line 251 "src/syntax/parser.y"
+#line 254 "src/syntax/parser.y"
                              { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3150 "./src/syntax/parser.c"
+#line 3153 "./src/syntax/parser.c"
     break;
 
   case 73: /* statement: expression_statement  */
-#line 252 "src/syntax/parser.y"
+#line 255 "src/syntax/parser.y"
                                { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3156 "./src/syntax/parser.c"
+#line 3159 "./src/syntax/parser.c"
     break;
 
   case 74: /* statement: selection_statement  */
-#line 253 "src/syntax/parser.y"
+#line 256 "src/syntax/parser.y"
                               { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3162 "./src/syntax/parser.c"
+#line 3165 "./src/syntax/parser.c"
     break;
 
   case 75: /* statement: iteration_statement  */
-#line 254 "src/syntax/parser.y"
+#line 257 "src/syntax/parser.y"
                               { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3168 "./src/syntax/parser.c"
+#line 3171 "./src/syntax/parser.c"
     break;
 
   case 76: /* statement: io_statement  */
-#line 255 "src/syntax/parser.y"
+#line 258 "src/syntax/parser.y"
                        { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3174 "./src/syntax/parser.c"
+#line 3177 "./src/syntax/parser.c"
     break;
 
   case 77: /* statement: jump_statement  */
-#line 256 "src/syntax/parser.y"
+#line 259 "src/syntax/parser.y"
                          { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3180 "./src/syntax/parser.c"
+#line 3183 "./src/syntax/parser.c"
     break;
 
   case 78: /* statement: assignment_statement  */
-#line 257 "src/syntax/parser.y"
+#line 260 "src/syntax/parser.y"
                                { (yyval.ast_node) = (yyvsp[0].ast_node); }
-#line 3186 "./src/syntax/parser.c"
+#line 3189 "./src/syntax/parser.c"
     break;
 
   case 79: /* statement: error  */
-#line 258 "src/syntax/parser.y"
+#line 261 "src/syntax/parser.y"
                 { yyerrok; }
-#line 3192 "./src/syntax/parser.c"
+#line 3195 "./src/syntax/parser.c"
     break;
 
   case 80: /* assignment_statement: identifier '=' expression ';'  */
-#line 261 "src/syntax/parser.y"
+#line 264 "src/syntax/parser.y"
                                                     {
                       (yyval.ast_node) = create_ast_node(ASSIGNMENT_STATEMENT, NULL, (yyvsp[-3].ast_node), (yyvsp[-1].ast_node), NULL, NULL);
                     }
-#line 3200 "./src/syntax/parser.c"
+#line 3203 "./src/syntax/parser.c"
     break;
 
   case 81: /* expression_statement: optional_expression ';'  */
-#line 266 "src/syntax/parser.y"
+#line 269 "src/syntax/parser.y"
                                               { (yyval.ast_node) = (yyvsp[-1].ast_node); }
-#line 3206 "./src/syntax/parser.c"
+#line 3209 "./src/syntax/parser.c"
     break;
 
   case 82: /* set_membership_expression: expression IN expression  */
-#line 269 "src/syntax/parser.y"
+#line 272 "src/syntax/parser.y"
                                                     {
                         (yyval.ast_node) = create_ast_node(SET_MEMBERSHIP_EXPRESSION, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                       }
-#line 3214 "./src/syntax/parser.c"
+#line 3217 "./src/syntax/parser.c"
     break;
 
   case 83: /* selection_statement: IF '(' logical_or_expression ')' statement  */
-#line 274 "src/syntax/parser.y"
+#line 277 "src/syntax/parser.y"
                                                                               {
                       (yyval.ast_node) = create_ast_node(SELECTION_STATEMENT, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 3222 "./src/syntax/parser.c"
+#line 3225 "./src/syntax/parser.c"
     break;
 
   case 84: /* selection_statement: IF '(' logical_or_expression ')' statement ELSE statement  */
-#line 277 "src/syntax/parser.y"
+#line 280 "src/syntax/parser.y"
                                                                               {
                       (yyval.ast_node) = create_ast_node(SELECTION_STATEMENT, NULL, (yyvsp[-4].ast_node), (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL);
                     }
-#line 3230 "./src/syntax/parser.c"
+#line 3233 "./src/syntax/parser.c"
     break;
 
   case 85: /* iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement  */
-#line 282 "src/syntax/parser.y"
+#line 285 "src/syntax/parser.y"
                                                                                                                {
                       (yyval.ast_node) = create_ast_node(ITERATION_STATEMENT, NULL, (yyvsp[-6].ast_node), (yyvsp[-4].ast_node), (yyvsp[-2].ast_node), (yyvsp[0].ast_node));
                     }
-#line 3238 "./src/syntax/parser.c"
+#line 3241 "./src/syntax/parser.c"
     break;
 
   case 86: /* iteration_statement: FORALL '(' set_membership_expression ')' statement  */
-#line 285 "src/syntax/parser.y"
+#line 288 "src/syntax/parser.y"
                                                                        {
                       (yyval.ast_node) = create_ast_node(ITERATION_STATEMENT, NULL, (yyvsp[-2].ast_node), (yyvsp[0].ast_node), NULL, NULL);
                     }
-#line 3246 "./src/syntax/parser.c"
+#line 3249 "./src/syntax/parser.c"
     break;
 
   case 87: /* io_statement: WRITE '(' expression ')' ';'  */
-#line 290 "src/syntax/parser.y"
+#line 293 "src/syntax/parser.y"
                                            {
                 (yyval.ast_node) = create_ast_node(IO_STATEMENT, (yyvsp[-4].token), (yyvsp[-2].ast_node), NULL, NULL, NULL);
               }
-#line 3254 "./src/syntax/parser.c"
+#line 3257 "./src/syntax/parser.c"
     break;
 
   case 88: /* io_statement: WRITELN '(' expression ')' ';'  */
-#line 293 "src/syntax/parser.y"
+#line 296 "src/syntax/parser.y"
                                              {
                 (yyval.ast_node) = create_ast_node(IO_STATEMENT, (yyvsp[-4].token), (yyvsp[-2].ast_node), NULL, NULL, NULL);
               }
-#line 3262 "./src/syntax/parser.c"
+#line 3265 "./src/syntax/parser.c"
     break;
 
   case 89: /* io_statement: READ '(' identifier ')' ';'  */
-#line 296 "src/syntax/parser.y"
+#line 299 "src/syntax/parser.y"
                                           {
                 (yyval.ast_node) = create_ast_node(IO_STATEMENT, (yyvsp[-4].token), (yyvsp[-2].ast_node), NULL, NULL, NULL);
               }
-#line 3270 "./src/syntax/parser.c"
+#line 3273 "./src/syntax/parser.c"
     break;
 
   case 90: /* jump_statement: RETURN expression ';'  */
-#line 301 "src/syntax/parser.y"
+#line 304 "src/syntax/parser.y"
                                       {
                   (yyval.ast_node) = create_ast_node(JUMP_STATEMENT, (yyvsp[-2].token), (yyvsp[-1].ast_node), NULL, NULL, NULL);
                 }
-#line 3278 "./src/syntax/parser.c"
+#line 3281 "./src/syntax/parser.c"
     break;
 
   case 91: /* identifier: IDENTIFIER  */
-#line 306 "src/syntax/parser.y"
+#line 309 "src/syntax/parser.y"
                        { (yyval.ast_node) = create_ast_node(tIDENTIFIER, (yyvsp[0].token), NULL, NULL, NULL, NULL); }
-#line 3284 "./src/syntax/parser.c"
+#line 3287 "./src/syntax/parser.c"
     break;
 
 
-#line 3288 "./src/syntax/parser.c"
+#line 3291 "./src/syntax/parser.c"
 
       default: break;
     }
@@ -3509,7 +3512,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 309 "src/syntax/parser.y"
+#line 312 "src/syntax/parser.y"
 
 
 void yyerror (char const *string) {

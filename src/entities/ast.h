@@ -2,7 +2,7 @@
 
 /* Interface to the lexer */
 extern int yylex(void);
-void yyerror(const char*);
+extern void yyerror(const char*);
 
 /* Nodes in the abstract syntax tree */
 struct ast_node {

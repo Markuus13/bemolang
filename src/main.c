@@ -11,6 +11,8 @@ extern struct ast_node *ast;
 
 void global_setup() {
   print_tokens_enabled = 0;
+  print_ast_enabled = 0;
+  print_st_enabled = 0;
 
   line_counter = 1;
   column_counter = 1;
@@ -30,10 +32,22 @@ int main(int argc, char **argv) {
     yyparse();
   } while (!feof(yyin));
 
+  if (print_ast_enabled) {
+    printf("====== Abstract Symbol Tree ======\n\n");
+    print_ast(ast);
+    printf("\n===============\n\n");
+  }
+
+  // if (print_st_enabled) {
+  //   printf("======  ======\n\n");
+  //   print_symbol_table(symbol_table);
+  //   printf("\n===============\n\n");
+  // }
+
   fclose(yyin);
   yylex_destroy();
-  print_ast(ast);
-  // free_ast(ast);
+  free_ast(ast);
+  // free_symbol_table(symbol_table);
 
   return 0;
 }

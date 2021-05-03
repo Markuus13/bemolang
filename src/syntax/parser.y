@@ -2,9 +2,12 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include "../entities/ast.h"
+  #include "../entities/symbol_table.h"
   #include "../main.h"
 
   struct ast_node *ast = NULL;
+  struct symbol_table *symbol_table = NULL;
+  int scope = 0;
 %}
 
 %output "./src/syntax/parser.c"
