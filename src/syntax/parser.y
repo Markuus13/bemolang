@@ -5,6 +5,10 @@
   #include "../entities/symbol_table.h"
   #include "../main.h"
 
+  extern int line_counter;
+  extern int column_counter;
+  extern int parser_column;
+
   struct ast_node *ast = NULL;
   struct symbol_table *symbol_table = NULL;
   int scope = 0;

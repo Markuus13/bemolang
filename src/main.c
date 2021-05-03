@@ -8,11 +8,18 @@
 #include "main.h"
 
 extern struct ast_node *ast;
+int print_tokens_enabled;
+int print_ast_enabled;
+int print_st_enabled;
+int line_counter;
+int column_counter;
+int parser_column;
 
 void global_setup() {
-  print_tokens_enabled = 0;
-  print_ast_enabled = 0;
-  print_st_enabled = 0;
+  print_tokens_enabled = 1;
+  print_ast_enabled = 1;
+  // Not ready yet
+  // print_st_enabled = 1;
 
   line_counter = 1;
   column_counter = 1;

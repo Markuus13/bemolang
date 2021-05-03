@@ -12,6 +12,11 @@
   #include "../syntax/parser.h"
   #include "../main.h"
 
+  extern int column_counter;
+  extern int line_counter;
+  extern int parser_column;
+  extern int print_tokens_enabled;
+
   enum TOKENS {
     SET_ADD_TKN,
     ELEM_TKN,
