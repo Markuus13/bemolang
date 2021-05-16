@@ -5,9 +5,12 @@
 #include "lexical/scanner.h"
 #include "syntax/parser.h"
 #include "entities/ast.h"
+#include "entities/symbol_table.h"
 #include "main.h"
 
 extern struct ast_node *ast;
+extern struct symbol_table_row *symbol_table;
+
 int print_tokens_enabled;
 int print_ast_enabled;
 int print_st_enabled;
@@ -18,8 +21,7 @@ int parser_column;
 void global_setup() {
   print_tokens_enabled = 1;
   print_ast_enabled = 1;
-  // Not ready yet
-  // print_st_enabled = 1;
+  print_st_enabled = 1;
 
   line_counter = 1;
   column_counter = 1;
@@ -27,12 +29,18 @@ void global_setup() {
   parser_column = 1;
 }
 
+void free_data_structures() {
+  yylex_destroy();
+  free_ast(ast);
+  // free_symbol_table(symbol_table);
+}
+
 int main(int argc, char **argv) {
   if (argc < 2) {
     exit(1);
   }
-  global_setup();
 
+  global_setup();
   yyin = fopen(argv[1], "r");
 
   do {
@@ -45,16 +53,12 @@ int main(int argc, char **argv) {
     printf("\n===============\n\n");
   }
 
-  // if (print_st_enabled) {
-  //   printf("======  ======\n\n");
-  //   print_symbol_table(symbol_table);
-  //   printf("\n===============\n\n");
-  // }
+  if (print_st_enabled) {
+    print_symbol_table();
+  }
 
   fclose(yyin);
-  yylex_destroy();
-  free_ast(ast);
-  // free_symbol_table(symbol_table);
+  free_data_structures();
 
   return 0;
 }
