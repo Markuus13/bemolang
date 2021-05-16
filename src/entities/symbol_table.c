@@ -48,9 +48,16 @@ struct symbol_table_row *find_row(char* key, struct symbol_table_row* st_row) {
 
 void print_symbol_table() {
   printf("==================== Symbol Table ====================\n");
-  // for(struct symbol_table_row *st_row = symbol_table; st_row != NULL; st_row = st_row->hh.next) {
-
-  // }
+  for(struct symbol_table_row *st_row = symbol_table; st_row != NULL; st_row = st_row->hh.next) {
+    printf(
+      "Row:\t\t{ KEY: %s, TOKEN_TYPE: %s, TOKEN_NAME: %s, ROW_TYPE: %s, SCOPE: %d }\n",
+      st_row->key,
+      st_row->token_type,
+      st_row->token_name,
+      st_row->row_type,
+      st_row->scope
+    );
+  }
   printf("==================\n");
 }
 

@@ -35,6 +35,18 @@ void free_data_structures() {
   // free_symbol_table(symbol_table);
 }
 
+void print_informations() {
+  if (print_ast_enabled) {
+    printf("====== Abstract Symbol Tree ======\n\n");
+    print_ast(ast);
+    printf("\n===============\n\n");
+  }
+
+  if (print_st_enabled) {
+    print_symbol_table();
+  }
+}
+
 int main(int argc, char **argv) {
   if (argc < 2) {
     exit(1);
@@ -47,15 +59,7 @@ int main(int argc, char **argv) {
     yyparse();
   } while (!feof(yyin));
 
-  if (print_ast_enabled) {
-    printf("====== Abstract Symbol Tree ======\n\n");
-    print_ast(ast);
-    printf("\n===============\n\n");
-  }
-
-  if (print_st_enabled) {
-    print_symbol_table();
-  }
+  print_informations();
 
   fclose(yyin);
   free_data_structures();
