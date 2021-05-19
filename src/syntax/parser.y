@@ -36,7 +36,7 @@
 
 %type <token> type_specifier
 %type <ast_node> translation_unit external_declaration external_declaration_list
-%type <ast_node> parameters parameter_list parameter_declaration function_definition
+%type <ast_node> parameters parameter_list function_definition
 %type <ast_node> logical_or_expression logical_and_expression equality_expression
 %type <ast_node> relational_expression belongs_to_expression additive_expression
 %type <ast_node> multiplicative_expression unary_expression unary_operator term optional_expression
@@ -79,16 +79,14 @@ parameters: parameter_list { $$ = $1; }
           | { $$ = NULL; }
           ;
 
-parameter_list: parameter_declaration ',' parameter_list {
-                  $$ = create_ast_node(PARAMETER_LIST, NULL, $1, $3, NULL, NULL);
+parameter_list: type_specifier identifier ',' parameter_list {
+                  $$ = create_ast_node(PARAMETER_LIST, NULL, $4, NULL, NULL, NULL);
                 }
-              | parameter_declaration { $$ = $1; }
+              | type_specifier identifier {
+                  $$ = create_ast_node(PARAMETER_DECLARATION, $2->value, NULL, NULL, NULL, NULL);
+                  insert_row_into_symbol_table($1, $2->value, "variable");
+                }
               ;
-
-parameter_declaration: type_specifier identifier {
-                        $$ = create_ast_node(PARAMETER_DECLARATION, $1, $2, NULL, NULL, NULL);
-                      }
-                    ;
 
 logical_or_expression: logical_and_expression { $$ = $1; }
                     | logical_or_expression OR logical_and_expression {
