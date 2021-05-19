@@ -1,3 +1,6 @@
+int x;
+x = 0;
+
 set copy_set(set s) {
     set ans;
     ans = EMPTY;

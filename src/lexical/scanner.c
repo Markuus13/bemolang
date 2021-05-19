@@ -2343,13 +2343,13 @@ void handle_token(int token) {
       strcpy(yylval.token, yytext);
       break;
     case INT_TKN:
-      if (print_tokens_enabled) printf("<int, %s>", yytext);
+      if (print_tokens_enabled) printf("<int>");
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
       strcpy(yylval.token, yytext);
       break;
     case FLOAT_TKN:;
-      if (print_tokens_enabled) printf("<float, %s>", yytext);
+      if (print_tokens_enabled) printf("<float>");
       token_length = strlen(yytext) + 1;
       yylval.token = (char *) malloc(token_length * sizeof(char *));
       strcpy(yylval.token, yytext);

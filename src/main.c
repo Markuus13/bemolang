@@ -32,7 +32,7 @@ void global_setup() {
 void free_data_structures() {
   yylex_destroy();
   free_ast(ast);
-  // free_symbol_table(symbol_table);
+  free_symbol_table(symbol_table);
 }
 
 void print_informations() {

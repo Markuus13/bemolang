@@ -61,10 +61,11 @@ external_declaration_list: external_declaration_list external_declaration {
 
 external_declaration: function_definition { $$ = $1; }
                     | declaration { $$ = $1; }
+                    | assignment_statement { $$ = $1; }
                     ;
 
 function_definition: type_specifier identifier '(' parameters ')' compound_statement {
-                      $$ = create_ast_node(FUNCTION_DEFINITION, $1, $2, $4, NULL, NULL);
+                      $$ = create_ast_node(FUNCTION_DEFINITION, $1, $2, $4, $6, NULL);
                       insert_row_into_symbol_table($1, $2->value, "function");
                     }
                   ;
@@ -246,6 +247,7 @@ statement_list: statement_list statement {
 
 declaration: type_specifier identifier ';' {
               $$ = create_ast_node(DECLARATION, $1, $2, NULL, NULL, NULL);
+              insert_row_into_symbol_table($1, $2->value, "variable");
             }
           ;
 
