@@ -28,7 +28,7 @@ void insert_row_into_symbol_table(char *token_type, char *token_name, char *row_
 // "scope0_rtype_ttype_tname_rtype";
 char *generate_hash_key(int scope, char *token_type, char *token_name, char *row_type) {
   char temp_scope[] = "scope0";
-  int key_length = strlen(temp_scope) + strlen(token_type) + strlen(token_name) + strlen(row_type) + (4 * sizeof(char *));
+  int key_length = strlen(temp_scope) + strlen(token_type) + strlen(token_name) + strlen(row_type) + 4;
   char *key = malloc(key_length * sizeof (char *));
   strcat(key, temp_scope);
   strcat(key, "_");
@@ -47,10 +47,10 @@ struct symbol_table_row *find_row(char* key, struct symbol_table_row* st_row) {
 }
 
 void print_symbol_table() {
-  printf("==================== Symbol Table ====================\n");
+  printf("======================== Symbol Table ========================\n");
   for(struct symbol_table_row *st_row = symbol_table; st_row != NULL; st_row = st_row->hh.next) {
     printf(
-      "Row:\t\t{ KEY: %s, TOKEN_TYPE: %s, TOKEN_NAME: %s, ROW_TYPE: %s, SCOPE: %d }\n",
+      "{ KEY: %s, TOKEN_TYPE: %s, TOKEN_NAME: %s, ROW_TYPE: %s, SCOPE: %d }\n",
       st_row->key,
       st_row->token_type,
       st_row->token_name,
@@ -58,7 +58,7 @@ void print_symbol_table() {
       st_row->scope
     );
   }
-  printf("==================\n");
+  printf("==============================================================\n");
 }
 
 void free_symbol_table() {

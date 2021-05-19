@@ -37,9 +37,9 @@ void free_data_structures() {
 
 void print_informations() {
   if (print_ast_enabled) {
-    printf("====== Abstract Symbol Tree ======\n\n");
+    printf("\n======================== Abstract Symbol Tree ========================\n");
     print_ast(ast);
-    printf("\n===============\n\n");
+    printf("======================================================================\n\n");
   }
 
   if (print_st_enabled) {

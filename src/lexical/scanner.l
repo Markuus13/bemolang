@@ -398,6 +398,12 @@ void handle_token(int token) {
       yylval.token = (char *) malloc(token_length * sizeof(char *));
       strcpy(yylval.token, yytext);
       break;
+    case INT_TKN:
+      if (print_tokens_enabled) printf("<int, %s>", yytext);
+      token_length = strlen(yytext) + 1;
+      yylval.token = (char *) malloc(token_length * sizeof(char *));
+      strcpy(yylval.token, yytext);
+      break;
     case FLOAT_TKN:;
       if (print_tokens_enabled) printf("<float, %s>", yytext);
       token_length = strlen(yytext) + 1;

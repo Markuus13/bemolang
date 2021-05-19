@@ -34,8 +34,9 @@
 %nonassoc IF_ONLY
 %nonassoc ELSE
 
-%type <ast_node> translation_unit external_declaration external_declaration_list type_specifier
-%type <ast_node> declarator parameters parameter_list parameter_declaration function_definition
+%type <token> type_specifier
+%type <ast_node> translation_unit external_declaration external_declaration_list
+%type <ast_node> parameters parameter_list parameter_declaration function_definition
 %type <ast_node> logical_or_expression logical_and_expression equality_expression
 %type <ast_node> relational_expression belongs_to_expression additive_expression
 %type <ast_node> multiplicative_expression unary_expression unary_operator term optional_expression
@@ -62,21 +63,17 @@ external_declaration: function_definition { $$ = $1; }
                     | declaration { $$ = $1; }
                     ;
 
-function_definition: type_specifier declarator compound_statement {
-                      $$ = create_ast_node(FUNCTION_DEFINITION, NULL, $1, $2, $3, NULL);
+function_definition: type_specifier identifier '(' parameters ')' compound_statement {
+                      $$ = create_ast_node(FUNCTION_DEFINITION, $1, $2, $4, NULL, NULL);
+                      insert_row_into_symbol_table($1, $2->value, "function");
                     }
                   ;
 
-type_specifier: INT { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
-              | FLOAT { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
-              | ELEM { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
-              | SET { $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL, NULL); }
+type_specifier: INT { $$ = $1; }
+              | FLOAT { $$ = $1; }
+              | ELEM { $$ = $1; }
+              | SET { $$ = $1; }
               ;
-
-declarator: identifier '(' parameters ')' {
-              $$ = create_ast_node(DECLARATOR, NULL, $1, $3, NULL, NULL);
-            }
-          ;
 
 parameters: parameter_list { $$ = $1; }
           | { $$ = NULL; }
@@ -89,7 +86,7 @@ parameter_list: parameter_declaration ',' parameter_list {
               ;
 
 parameter_declaration: type_specifier identifier {
-                        $$ = create_ast_node(PARAMETER_DECLARATION, NULL, $1, $2, NULL, NULL);
+                        $$ = create_ast_node(PARAMETER_DECLARATION, $1, $2, NULL, NULL, NULL);
                       }
                     ;
 
@@ -250,7 +247,7 @@ statement_list: statement_list statement {
               ;
 
 declaration: type_specifier identifier ';' {
-              $$ = create_ast_node(DECLARATION, NULL, $1, $2, NULL, NULL);
+              $$ = create_ast_node(DECLARATION, $1, $2, NULL, NULL, NULL);
             }
           ;
 
@@ -310,7 +307,9 @@ jump_statement: RETURN expression ';' {
                 }
               ;
 
-identifier: IDENTIFIER { $$ = create_ast_node(tIDENTIFIER, $1, NULL, NULL, NULL, NULL); }
+identifier: IDENTIFIER {
+              $$ = create_ast_node(tIDENTIFIER, $1, NULL, NULL, NULL, NULL);
+            }
           ;
 
 %%
