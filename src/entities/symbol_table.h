@@ -1,3 +1,6 @@
+#ifndef symbol_table_h
+#define symbol_table_h
+
 #include "uthash.h"
 
 struct symbol_table_row {
@@ -15,3 +18,5 @@ void free_symbol_table();
 
 struct symbol_table_row *find_row(char* key, struct symbol_table_row* symbol_table);
 char *generate_hash_key(int scope, char *token_type, char *token_name, char *row_type);
+
+#endif

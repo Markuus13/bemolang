@@ -17,6 +17,7 @@ int print_st_enabled;
 int line_counter;
 int column_counter;
 int parser_column;
+int semantic_errors;
 
 void global_setup() {
   print_tokens_enabled = 1;
@@ -27,6 +28,8 @@ void global_setup() {
   column_counter = 1;
 
   parser_column = 1;
+
+  semantic_errors = 0;
 }
 
 void free_data_structures() {

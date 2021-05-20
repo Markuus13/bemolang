@@ -1,3 +1,5 @@
+#ifndef ast_h
+#define ast_h
 #pragma once
 
 /* Interface to the lexer */
@@ -61,3 +63,5 @@ enum AST_NODE_TYPES {
   tIDENTIFIER,
   COMPOUND_STATEMENT
 };
+
+#endif
