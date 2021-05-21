@@ -41,8 +41,8 @@ void insert_row_into_symbol_table(
     HASH_ADD_KEYPTR(
       hh,
       current_scope->symbol_table,
-      current_scope->symbol_table->key,
-      strlen(current_scope->symbol_table->key),
+      new_row->key,
+      strlen(new_row->key),
       new_row
     );
   } else {
@@ -73,8 +73,8 @@ struct symbol_table_row * lookup(struct scope *current_scope, char* key) {
   struct scope * aux_cur_scope = current_scope;
   struct symbol_table_row* st_row;
 
-  while(aux_cur_scope != NULL && st_row != NULL) {
-    find_row(current_scope->symbol_table, key);
+  while(aux_cur_scope != NULL) {
+    st_row = find_row(current_scope->symbol_table, key);
     aux_cur_scope = current_scope->parent;
   }
 

@@ -4,19 +4,19 @@
 #include "uthash.h"
 #include "utlist.h"
 
-struct symbol_table_row {
+typedef struct symbol_table_row {
   UT_hash_handle hh;
   char* key;
   char* token_type;
   char* token_name;
   char* row_type;
-};
+} symbol_table_row;
 
-struct scope {
+typedef struct scope {
   struct scope *parent;
   struct symbol_table_row *symbol_table;
   struct scope *next; /* just to keep track of a scope list, so we can easily print/free this structure */
-};
+} scope;
 
 struct scope *push_scope(struct scope *initial_scope, struct scope *parent_scope);
 struct symbol_table_row *lookup(struct scope *current_scope, char* key);

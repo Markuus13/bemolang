@@ -53,28 +53,12 @@ void print_informations() {
 }
 
 int main(int argc, char **argv) {
-  // struct symbol_table_row *symbol_table_1 = NULL;
-  // struct symbol_table_row *symbol_table_row_1 = (struct symbol_table_row *) malloc(sizeof(struct symbol_table_row));
-  // symbol_table_row_1->key = (char *) malloc (sizeof (char) * 5);
-  // symbol_table_row_1->key = "abc";
-  // HASH_ADD_KEYPTR(hh, symbol_table_1, symbol_table_row_1->key, strlen(symbol_table_row_1->key), symbol_table_row_1);
-
-  // struct symbol_table_row *symbol_table_2 = NULL;
-  // struct symbol_table_row *symbol_table_row_2 = (struct symbol_table_row *) malloc(sizeof(struct symbol_table_row));
-  // symbol_table_row_2->key = (char *) malloc (sizeof (char) * 5);
-  // symbol_table_row_2->key = "efg";
-  // HASH_ADD_KEYPTR(hh, symbol_table_2, symbol_table_row_2->key, strlen(symbol_table_row_2->key), symbol_table_row_2);
-
-  // HASH_FIND_STR(symbol_table, key, st_row);
-
-
   if (argc < 2) {
     exit(1);
   }
 
   global_setup();
   yyin = fopen(argv[1], "r");
-
 
   struct scope *scope = (struct scope *) malloc(sizeof(struct scope));
   initial_symbol_table = (struct symbol_table_row *) malloc(sizeof(struct symbol_table_row));
