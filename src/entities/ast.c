@@ -13,21 +13,13 @@ struct ast_node *create_ast_node(
   struct ast_node *third_node,
   struct ast_node *fourth_node
   ) {
-  struct ast_node *ast_node = malloc(sizeof(struct ast_node));
+  struct ast_node *ast_node = (struct ast_node*) malloc(sizeof(struct ast_node));
 
   if (!ast_node) {
     yyerror("Out of memory error.");
     exit(0);
   }
 
-  // printf("Node type: %d", node_type);
-  // printf("Node value: %s", value);
-  // printf("First Node: %p", first_node);
-  // printf("Second Node: %p", second_node);
-  // printf("Third Node: %p", third_node);
-  // printf("Fourth Node: %p", fourth_node);
-  // printf("Is a leaf: %d", !first_node);
-  // printf("");
   ast_node->node_type = node_type;
   ast_node->value = value;
   ast_node->first_node = first_node;

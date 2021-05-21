@@ -3,20 +3,18 @@
   #include <stdlib.h>
   #include "../entities/ast.h"
   #include "../entities/symbol_table.h"
-  #include "../entities/scope.h"
   #include "../main.h"
 
   extern int line_counter;
   extern int column_counter;
   extern int parser_column;
+  extern struct scope *initial_scope;
+  extern struct symbol_table_row *initial_symbol_table;
 
   struct ast_node *ast = NULL;
-  struct symbol_table *symbol_table = NULL;
-  // struct scope *scope = create_scope(NULL, symbol_table);
+  struct scope *current_scope = NULL;
 
-  // struct scope *current_scope = NULL;
-
-  int scope_counter = 0;
+  int is_a_function = 0;
 %}
 
 %output "./src/syntax/parser.c"
@@ -55,6 +53,8 @@
 translation_unit: external_declaration_list {
                     $$ = create_ast_node(TRANSLATION_UNIT, NULL, $1, NULL, NULL, NULL);
                     ast = $$;
+                    // current_scope = initial_scope;
+                    printf("translation_unit: %p\n", current_scope);
                   }
                ;
 
@@ -69,9 +69,26 @@ external_declaration: function_definition { $$ = $1; }
                     | assignment_statement { $$ = $1; }
                     ;
 
-function_definition: type_specifier identifier '(' parameters ')' compound_statement {
-                      $$ = create_ast_node(FUNCTION_DEFINITION, $1, $2, $4, $6, NULL);
-                      insert_row_into_symbol_table($1, $2->value, "function");
+function_definition: type_specifier identifier '(' {
+                      printf("function definition-1: %p\n", current_scope);
+                      is_a_function = 1;
+                      struct symbol_table_row *symbol_table = NULL;
+
+                      struct scope *new_scope = (struct scope *) malloc(sizeof(struct scope));
+                      new_scope->symbol_table = symbol_table;
+                      new_scope->parent = current_scope;
+                      LL_APPEND(initial_scope, new_scope);
+
+                      current_scope = new_scope;
+                      printf("function definition-2: %p\n", current_scope);
+                    } parameters ')' compound_statement {
+                      printf("function definition-3: %p\n", current_scope);
+                      $$ = create_ast_node(FUNCTION_DEFINITION, $1, $5, $7, NULL, NULL);
+                      printf("\ncurrent_scope: %p, current_scope->parent: %p, current_scope->symbol_table: %p, value: %s\n",
+                        current_scope, current_scope->parent, current_scope->symbol_table, $2->value);
+                      insert_row_into_symbol_table(current_scope, $1, $2->value, "function");
+                      is_a_function = 0;
+                      printf("function definition-4: %p\n", current_scope);
                     }
                   ;
 
@@ -89,8 +106,10 @@ parameter_list: type_specifier identifier ',' parameter_list {
                   $$ = create_ast_node(PARAMETER_LIST, NULL, $4, NULL, NULL, NULL);
                 }
               | type_specifier identifier {
+                  printf("\ncurrent_scope: %p, current_scope->parent: %p, current_scope->symbol_table: %p, value: %s\n",
+                  current_scope, current_scope->parent, current_scope->symbol_table, $2->value);
                   $$ = create_ast_node(PARAMETER_DECLARATION, $2->value, NULL, NULL, NULL, NULL);
-                  insert_row_into_symbol_table($1, $2->value, "variable");
+                  insert_row_into_symbol_table(current_scope, $1, $2->value, "parameter");
                 }
               ;
 
@@ -240,7 +259,25 @@ argument_list: argument_list ',' expression {
             | { $$ = NULL; }
             ;
 
-compound_statement: '{' statement_list '}' { $$ = $2; }
+compound_statement: '{' {
+                      printf("is a function: %d\n", is_a_function);
+                      printf("compound statement-1: %p\n", current_scope);
+                      if (!is_a_function) {
+                        struct symbol_table_row *symbol_table = NULL;
+
+                        struct scope *new_scope = (struct scope *) malloc(sizeof(struct scope));
+                        new_scope->symbol_table = symbol_table;
+                        new_scope->parent = current_scope;
+                        LL_APPEND(initial_scope, new_scope);
+
+                        current_scope = new_scope;
+                      }
+                    } statement_list '}' {
+                      $$ = $3;
+                      printf("compound statement-2: %p\n", current_scope);
+                      current_scope = current_scope->parent;
+                      printf("compound statement-3: %p\n", current_scope);
+                    }
                   | '{' '}' { create_ast_node(COMPOUND_STATEMENT, NULL, NULL, NULL, NULL, NULL); }
                   ;
 
@@ -251,8 +288,10 @@ statement_list: statement_list statement {
               ;
 
 declaration: type_specifier identifier ';' {
+              printf("\ncurrent_scope: %p, current_scope->parent: %p, current_scope->symbol_table: %p, value: %s\n",
+                    current_scope, current_scope->parent, current_scope->symbol_table, $2->value);
               $$ = create_ast_node(DECLARATION, $1, $2, NULL, NULL, NULL);
-              insert_row_into_symbol_table($1, $2->value, "variable");
+              insert_row_into_symbol_table(current_scope, $1, $2->value, "variable");
             }
           ;
 
