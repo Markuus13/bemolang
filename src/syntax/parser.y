@@ -39,7 +39,7 @@
 
 %type <token> type_specifier
 %type <ast_node> translation_unit external_declaration external_declaration_list
-%type <ast_node> parameters parameter_list function_definition
+%type <ast_node> parameters parameter_list function_definition optional_assignment
 %type <ast_node> logical_or_expression logical_and_expression equality_expression
 %type <ast_node> relational_expression belongs_to_expression additive_expression
 %type <ast_node> multiplicative_expression unary_expression unary_operator term optional_expression
@@ -184,6 +184,10 @@ optional_expression: expression { $$ = $1; }
                   | { $$ = NULL; }
                   ;
 
+optional_assignment: identifier '=' expression { $$ = $3; }
+                  | { $$ = NULL; }
+                    ;
+
 expression: additive_expression { $$ = $1; }
           | function_arg_constant_expression { $$ = $1; }
           ;
@@ -301,8 +305,9 @@ selection_statement: IF '(' logical_or_expression ')' statement %prec IF_ONLY {
                     }
                   ;
 
-iteration_statement: FOR '(' optional_expression ';' optional_expression ';' optional_expression ')' statement {
-                      $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, $7, $9);
+iteration_statement: FOR '(' optional_assignment ';' optional_expression ';' optional_expression ')' statement {
+
+                      // $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, $7, $9);
                     }
                   | FORALL '(' set_membership_expression ')' statement {
                       $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, NULL, NULL);

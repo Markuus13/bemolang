@@ -159,7 +159,7 @@ void print_node_type_name(int node_type) {
   }
 }
 
-void print_ast(struct ast_node *ast_node) {
+void print_ast(ast_node *ast_node) {
   if (ast_node == NULL) {
     return;
   }
@@ -179,7 +179,7 @@ void print_ast(struct ast_node *ast_node) {
   ast_printer_aux -= 3;
 }
 
-void free_ast(struct ast_node *ast_node) {
+void free_ast(ast_node *ast_node) {
   if (ast_node == NULL) return;
 
   free_ast(ast_node->first_node);

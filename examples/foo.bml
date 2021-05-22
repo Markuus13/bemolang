@@ -3,6 +3,10 @@ int y;
 int foonction(int a, int b) {
   int c;
 
+  for (; ;) {
+    write("oi");
+  }
+
   if (1) {
     int x;
     x = 2;
