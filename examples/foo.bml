@@ -3,7 +3,7 @@ int y;
 int foonction(int a, int b) {
   int c;
 
-  for (; ;) {
+  for (i = 0; i < 4;) {
     write("oi");
   }
 
