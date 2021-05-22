@@ -1,3 +1,40 @@
+int y;
+
+int foonction(int a, int b) {
+  int c;
+
+  if (1) {
+    int x;
+    x = 2;
+    if (x == 2) {
+      int z;
+      z = 0;
+    }
+  } else {
+    int y;
+    y = 3;
+  }
+}
+
+set subsum(set s, int target, int cur_sum, set ans) {
+    float x;
+    if(target == cur_sum) return ans;
+    else if (s == EMPTY) return EMPTY;
+    else {
+       int el;
+       remove((exists (el in s)) in s);
+       if(subsum(s, target, cur_sum, ans)) return ans;
+       cur_sum = cur_sum + el;
+       add(el in ans);
+       if(subsum(s, target, cur_sum, ans)) return ans;
+       add(el in s);
+       remove (el in s);
+       return EMPTY;
+    }
+}
+
 int main() {
-  foo(bar(nier(2 + 4) + 5), baz());
+  set foo;
+  foo = EMPTY;
+  return 0;
 }

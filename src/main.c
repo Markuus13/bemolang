@@ -9,9 +9,9 @@
 #include "main.h"
 
 extern struct ast_node *ast;
-struct symbol_table_row *initial_symbol_table = NULL;
-struct scope *initial_scope = NULL;
-extern struct scope *current_scope;
+symbol_table_row *initial_symbol_table = NULL;
+scope *initial_scope = NULL;
+scope *current_scope;
 
 int print_tokens_enabled;
 int print_ast_enabled;
@@ -48,7 +48,7 @@ void print_informations() {
   }
 
   if (print_st_enabled) {
-    print_symbol_table(initial_symbol_table);
+    print_symbol_table2(initial_scope);
   }
 }
 
@@ -60,16 +60,10 @@ int main(int argc, char **argv) {
   global_setup();
   yyin = fopen(argv[1], "r");
 
-  struct scope *scope = (struct scope *) malloc(sizeof(struct scope));
-  initial_symbol_table = (struct symbol_table_row *) malloc(sizeof(struct symbol_table_row));
-
-  scope->parent = NULL;
-  scope->symbol_table = initial_symbol_table;
-  LL_APPEND(initial_scope, scope);
+  initial_scope = (struct scope *) malloc(sizeof(struct scope));
+  initial_scope->parent = NULL;
+  initial_scope->symbol_table = initial_symbol_table;
   current_scope = initial_scope;
-
-  printf("current_scope: %p\n", scope);
-  printf("current_scope->parent: %p\n", scope->parent);
 
   do {
     yyparse();
