@@ -7,14 +7,14 @@ extern int yylex(void);
 extern void yyerror(const char*);
 
 /* Nodes in the abstract syntax tree */
-struct ast_node {
+typedef struct ast_node {
  int node_type;
  char *value;
  struct ast_node *first_node;
  struct ast_node *second_node;
  struct ast_node *third_node;
  struct ast_node *fourth_node;
-};
+} ast_node;
 
 /* AST functions */
 struct ast_node *create_ast_node(

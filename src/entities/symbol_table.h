@@ -22,15 +22,11 @@ typedef struct scope {
 scope *push_scope(scope *parent_scope, int scope_id);
 symbol_table_row *lookup(scope *current_scope, char* key);
 scope *pop_scope(scope *current_scope);
-
-void insert_row_into_symbol_table(scope* current_scope, char *token_type, char *token_name, char *row_type);
-void print_symbol_table(symbol_table_row* symbol_table);
-void free_symbol_table(symbol_table_row* symbol_table);
-
 symbol_table_row *find_row(symbol_table_row* symbol_table, char* key);
 char *generate_hash_key(char *token_type, char *token_name, char *row_type);
 
-void print_symbol_table2(scope* initial_scope);
-void free_symbol_table2(scope* initial_scope);
+void insert_row_into_symbol_table(scope* current_scope, char *token_type, char *token_name, char *row_type);
+void print_symbol_table(scope* initial_scope);
+void free_symbol_table(scope* initial_scope);
 
 #endif

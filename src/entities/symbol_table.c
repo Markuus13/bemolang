@@ -85,34 +85,7 @@ symbol_table_row * lookup(scope *current_scope, char* key) {
   return st_row;
 }
 
-void print_symbol_table(symbol_table_row* symbol_table) {
-  printf("======================== Symbol Table ================================================\n");
-  printf("Token Type,\t\tToken Name,\t\tRow Type,\tScope,\tKey\n");
-  printf("======================================================================================\n");
-  // for(struct symbol_table_row *st_row = symbol_table; st_row != NULL; st_row = st_row->hh.next) {
-  //   printf(
-  //     "%s,\t\t\t%s,\t\t\t%s,\t%s\n",
-  //     st_row->token_type,
-  //     st_row->token_name,
-  //     st_row->row_type,
-  //     st_row->key
-  //   );
-  // }
-  printf("======================================================================================\n");
-}
-
-void free_symbol_table(symbol_table_row *symbol_table) {
-  symbol_table_row* st_row;
-  symbol_table_row* st_aux_row;
-
-  HASH_ITER(hh, symbol_table, st_row, st_aux_row) {
-    HASH_DEL(symbol_table, st_row);
-    free(st_row->key);
-    free(st_row);
-  }
-}
-
-void print_symbol_table2(scope* initial_scope) {
+void print_symbol_table(scope* initial_scope) {
   scope* scope;
 
   printf("======================== Symbol Table ================================================\n");
@@ -134,7 +107,7 @@ void print_symbol_table2(scope* initial_scope) {
   printf("======================================================================================\n");
 }
 
-void free_symbol_table2(scope* initial_scope) {
+void free_symbol_table(scope* initial_scope) {
   symbol_table_row* st_row;
   symbol_table_row* st_aux_row;
   scope* scope;

@@ -11,8 +11,7 @@
   extern scope *initial_scope;
   extern symbol_table_row *initial_symbol_table;
   extern scope *current_scope;
-
-  struct ast_node *ast = NULL;
+  extern ast_node *ast;
 
   int is_a_function_declaration = 0;
   int scope_counter = 0;
@@ -72,14 +71,9 @@ function_definition: type_specifier identifier '(' {
                       is_a_function_declaration = 1;
                       scope_counter++;
                       current_scope = push_scope(current_scope, scope_counter);
-
                     } parameters ')' compound_statement {
-                      // scope_counter--;
-
-                      // current_scope = current_scope->parent;
                       $$ = create_ast_node(FUNCTION_DEFINITION, $1, $5, $7, NULL, NULL);
                       insert_row_into_symbol_table(current_scope, $1, $2->value, "function");
-                      printf("Fim da função '%s'\nscope atual: $%d \n", $2->value, scope_counter);
                     }
                   ;
 

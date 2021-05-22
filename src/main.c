@@ -8,7 +8,7 @@
 #include "entities/symbol_table.h"
 #include "main.h"
 
-extern struct ast_node *ast;
+ast_node *ast = NULL;
 symbol_table_row *initial_symbol_table = NULL;
 scope *initial_scope = NULL;
 scope *current_scope;
@@ -36,8 +36,8 @@ void global_setup() {
 
 void free_data_structures() {
   yylex_destroy();
-  free_ast(ast);
-  free_symbol_table(initial_symbol_table);
+  // free_ast(ast);
+  free_symbol_table(initial_scope);
 }
 
 void print_informations() {
@@ -48,7 +48,7 @@ void print_informations() {
   }
 
   if (print_st_enabled) {
-    print_symbol_table2(initial_scope);
+    print_symbol_table(initial_scope);
   }
 }
 
@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
   print_informations();
 
   fclose(yyin);
-  // free_data_structures();
+  free_data_structures();
 
   return 0;
 }
