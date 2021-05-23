@@ -75,16 +75,19 @@ symbol_table_row *find_row(symbol_table_row* symbol_table, char* key) {
   return st_row;
 }
 
-symbol_table_row * lookup(scope *current_scope, char* key) {
-  scope * aux_cur_scope = current_scope;
-  symbol_table_row* st_row;
+symbol_table_row *lookup(scope *current_scope, const char* identifier) {
+  symbol_table_row *result_st_row = NULL;
 
-  while(aux_cur_scope != NULL) {
-    st_row = find_row(current_scope->symbol_table, key);
-    aux_cur_scope = current_scope->parent;
+  for (scope *aux_curr_scope = current_scope; aux_curr_scope != NULL; aux_curr_scope = aux_curr_scope->parent) {
+    for (symbol_table_row *aux_st = aux_curr_scope->symbol_table; aux_st != NULL; aux_st = aux_st->hh.next) {
+      if (!strcmp(aux_st->token_name, identifier)) {
+        result_st_row = aux_st;
+        break;
+      }
+    }
   }
 
-  return st_row;
+  return result_st_row;
 }
 
 void print_symbol_table(scope* initial_scope) {

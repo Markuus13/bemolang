@@ -14,7 +14,7 @@ compile: bison flex
 	gcc $(FILES) $(FLAGS) -o bemolang.out
 
 run:
-	./bemolang.out "./examples/foo.bml"
+	# ./bemolang.out "./examples/foo.bml"
 	# ./bemolang.out "./examples/1_subsum_program.bml"
 	# ./bemolang.out "./examples/2_simple_program.bml"
 	# ./bemolang.out "./examples/3_function_calls_and_polymorphism.bml"
@@ -26,6 +26,8 @@ run:
 	# ./bemolang.out "./examples/9_syntax_error_2.bml"
 	# ./bemolang.out "./examples/11_main_without_return.bml"
 	# ./bemolang.out "./examples/12_without_main_function.bml"
+	# ./bemolang.out "./examples/13_no_semantic_errors.bml"
+	# ./bemolang.out "./examples/14_undeclared_variables.bml"
 
 debug: bison flex
 	gcc $(FILES) $(FLAGS) -fsanitize=address -o bemolang.out

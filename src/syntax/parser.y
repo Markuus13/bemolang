@@ -178,7 +178,10 @@ unary_operator: '+' { $$ = create_ast_node(UNARY_OPERATOR, "+", NULL, NULL, NULL
               | '!' { $$ = create_ast_node(UNARY_OPERATOR, "!", NULL, NULL, NULL, NULL); }
               ;
 
-term: identifier { $$ = $1; }
+term: identifier {
+        $$ = $1;
+        check_if_identifier_has_already_been_declared(current_scope, $1->value);
+      }
     | INTEGER_CONST { $$ = create_ast_node(TERM, $1, NULL, NULL, NULL, NULL); }
     | FLOAT_CONST { $$ = create_ast_node(TERM, $1, NULL, NULL, NULL, NULL); }
     | '(' additive_expression ')' {
@@ -196,7 +199,10 @@ optional_for_expression: for_expression { $$ = $1; }
                   ;
 
 for_expression: logical_or_expression { $$ = $1; }
-              | identifier '=' expression { $$ = $3; }
+              | identifier '=' expression {
+                  $$ = $3;
+                  check_if_identifier_has_already_been_declared(current_scope, $1->value);
+                }
               ;
 
 expression: additive_expression { $$ = $1; }
@@ -224,6 +230,7 @@ function_call_expression: identifier '(' argument_list ')' {
                             $$ = create_ast_node(
                               FUNCTION_CALL_EXPRESSION, NULL, $1, $3, NULL, NULL
                             );
+                            check_if_identifier_has_already_been_declared(current_scope, $1->value);
                           }
                         | set_function_call_expression { $$ = $1; }
                         | '(' function_arg_constant_expression ')' { $$ = $2; }
@@ -297,6 +304,7 @@ statement: declaration { $$ = $1; }
 
 assignment_statement: identifier '=' expression ';' {
                       $$ = create_ast_node(ASSIGNMENT_STATEMENT, NULL, $1, $3, NULL, NULL);
+                      check_if_identifier_has_already_been_declared(current_scope, $1->value);
                     }
                   ;
 

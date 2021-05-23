@@ -21,7 +21,7 @@ typedef struct scope {
 } scope;
 
 scope *push_scope(scope *parent_scope, int scope_id);
-symbol_table_row *lookup(scope *current_scope, char* key);
+symbol_table_row *lookup(scope *current_scope, const char* identifier);
 scope *pop_scope(scope *current_scope);
 symbol_table_row *find_row(symbol_table_row* symbol_table, char* key);
 char *generate_hash_key(char *token_type, char *token_name, char *row_type);

@@ -15,10 +15,20 @@ void yyerror (char const *string) {
 
 void report_lexer_error(const char *symbol) {
   char error_message[1000];
-  strcpy(error_message, "Unrecognized symbol \"%s\".");
+  strcpy(error_message, "Unrecognized symbol \"");
+  strcat(error_message, symbol);
+  strcat(error_message, "\".");
   yyerror(error_message);
 }
 
 void report_main_function_not_defined() {
-  yyerror("Undefined reference to 'main' function");
+  yyerror("Error: Undefined reference to 'main' function");
+}
+
+void report_identifier_not_declared(const char* identifier) {
+  char error_message[1000];
+  strcpy(error_message, "Error: Undeclared identifier \"");
+  strcat(error_message, identifier);
+  strcat(error_message, "\".");
+  yyerror(error_message);
 }
