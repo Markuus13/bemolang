@@ -14,7 +14,7 @@ compile: bison flex
 	gcc $(FILES) $(FLAGS) -o bemolang.out
 
 run:
-	# ./bemolang.out "./examples/foo.bml"
+	./bemolang.out "./examples/foo.bml"
 	# ./bemolang.out "./examples/1_function.bml"
 	# ./bemolang.out "./examples/2_simple_program.bml"
 	# ./bemolang.out "./examples/3_function_calls_and_polymorphism.bml"

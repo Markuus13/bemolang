@@ -116,10 +116,14 @@ void free_symbol_table(scope* initial_scope) {
   LL_FOREACH_SAFE(initial_scope, scope, scope_aux) {
     HASH_ITER(hh, scope->symbol_table, st_row, st_aux_row) {
       HASH_DEL(scope->symbol_table, st_row);
+      free(st_row->token_name);
+      free(st_row->token_type);
       free(st_row->key);
       free(st_row);
     }
     LL_DELETE(initial_scope, scope);
+    free(scope->symbol_table);
     free(scope);
   }
+  free (initial_scope);
 }

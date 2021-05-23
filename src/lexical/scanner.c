@@ -2104,7 +2104,6 @@ void handle_token(int token) {
   switch(token) {
     case SET_ADD_TKN:
       if (print_tokens_enabled) printf("<add>");
-      yylval.token = strdup(yytext);
       break;
     case ELEM_TKN:
       if (print_tokens_enabled) printf("<elem>");
@@ -2112,11 +2111,9 @@ void handle_token(int token) {
       break;
     case ELSE_TKN:
       if (print_tokens_enabled) printf("<else>");
-      yylval.token = strdup(yytext);
       break;
     case EXISTS_TKN:
       if (print_tokens_enabled) printf("<exists>");
-      yylval.token = strdup(yytext);
       break;
     case FOR_TKN:
       if (print_tokens_enabled) printf("<for>");
@@ -2124,19 +2121,15 @@ void handle_token(int token) {
       break;
     case FORALL_TKN:
       if (print_tokens_enabled) printf("<forall>");
-      yylval.token = strdup(yytext);
       break;
     case IF_TKN:
       if (print_tokens_enabled) printf("<if>");
-      yylval.token = strdup(yytext);
       break;
     case IN_TKN:
       if (print_tokens_enabled) printf("<in>");
-      yylval.token = strdup(yytext);
       break;
     case IS_SET_TKN:
       if (print_tokens_enabled) printf("is_set");
-      yylval.token = strdup(yytext);
       break;
     case READ_TKN:
       if (print_tokens_enabled) printf("<read>");
@@ -2144,11 +2137,9 @@ void handle_token(int token) {
       break;
     case REMOVE_TKN:
       if (print_tokens_enabled) printf("<remove>");
-      yylval.token = strdup(yytext);
       break;
     case RETURN_TKN:
       if (print_tokens_enabled) printf("<return>");
-      yylval.token = strdup(yytext);
       break;
     case SET_TKN:
       if (print_tokens_enabled) printf("<set>");
@@ -2160,7 +2151,6 @@ void handle_token(int token) {
       break;
     case WRITELN_TKN:
       if (print_tokens_enabled) printf("<writeln>");
-      yylval.token = strdup(yytext);
       break;
     case AND_OP_TKN:
       if (print_tokens_enabled) printf("<and_op, '%s'>", yytext);
@@ -2180,7 +2170,6 @@ void handle_token(int token) {
       break;
     case EQUAL_OP_TKN:
       if (print_tokens_enabled) printf("<eq_op, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case NOT_EQUAL_OP_TKN:
       if (print_tokens_enabled) printf("<not_eq_op, '%s'>", yytext);
@@ -2188,27 +2177,21 @@ void handle_token(int token) {
       break;
     case SEMICOLON_TKN:
       if (print_tokens_enabled) printf("<semicolon, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case LEFT_BRACKET_TKN:
       if (print_tokens_enabled) printf("<left_brack, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case RIGHT_BRACKET_TKN:
       if (print_tokens_enabled) printf("<right_brack, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case ASSIGNMENT_OP_TKN:
       if (print_tokens_enabled) printf("<assign_op, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case LEFT_PARENTESIS_TKN:
       if (print_tokens_enabled) printf("<left_parent, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case RIGHT_PARENTESIS_TKN:
       if (print_tokens_enabled) printf("<right_parent, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case ADD_OP_TKN:
       if (print_tokens_enabled) printf("<add_op, '%s'>", yytext);
@@ -2216,7 +2199,6 @@ void handle_token(int token) {
       break;
     case SUBTRACTION_OP_TKN:
       if (print_tokens_enabled) printf("<sub_op, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case MULTIPLICATION_OP_TKN:
       if (print_tokens_enabled) printf("<mult_op, '%s'>", yytext);
@@ -2228,7 +2210,6 @@ void handle_token(int token) {
       break;
     case NOT_OP_TKN:
       if (print_tokens_enabled) printf("<not_op, '%s'>", yytext);
-      yylval.token = strdup(yytext);
       break;
     case LT_OP_TKN:
       if (print_tokens_enabled) printf("<lt_op, '%s'>", yytext);
@@ -2240,19 +2221,15 @@ void handle_token(int token) {
       break;
     case COMMA_TKN:
       if (print_tokens_enabled) printf("<comma, '%s>'", yytext);
-      yylval.token = strdup(yytext);
       break;
     case WHITESPACE_TKN:
       if (print_tokens_enabled) printf("%s", yytext);
-      // yylval.token = strdup(yytext);
       break;
     case BREAK_LINE_TKN:
       if (print_tokens_enabled) printf("%s", yytext);
-      yylval.token = strdup(yytext);
       break;
     case EMPTY_CONST_TKN:
       if (print_tokens_enabled) printf("<EMPTY>");
-      yylval.token = strdup(yytext);
       break;
     case IDENTIFIER_TKN:;
       if (print_tokens_enabled) printf("<id, '%s'>", yytext);
