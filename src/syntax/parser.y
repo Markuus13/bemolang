@@ -39,7 +39,7 @@
 
 %type <token> type_specifier
 %type <ast_node> translation_unit external_declaration external_declaration_list
-%type <ast_node> parameters parameter_list function_definition optional_assignment
+%type <ast_node> parameters parameter_list function_definition
 %type <ast_node> logical_or_expression logical_and_expression equality_expression
 %type <ast_node> relational_expression belongs_to_expression additive_expression
 %type <ast_node> multiplicative_expression unary_expression unary_operator term
@@ -47,7 +47,7 @@
 %type <ast_node> set_function_call_expression argument_list compound_statement statement_list
 %type <ast_node> declaration statement assignment_statement expression_statement
 %type <ast_node> set_membership_expression selection_statement iteration_statement io_statement
-%type <ast_node> jump_statement identifier optional_for_expression for_expression
+%type <ast_node> jump_statement identifier optional_for_expression for_expression optional_expression
 
 %%
 translation_unit: external_declaration_list {
@@ -180,17 +180,18 @@ term: identifier { $$ = $1; }
     | function_call_expression { $$ = $1; }
     ;
 
+optional_expression: expression { $$ = $1; }
+                  | { $$ = NULL; }
+                  ;
+
 optional_for_expression: for_expression { $$ = $1; }
                   | { $$ = NULL; }
                   ;
 
 for_expression: logical_or_expression { $$ = $1; }
-              | for_expression ',' logical_or_expression { $$ = $3; }
+              | logical_or_expression ',' for_expression { $$ = $3; }
+              | identifier '=' expression { $$ = $3; }
               ;
-
-optional_assignment: identifier '=' expression { $$ = $3; }
-                  | { $$ = NULL; }
-                    ;
 
 expression: additive_expression { $$ = $1; }
           | function_arg_constant_expression { $$ = $1; }
@@ -293,7 +294,7 @@ assignment_statement: identifier '=' expression ';' {
                     }
                   ;
 
-expression_statement: optional_for_expression ';' { $$ = $1; }
+expression_statement: optional_expression ';' { $$ = $1; }
                     ;
 
 set_membership_expression: expression IN expression {
@@ -309,7 +310,7 @@ selection_statement: IF '(' logical_or_expression ')' statement %prec IF_ONLY {
                     }
                   ;
 
-iteration_statement: FOR '(' optional_assignment ';' optional_for_expression ';' optional_for_expression ')' statement {
+iteration_statement: FOR '(' optional_for_expression ';' optional_for_expression ';' optional_for_expression ')' statement {
                       $$ = create_ast_node(ITERATION_STATEMENT, NULL, $3, $5, $7, $9);
                     }
                   | FORALL '(' set_membership_expression ')' statement {

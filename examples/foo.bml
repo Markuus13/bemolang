@@ -2,8 +2,9 @@ int y;
 
 int foonction(int a, int b) {
   int c;
+  c = 2;
 
-  for (i = 0; i < 4;) {
+  for (i = 0; i < c; i = i + 1) {
     write("oi");
   }
 
