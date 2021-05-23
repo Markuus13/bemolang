@@ -1,4 +1,4 @@
-FILES = src/lexical/scanner.c src/syntax/parser.c src/entities/ast.c src/entities/symbol_table.c src/error_handler/errors.c src/main.c
+FILES = src/lexical/scanner.c src/syntax/parser.c src/semantic/semantic.c src/entities/ast.c src/entities/symbol_table.c src/error_handler/errors.c src/main.c
 FLAGS = -g -Wall
 
 install:
@@ -14,8 +14,8 @@ compile: bison flex
 	gcc $(FILES) $(FLAGS) -o bemolang.out
 
 run:
-	./bemolang.out "./examples/foo.bml"
-	# ./bemolang.out "./examples/1_function.bml"
+	# ./bemolang.out "./examples/foo.bml"
+	# ./bemolang.out "./examples/1_subsum_program.bml"
 	# ./bemolang.out "./examples/2_simple_program.bml"
 	# ./bemolang.out "./examples/3_function_calls_and_polymorphism.bml"
 	# ./bemolang.out "./examples/4_natural_numbers_as_sets.bml"
@@ -25,6 +25,7 @@ run:
 	# ./bemolang.out "./examples/8_some_example.bml"
 	# ./bemolang.out "./examples/9_syntax_error_2.bml"
 	# ./bemolang.out "./examples/11_main_without_return.bml"
+	# ./bemolang.out "./examples/12_without_main_function.bml"
 
 debug: bison flex
 	gcc $(FILES) $(FLAGS) -fsanitize=address -o bemolang.out

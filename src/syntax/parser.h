@@ -92,7 +92,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "src/syntax/parser.y"
+#line 27 "src/syntax/parser.y"
 
   struct ast_node *ast_node;
   char* token;

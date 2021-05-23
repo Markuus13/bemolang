@@ -3,6 +3,7 @@
   #include <stdlib.h>
   #include "../entities/ast.h"
   #include "../entities/symbol_table.h"
+  #include "../semantic/semantic.h"
   #include "../error_handler/errors.h"
   #include "../main.h"
 
@@ -54,6 +55,7 @@
 translation_unit: external_declaration_list {
                     $$ = create_ast_node(TRANSLATION_UNIT, NULL, $1, NULL, NULL, NULL);
                     ast = $$;
+                    check_for_main_function(initial_scope);
                   }
                ;
 

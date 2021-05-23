@@ -26,8 +26,8 @@ struct ast_node *create_ast_node(
   struct ast_node *fourth_node
 );
 
-void free_ast(struct ast_node *ast_node);
-void print_ast(struct ast_node *ast_node);
+void free_ast(ast_node *ast_node);
+void print_ast(ast_node *ast_node);
 
 /* AST type enums */
 enum AST_NODE_TYPES {

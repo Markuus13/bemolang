@@ -10,7 +10,6 @@ extern int source_code_has_error;
 
 void yyerror (char const *string) {
   source_code_has_error = 1;
-
   fprintf(stderr, "%d:%d %s\n", line_counter, parser_column, string);
 }
 
@@ -20,3 +19,6 @@ void report_lexer_error(const char *symbol) {
   yyerror(error_message);
 }
 
+void report_main_function_not_defined() {
+  yyerror("Undefined reference to 'main' function");
+}

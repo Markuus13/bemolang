@@ -3,6 +3,6 @@
 
 #include "../entities/symbol_table.h"
 
-void check_for_main_function(struct symbol_table_row *table_row);
+void check_for_main_function(scope *initial_scope);
 
 #endif
