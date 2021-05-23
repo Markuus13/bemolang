@@ -5,5 +5,6 @@
 
 void check_for_main_function(scope *initial_scope);
 void check_if_identifier_has_already_been_declared(scope *current_scope, const char *identifier);
+void check_function_arity();
 
 #endif

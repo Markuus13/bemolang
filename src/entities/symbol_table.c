@@ -82,8 +82,6 @@ void insert_row_into_symbol_table(
       strlen(new_row->key),
       new_row
     );
-  } else {
-    printf("Debug: Symbol table insertion error");
   }
 }
 
