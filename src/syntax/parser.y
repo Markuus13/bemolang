@@ -16,7 +16,8 @@
   extern ast_node *ast;
 
   int is_a_function_declaration = 0;
-  int scope_counter = 0;
+  int function_arity_counter = 0;
+  int scope_counter_depth = 0;
 %}
 
 %output "./src/syntax/parser.c"
@@ -72,11 +73,12 @@ external_declaration: function_definition { $$ = $1; }
 
 function_definition: type_specifier identifier '(' {
                       is_a_function_declaration = 1;
-                      scope_counter++;
-                      current_scope = push_scope(current_scope, scope_counter);
+                      scope_counter_depth++;
+                      current_scope = push_scope(current_scope, scope_counter_depth);
                     } parameters ')' compound_statement {
                       $$ = create_ast_node(FUNCTION_DEFINITION, $1, $5, $7, NULL, NULL);
-                      insert_row_into_symbol_table(current_scope, $1, $2->value, "function");
+                      insert_row_into_symbol_table(current_scope, $1, $2->value, "function", function_arity_counter);
+                      function_arity_counter = 0;
                     }
                   ;
 
@@ -91,12 +93,14 @@ parameters: parameter_list { $$ = $1; }
           ;
 
 parameter_list: type_specifier identifier ',' parameter_list {
+                  function_arity_counter++;
                   $$ = create_ast_node(PARAMETER_LIST, NULL, $4, NULL, NULL, NULL);
-                  insert_row_into_symbol_table(current_scope, $1, $2->value, "parameter");
+                  insert_row_into_symbol_table(current_scope, $1, $2->value, "parameter", 0);
                 }
               | type_specifier identifier {
+                  function_arity_counter++;
                   $$ = create_ast_node(PARAMETER_DECLARATION, $2->value, NULL, NULL, NULL, NULL);
-                  insert_row_into_symbol_table(current_scope, $1, $2->value, "parameter");
+                  insert_row_into_symbol_table(current_scope, $1, $2->value, "parameter", 0);
                 }
               ;
 
@@ -256,13 +260,13 @@ argument_list: argument_list ',' expression {
 
 compound_statement: '{' {
                       if (!is_a_function_declaration) {
-                        scope_counter++;
-                        current_scope = push_scope(current_scope, scope_counter);
+                        scope_counter_depth++;
+                        current_scope = push_scope(current_scope, scope_counter_depth);
                       }
                       is_a_function_declaration = 0;
                     } statement_list '}' {
                       $$ = $3;
-                      scope_counter--;
+                      scope_counter_depth--;
                       current_scope = current_scope->parent;
                     }
                   | '{' '}' { create_ast_node(COMPOUND_STATEMENT, NULL, NULL, NULL, NULL, NULL); }
@@ -276,7 +280,7 @@ statement_list: statement_list statement {
 
 declaration: type_specifier identifier ';' {
               $$ = create_ast_node(DECLARATION, $1, $2, NULL, NULL, NULL);
-              insert_row_into_symbol_table(current_scope, $1, $2->value, "variable");
+              insert_row_into_symbol_table(current_scope, $1, $2->value, "variable", 0);
             }
           ;
 

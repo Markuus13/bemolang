@@ -26,7 +26,8 @@ void insert_row_into_symbol_table(
   scope *current_scope,
   char *token_type,
   char *token_name,
-  char *row_type
+  char *row_type,
+  int function_arity
 ) {
   symbol_table_row *new_row = NULL;
   symbol_table_row *existent_row = NULL;
@@ -41,6 +42,7 @@ void insert_row_into_symbol_table(
     new_row->token_name = token_name;
     new_row->token_type = token_type;
     new_row->row_type = row_type;
+    new_row->arity = function_arity;
 
     HASH_ADD_KEYPTR(
       hh,
@@ -89,15 +91,21 @@ void print_symbol_table(scope* initial_scope) {
   scope* scope;
 
   printf("======================== Symbol Table ================================================\n");
-  printf("Token Type,\t\tToken Name,\t\tRow Type,\tScope-depth,\tAddress,\tKey\n");
+  printf("Token Type,\t\tToken Name,\t\tRow Type,\tArity,\tScope-depth,\tAddress,\tKey\n");
   printf("======================================================================================\n");
   LL_FOREACH(initial_scope, scope) {
     for(symbol_table_row *st_row = scope->symbol_table; st_row != NULL; st_row = st_row->hh.next) {
       printf(
-        "%s,\t\t\t%s,\t\t\t%s,\t$%d,\t%p,\t%s\n",
+        "%s,\t\t\t%s,\t\t\t%s,",
         st_row->token_type,
         st_row->token_name,
-        st_row->row_type,
+        st_row->row_type
+      );
+      if (strcmp(st_row->row_type, "function")) { printf("\tN/A,"); }
+      else { printf("\t%d,", st_row->arity); }
+
+      printf(
+        "\th%d,\t%p,\t%s\n",
         scope->id,
         scope,
         st_row->key
