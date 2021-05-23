@@ -3939,7 +3939,3 @@ yyreturn:
 
 #line 342 "src/syntax/parser.y"
 
-
-void yyerror (char const *string) {
-  fprintf (stderr, "%d:%d %s\n", line_counter, parser_column, string);
-}

@@ -340,7 +340,3 @@ identifier: IDENTIFIER {
           ;
 
 %%
-
-void yyerror (char const *string) {
-  fprintf (stderr, "%d:%d %s\n", line_counter, parser_column, string);
-}

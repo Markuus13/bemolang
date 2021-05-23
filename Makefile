@@ -1,4 +1,4 @@
-FILES = src/lexical/scanner.c src/syntax/parser.c src/entities/ast.c src/entities/symbol_table.c src/main.c
+FILES = src/lexical/scanner.c src/syntax/parser.c src/entities/ast.c src/entities/symbol_table.c src/error_handler/errors.c src/main.c
 FLAGS = -g -Wall
 
 install:

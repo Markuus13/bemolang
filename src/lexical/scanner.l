@@ -10,6 +10,7 @@
   #include <string.h>
   #include <math.h>
   #include "../syntax/parser.h"
+  #include "../error_handler/errors.h"
   #include "../main.h"
 
   extern int column_counter;
@@ -343,6 +344,6 @@ void handle_token(int token) {
 
 void handle_unrecognized_symbol() {
   if (print_tokens_enabled) printf("\n");
-  printf("%d:%d Unrecognized symbol \"%s\".\n", line_counter, column_counter, yytext);
+  report_lexer_error(yytext);
   count();
 }

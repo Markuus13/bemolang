@@ -16,10 +16,12 @@ scope *current_scope;
 int print_tokens_enabled;
 int print_ast_enabled;
 int print_st_enabled;
+
 int line_counter;
 int column_counter;
 int parser_column;
-int semantic_errors;
+
+int source_code_has_error;
 
 void global_setup() {
   print_tokens_enabled = 0;
@@ -31,7 +33,7 @@ void global_setup() {
 
   parser_column = 1;
 
-  semantic_errors = 0;
+  source_code_has_error = 0;
 }
 
 void free_data_structures() {
@@ -69,7 +71,9 @@ int main(int argc, char **argv) {
     yyparse();
   } while (!feof(yyin));
 
-  print_informations();
+  if (!source_code_has_error) {
+    print_informations();
+  }
 
   fclose(yyin);
   free_data_structures();
