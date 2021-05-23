@@ -3,6 +3,7 @@
   #include <stdlib.h>
   #include "../entities/ast.h"
   #include "../entities/symbol_table.h"
+  #include "../error_handler/errors.h"
   #include "../main.h"
 
   extern int line_counter;
@@ -189,7 +190,6 @@ optional_for_expression: for_expression { $$ = $1; }
                   ;
 
 for_expression: logical_or_expression { $$ = $1; }
-              | logical_or_expression ',' for_expression { $$ = $3; }
               | identifier '=' expression { $$ = $3; }
               ;
 

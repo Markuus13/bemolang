@@ -4,7 +4,7 @@ int foonction(int a, int b) {
   int c;
   c = 2;
 
-  for (i = 0; i < c; i = i + 1) {
+  for (sunday = 0; sunday < 10; sunday = sunday + 1) {
     write("oi");
   }
 
