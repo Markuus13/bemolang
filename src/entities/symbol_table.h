@@ -26,6 +26,7 @@ scope *pop_scope(scope *current_scope);
 symbol_table_row *find_row(symbol_table_row* symbol_table, char* key);
 char *generate_hash_key(char *token_type, char *token_name, char *row_type);
 
+void update_function_into_symbol_table(scope* current_scope, char *token_type, char *token_name, char *row_type, int function_arity);
 void insert_row_into_symbol_table(scope* current_scope, char *token_type, char *token_name, char *row_type, int function_arity);
 void print_symbol_table(scope* initial_scope);
 void free_symbol_table(scope* initial_scope);

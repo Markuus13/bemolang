@@ -65,11 +65,10 @@ int main(int argc, char **argv) {
   initial_scope = (struct scope *) malloc(sizeof(struct scope));
   initial_scope->parent = NULL;
   initial_scope->symbol_table = initial_symbol_table;
+  initial_scope->id = 0;
   current_scope = initial_scope;
 
-  do {
-    yyparse();
-  } while (!feof(yyin));
+  yyparse();
 
   if (!source_code_has_error) {
     print_informations();

@@ -180,15 +180,11 @@ void print_ast(ast_node *ast_node) {
 }
 
 void free_ast(ast_node *ast_node) {
-  if (ast_node == NULL) return;
-
-  free_ast(ast_node->first_node);
-  free_ast(ast_node->second_node);
-  free_ast(ast_node->third_node);
-  free_ast(ast_node->fourth_node);
-
-  if (ast_node->value != NULL) {
-    free(ast_node->value);
+  if (ast_node) {
+    free_ast(ast_node->first_node);
+    free_ast(ast_node->second_node);
+    free_ast(ast_node->third_node);
+    free_ast(ast_node->fourth_node);
+    free(ast_node);
   }
-  free(ast_node);
 }

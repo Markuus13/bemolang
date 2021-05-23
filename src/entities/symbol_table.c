@@ -22,6 +22,37 @@ scope *pop_scope(scope *current_scope) {
   return current_scope->parent;
 }
 
+void update_function_into_symbol_table(
+  scope* current_scope,
+  char *token_type,
+  char *token_name,
+  char *row_type,
+  int function_arity
+) {
+  char *key = generate_hash_key(token_type, token_name, row_type);
+  symbol_table_row *existent_function_row = find_row(current_scope->symbol_table, key);
+
+  HASH_DEL(current_scope->symbol_table, existent_function_row);
+
+  symbol_table_row *new_row = (symbol_table_row *) malloc(sizeof (symbol_table_row));
+  new_row->key = key;
+  new_row->token_name = token_name;
+  new_row->token_type = token_type;
+  new_row->row_type = row_type;
+  new_row->arity = function_arity;
+
+  HASH_ADD_KEYPTR(
+    hh,
+    current_scope->symbol_table,
+    new_row->key,
+    strlen(new_row->key),
+    new_row
+  );
+}
+
+#define HASH_REPLACE_PTR(head,ptrfield,add,replaced)                             \
+    HASH_REPLACE(hh,head,ptrfield,sizeof(void *),add,replaced)
+
 void insert_row_into_symbol_table(
   scope *current_scope,
   char *token_type,
@@ -59,6 +90,7 @@ void insert_row_into_symbol_table(
 char *generate_hash_key(char *token_type, char *token_name, char *row_type) {
   int key_length = (strlen(token_type) + strlen(token_name) + strlen(row_type) + 4);
   char *key = (char *) malloc(key_length * sizeof(char));
+  key[0] = '\0';
 
   strcat(key, token_type);
   strcat(key, "_");

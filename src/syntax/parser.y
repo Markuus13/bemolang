@@ -72,12 +72,13 @@ external_declaration: function_definition { $$ = $1; }
                     ;
 
 function_definition: type_specifier identifier '(' {
+                      insert_row_into_symbol_table(current_scope, $1, $2->value, "function", function_arity_counter);
                       is_a_function_declaration = 1;
                       scope_counter_depth++;
                       current_scope = push_scope(current_scope, scope_counter_depth);
                     } parameters ')' compound_statement {
                       $$ = create_ast_node(FUNCTION_DEFINITION, $1, $5, $7, NULL, NULL);
-                      insert_row_into_symbol_table(current_scope, $1, $2->value, "function", function_arity_counter);
+                      update_function_into_symbol_table(current_scope, $1, $2->value, "function", function_arity_counter);
                       function_arity_counter = 0;
                     }
                   ;
